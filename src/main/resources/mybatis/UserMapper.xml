@@ -30,7 +30,7 @@
         delete from users where username = #{userName}
     </delete>
 
-    <select id="findUserByUsername" parameterType="string" resultMap="com.avic.model.User">
+    <select id="findUserByUsername" parameterType="string" resultType="com.avic.model.User">
         select * from  users where username = #{userName}
     </select>
 

@@ -19,6 +19,8 @@ public class UserMapperTest {
     @Autowired(required = true)
     UserMapper userMapper;
 
+
+
     @Test
     public void testInsertUser() {
         User user = new User();
@@ -28,4 +30,12 @@ public class UserMapperTest {
         user.setAccountStatus(0);
         userMapper.insertUser(user);
     }
+
+    @Test
+    public void findUserByUserName() {
+        String userName = "lsc";
+        User user = userMapper.findUserByUsername(userName);
+        System.out.println(user.getPassWord());
+    }
+
 }
