@@ -45,4 +45,12 @@ public class UserServiceImpl implements UserService {
         logger.info("删除用户信息");
         userMapper.deleteUser(user);
     }
+
+    @Override
+    public User findUserByUsername(String userName) {
+        User user = userMapper.findUserByUsername(userName);
+        return user;
+    }
+
+
 }

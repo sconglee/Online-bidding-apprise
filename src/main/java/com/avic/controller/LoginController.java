@@ -44,9 +44,12 @@ public class LoginController {
      **/
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public boolean userLogin(@RequestParam("userName") String userName, @RequestParam("password") String password, HttpSession session) {
+        logger.info("用户登录，用户是：" + userName + "， 密码是： " + password);
 
 
-        logger.info("用户名和密码匹配失败！");
+
+
+
         return false;
     }
 
