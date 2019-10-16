@@ -1,5 +1,3 @@
 logs
 target/
-pom.xml
-src/main/resources/jdbc.properties
 .idea/
