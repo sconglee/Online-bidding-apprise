@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.avic.mapper.ScoreSheetTemplateMapper">
+    <resultMap id="scoreSheetTemplateMap" type="com.avic.model.ScoreSheetTemplate">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="projectName" property="projectName" jdbcType="VARCHAR"/>
+        <result column="projectNumber" property="projectNumber" jdbcType="VARCHAR"/>
+        <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
+        <result column="sequenceNumber" property="sequenceNumber" jdbcType="VARCHAR"/>
+        <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
+        <result column="scoredComName" property="scoredComName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="delete" property="delete" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
+        <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findAllScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
+        select projectName, projectNumber, status, createTime from scoreSheetTemplate
+    </select>
+
+    <insert id="insertScoreSheetTemplate"  parameterType="com.avic.model.ScoreSheetTemplate">
+        insert into scoreSheetTemplate (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">
+                projectName,
+            </if>
+            <if test="projectNumber != null">
+                projectNumber,
+            </if>
+            <if test="totalItems != null">
+                totalItems,
+            </if>
+            <if test="sequenceNumber != null">
+                sequenceNumber,
+            </if>
+            <if test="itemWeight != null">
+                itemWeight,
+            </if>
+            <if test="scoredComName != null">
+                scoredComName,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="delete != null">
+                delete,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        values (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">
+                #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectNumber != null">
+                #{projectNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="totalItems != null">
+                #{totalItems,jdbcType=VARCHAR},
+            </if>
+            <if test="sequenceNumber != null">
+                #{sequenceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="itemWeight != null">
+                #{itemWeight,jdbcType=VARCHAR},
+            </if>
+            <if test="scoredComName != null">
+                #{scoredComName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="delete != null">
+                #{delete,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateScoreSheetTemplate" parameterType="com.avic.model.ScoreSheetTemplate">
+        update scoreSheetTemplate
+        <set>
+            <if test="projectName != null and projectName != ''">
+                projectName = #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectNumber != null and projectNumber != ''">
+                projectNumber = #{projectNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="totalItems != null and totalItems != ''">
+                totalItems = #{totalItems,jdbcType=VARCHAR},
+            </if>
+            <if test="sequenceNumber != null and sequenceNumber != ''">
+                sequenceNumber = #{sequenceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="itemWeight != null and itemWeight != ''">
+                itemWeight = #{itemWeight,jdbcType=VARCHAR},
+            </if>
+            <if test="scoredComName != null and scoredComName != ''">
+                scoredComName = #{scoredComName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="delete != null">
+                delete = #{delete,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                updateTime = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where projectName = #{projectName} and projectNumber = #{projectNumber}
+    </update>
+
+    <select id="findTemplateByProjectNameAndNumber" parameterType="com.avic.model.ScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
+        select * from scoreSheetTemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
+    </select>
+
+    <update id="enableEffectiveOrNot" parameterType="com.avic.model.ScoreSheetTemplate">
+      update scoreSheetTemplate
+      set status = #{status}, updateTime = #{updateTime}
+      where projectName = #{projectName} and projectNumber = #{projectNumber}
+    </update>
+
+    <delete id="deleteScoreSheetTemplate" parameterType="String">
+        delete from scoreSheetTemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
+    </delete>
+
+
+</mapper>

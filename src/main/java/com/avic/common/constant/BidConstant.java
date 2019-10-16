@@ -1,6 +1,5 @@
 package com.avic.common.constant;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,18 +22,23 @@ public class BidConstant {
     // 用户类型：评标专家
     public final static Integer USER_TYPE_SCORED_EXPERT= 1;
 
+    // 评标模板生效状态
+    public static final Integer TEMPLATE_ACTIVE = 0;
+    public static final Integer TEMPLATE_NO_ACTIVE = 1;
 
-    public static final String SMS_TYPE_OPEN = "1";
-    public static final String SMS_TYPE_ACTIVE = "2";
-    public static final String SMS_TYPE_PWD = "3";
+    // 评标模板删除状态
+    public static final Integer TEMPLATE_NO_DELETE = 0;
+    public static final Integer TEMPLATE_DELTER = 1;
 
-    public static Map<String,String> actionType = new HashMap<String,String>();
-
+    public static Map<Integer,String> templateStatus = new HashMap<>();
     static{
-        actionType.put(SMS_TYPE_OPEN, "11");
-        actionType.put(SMS_TYPE_ACTIVE, "22222");
-        actionType.put(SMS_TYPE_PWD, "3333");
+        templateStatus.put(TEMPLATE_ACTIVE, "生效");
+        templateStatus.put(TEMPLATE_NO_ACTIVE, "未生效");
+        templateStatus.put(TEMPLATE_NO_DELETE, "评标打分模板未被删除，处于正常状态！");
+        templateStatus.put(TEMPLATE_DELTER, "评标打分模板已被删除，处于不可用状态！");
     }
+
+
 
 
 
