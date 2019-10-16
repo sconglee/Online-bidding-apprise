@@ -11,13 +11,15 @@
         <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
         <result column="scoredComName" property="scoredComName" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
-        <result column="delete" property="delete" jdbcType="INTEGER"/>
+        <result column="remove" property="remove" jdbcType="INTEGER"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findAllScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
-        select projectName, projectNumber, status, createTime from scoreSheetTemplate
+        select projectName, projectNumber, status, createTime
+        from scoreSheetTemplate
+        where remove = 1
     </select>
 
     <insert id="insertScoreSheetTemplate"  parameterType="com.avic.model.ScoreSheetTemplate">
@@ -44,8 +46,8 @@
             <if test="status != null">
                 status,
             </if>
-            <if test="delete != null">
-                delete,
+            <if test="remove != null">
+                remove,
             </if>
             <if test="createTime != null">
                 createTime,
@@ -77,8 +79,8 @@
             <if test="status != null">
                 #{status,jdbcType=INTEGER},
             </if>
-            <if test="delete != null">
-                #{delete,jdbcType=INTEGER},
+            <if test="remove != null">
+                #{remove,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=VARCHAR},
@@ -113,8 +115,8 @@
             <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
-            <if test="delete != null">
-                delete = #{delete,jdbcType=INTEGER},
+            <if test="remove != null">
+                remove = #{remove,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 createTime = #{createTime,jdbcType=VARCHAR},

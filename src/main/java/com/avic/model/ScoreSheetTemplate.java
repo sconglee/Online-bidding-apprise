@@ -20,7 +20,7 @@ public class ScoreSheetTemplate implements Serializable {
     private String itemWeight;
     private String scoredComName;
     private Integer status;
-    private Integer delete;
+    private Integer remove;
     private String createTime;
     private String updateTime;
 
@@ -88,12 +88,12 @@ public class ScoreSheetTemplate implements Serializable {
         this.status = status;
     }
 
-    public Integer getDelete() {
-        return delete;
+    public Integer getRemove() {
+        return remove;
     }
 
-    public void setDelete(Integer delete) {
-        this.delete = delete;
+    public void setRemove(Integer remove) {
+        this.remove = remove;
     }
 
     public String getCreateTime() {
@@ -122,7 +122,7 @@ public class ScoreSheetTemplate implements Serializable {
                 ", itemWeight='" + itemWeight + '\'' +
                 ", scoredComName='" + scoredComName + '\'' +
                 ", status=" + status +
-                ", delete=" + delete +
+                ", remove=" + remove +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';
