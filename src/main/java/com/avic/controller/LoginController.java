@@ -1,5 +1,6 @@
 package com.avic.controller;
 
+import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.MD5;
 import com.avic.model.User;
 import com.avic.service.UserService;
@@ -65,12 +66,13 @@ public class LoginController {
             user.setPassWord(MD5.getMD5(password));
             User userInfo = userService.findUserByUsername(user);
 
-            if (userInfo != null) {
+            if (userInfo != null && userInfo.getAccountStatus() != BidConstant.USER_STATUS_CANCEL) {
                 // 把用户登录信息保存在session中
                 session.setAttribute("userName", userName);
                 session.setAttribute("password", password);
 
                 modelMap.put("success", true);
+                modelMap.put("role", userInfo.getAccountType());
                 modelMap.put("msg", "用户登录成功");
             } else {
                 modelMap.put("success", false);
