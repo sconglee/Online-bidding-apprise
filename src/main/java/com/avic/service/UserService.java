@@ -13,7 +13,7 @@ public interface UserService {
 
     public List<User> findAllUser();
 
-    public void addUser(User user);
+    public int addUser(User user);
 
     public void updateUser(User user);
 

@@ -24,11 +24,11 @@ public class UserMapperTest {
     @Test
     public void testInsertUser() {
         User user = new User();
-        user.setUserName("lsc");
+        user.setUserName("lishicong");
         user.setPassWord(MD5.getMD5("123456"));
         user.setAccountType(1);
         user.setAccountStatus(0);
-        userMapper.insertUser(user);
+        System.out.println(userMapper.insertUser(user));
     }
 
     @Test

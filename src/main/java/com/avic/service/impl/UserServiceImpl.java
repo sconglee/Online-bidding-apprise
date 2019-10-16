@@ -29,9 +29,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public int addUser(User user) {
         logger.info("添加用户信息");
-        userMapper.insertUser(user);
+        return userMapper.insertUser(user);
     }
 
     @Override

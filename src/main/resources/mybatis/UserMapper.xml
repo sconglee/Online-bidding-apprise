@@ -17,7 +17,8 @@
 
     <insert id="insertUser" parameterType="com.avic.model.User">
         insert into users (username, password, create_time, account_type, account_status)
-        values (#{userName}, #{passWord}, sysdate(), #{accountType}, #{accountStatus})
+        select #{userName}, #{passWord}, sysdate(), #{accountType}, #{accountStatus} from dual
+        where not exists (select 1 from users where username=#{userName})
     </insert>
 
     <update id="updateUser" parameterType="com.avic.model.User">

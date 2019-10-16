@@ -12,7 +12,7 @@ public interface UserMapper {
 
     public List<User> getUser();
 
-    public void insertUser(User user);
+    public int insertUser(User user);
 
     public void updateUser(User user);
 
