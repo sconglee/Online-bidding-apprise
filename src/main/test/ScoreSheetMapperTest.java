@@ -36,7 +36,7 @@ public class ScoreSheetMapperTest {
     public void insertScoreSheetTemplate() {
         ScoreSheetTemplate scoreSheetTemplate = new ScoreSheetTemplate();
         scoreSheetTemplate.setProjectName("XX工程GS-1307 高速电视测量系统改造(二次)");
-        scoreSheetTemplate.setProjectNumber("0730-196012JP0027/05");
+        scoreSheetTemplate.setProjectNumber("0730-196012JP0027/07");
         scoreSheetTemplate.setTotalItems("技术得分" + "," + "商务得分" + "," + "价格得分");
         scoreSheetTemplate.setSequenceNumber("1" + "," + "2" + "," + "3" + "," + "4" + "," + "5" + "," + "6" + "," + "7" + "," + "8" + "," + "9" + "," + "10" + "," + "11" + ","
                 + "12" + "," + "13" + "," + "14" + "," + "15" + "," + "16" + "," + "17" + "," + "18" + "," + "19" + "," + "20" + "," + "21" + "," + "22" + "," + "23");
@@ -49,7 +49,7 @@ public class ScoreSheetMapperTest {
 
         // 先查询数据库是否已经存在，如果存在则报错
         ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
-        if (result == null || result.getDelete() == BidConstant.TEMPLATE_DELTER) {
+        if (result == null || result.getRemove() == BidConstant.TEMPLATE_REMOVE) {
             // 数据库中不存在，执行insert操作
             System.out.println("insert成功：" + scoreSheetTemplateMapper.insertScoreSheetTemplate(scoreSheetTemplate));
 
@@ -114,7 +114,7 @@ public class ScoreSheetMapperTest {
         scoreSheetTemplate.setProjectNumber("0730-196012JP0027/04");
 
         ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
-        if (result != null && result.getDelete() != BidConstant.TEMPLATE_DELTER) {
+        if (result != null && result.getRemove() != BidConstant.TEMPLATE_REMOVE) {
             System.out.println("根据项目名称和项目编号查询评标打分模板成功：");
             System.out.println(result.getSequenceNumber());
             System.out.println(result.toString());
@@ -141,7 +141,7 @@ public class ScoreSheetMapperTest {
 
         // 先去数据查询数据
         ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
-        if (result != null && result.getDelete() != BidConstant.TEMPLATE_DELTER) {
+        if (result != null && result.getRemove() != BidConstant.TEMPLATE_REMOVE) {
             System.out.println("根据项目名称和项目编号查询评标打分模板成功：");
             System.out.println(result.toString());
 

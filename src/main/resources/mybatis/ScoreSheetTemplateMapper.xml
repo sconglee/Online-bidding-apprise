@@ -19,7 +19,7 @@
     <select id="findAllScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
         select projectName, projectNumber, status, createTime
         from scoreSheetTemplate
-        where remove = 1
+        where remove = 0
     </select>
 
     <insert id="insertScoreSheetTemplate"  parameterType="com.avic.model.ScoreSheetTemplate">
