@@ -34,8 +34,19 @@ public class UserMapperTest {
     @Test
     public void findUserByUserName() {
         String userName = "lsc";
-        User user = userMapper.findUserByUsername(userName);
-        System.out.println(user.getPassWord());
+        String passWord = "123456";
+
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassWord(MD5.getMD5(passWord));
+
+        User userInfo = userMapper.findUserByUsername(user);
+        if (userInfo == null) {
+            System.out.println("没有查询结果！！");
+        } else {
+            System.out.println(userInfo.getPassWord());
+        }
+
     }
 
 }

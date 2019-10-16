@@ -18,5 +18,5 @@ public interface UserMapper {
 
     public void deleteUser(User user);
 
-    public User findUserByUsername(String userName);
+    public User findUserByUsername(User user);
 }

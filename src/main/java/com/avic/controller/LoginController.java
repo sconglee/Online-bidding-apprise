@@ -1,5 +1,7 @@
 package com.avic.controller;
 
+import com.avic.common.utils.MD5;
+import com.avic.model.User;
 import com.avic.service.UserService;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerFactory;
@@ -8,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName LoginController
@@ -48,15 +53,34 @@ public class LoginController {
      * @Param []
      * @return boolean
      **/
-    @RequestMapping(value = "/user/login",method = RequestMethod.POST)
-    public boolean userLogin(@RequestParam("userName") String userName, @RequestParam("password") String password, HttpSession session) {
+    @RequestMapping(value = "/loginCheck",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> userLogin(User user, HttpSession session) {
+        String userName = user.getUserName();
+        String password = user.getPassWord();
         logger.info("用户登录，用户是：" + userName + "， 密码是： " + password);
 
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if (userName != null && password != null) {
+            user.setPassWord(MD5.getMD5(password));
+            User userInfo = userService.findUserByUsername(user);
 
+            if (userInfo != null) {
+                // 把用户登录信息保存在session中
+                session.setAttribute("userName", userName);
+                session.setAttribute("password", password);
 
-
-
-        return false;
+                modelMap.put("success", true);
+                modelMap.put("msg", "用户登录成功");
+            } else {
+                modelMap.put("success", false);
+                modelMap.put("msg", "用户名或密码错误");
+            }
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("msg", "用户名和密码均不能为空");
+        }
+        return modelMap;
     }
 
 
