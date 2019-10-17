@@ -20,11 +20,11 @@ public interface ScoreSheetTemplateService {
 
     public void updateScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 
-    public void deleteScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
+    public Boolean deleteScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 
     public ScoreSheetTemplate findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate);
 
-    public void enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
+    public Boolean enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
 
 
 }
