@@ -1,6 +1,7 @@
 package com.avic.service.impl;
 
 import com.avic.common.constant.BidConstant;
+import com.avic.common.utils.MD5;
 import com.avic.common.utils.TimeUtil;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ScoreSheetTemplate;
@@ -10,7 +11,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName scoreSheetTemplateServiceImpl
@@ -87,8 +90,11 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     * @return java.lang.Boolean
     **/
     @Override
-    public Boolean enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate) {
-        logger.info("使评分表模板生效或者失效");
+    public Map<String, Object>  enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate) {
+        Map<String, Object> modelMap = new HashMap<>();
+        modelMap.put("success", "true");
+        modelMap.put("msg", "");
+
         // 先去数据查询数据
         ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
         if (result != null && result.getRemove().equals(BidConstant.TEMPLATE_NO_REMOVE)) {
@@ -97,22 +103,26 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
             if (result.getStatus().equals(BidConstant.TEMPLATE_NO_ACTIVE)) {
                 // 设置为0 生效
                 result.setStatus(BidConstant.TEMPLATE_ACTIVE);
+                modelMap.put("msg", "评标打分模板已生效！！");
             } else {
                 // 设置为1 失效
                 result.setStatus(BidConstant.TEMPLATE_NO_ACTIVE);
+                modelMap.put("msg", "评标打分模板已失效！！");
             }
-            result.setUpdateTime(TimeUtil.getTimeByDefautFormat());
-            result.setCreateTime(TimeUtil.getTimeByDefautFormat());
 
+            result.setUpdateTime(TimeUtil.getTimeByDefautFormat());
             scoreSheetTemplateMapper.enableEffectiveOrNot(result);
+
             logger.info("评标打分模板“生效/失效”成功,具体信息为：" + result.toString());
 
         } else {
-            logger.info("该项目名称和项目编码对应的评分模板不存在，请确认后重试！！" + result.toString());
-            return false;
+            logger.info("该项目名称和项目编码对应的评分模板不存在，请确认后重试！！" + scoreSheetTemplate.toString());
+            modelMap.put("success", "false");
+            modelMap.put("msg", "评分模板不存在，请确认后重试！！");
+            return modelMap;
         }
 
-        return true;
+        return modelMap;
     }
 
     /**
@@ -135,7 +145,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
             logger.info("删除评标打分模板成功");
 
         } else {
-            logger.info("根据项目名称和项目编码查询将要删除的评分模板不存在，请确认后重试！！" + result.toString());
+            logger.info("根据项目名称和项目编码查询将要删除的评分模板不存在，请确认后重试！！" + scoreSheetTemplate.toString());
             return false;
         }
 

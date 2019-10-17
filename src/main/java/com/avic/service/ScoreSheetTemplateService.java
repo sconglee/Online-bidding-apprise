@@ -4,6 +4,7 @@ import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * @Author xulei
@@ -24,7 +25,7 @@ public interface ScoreSheetTemplateService {
 
     public ScoreSheetTemplate findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate);
 
-    public Boolean enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
+    public Map<String, Object> enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
 
 
 }
