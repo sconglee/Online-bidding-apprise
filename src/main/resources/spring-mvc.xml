@@ -22,13 +22,26 @@
     <!-- 静态资源默认servlet配置 -->
     <mvc:default-servlet-handler/>
 
-    <!-- 配置jsp 显示ViewResolver -->
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".html"/>
-    </bean>-->
+    <!-- 在spring-mvc.xml文件中加入这段配置后，spring返回给页面的都是utf-8编码了 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=utf-8</value>
+                        <!-- application 可以在任意 form 表单里面 enctype 属性默认找到 -->
+                        <value>application/x-www-form-urlencoded</value>
+                    </list>
+                </property>
+            </bean>
+            </list>
+        </property>
+    </bean>
 
+
+    <!-- 配置jsp 显示ViewResolver -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".html" />

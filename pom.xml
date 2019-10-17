@@ -17,6 +17,8 @@
         <spring.version>4.3.5.RELEASE</spring.version>
         <!-- mybatis版本号 -->
         <mybatis.version>3.4.1</mybatis.version>
+        <!-- jackson版本号 -->
+        <jackson.version>2.8.7</jackson.version>
     </properties>
 
     <dependencies>
@@ -49,6 +51,23 @@
             <version>1.2.58</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
 
         <!-- 数据库 -->
