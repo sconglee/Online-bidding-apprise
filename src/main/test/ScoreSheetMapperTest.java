@@ -72,7 +72,7 @@ public class ScoreSheetMapperTest {
         scoreSheetTemplateList = scoreSheetTemplateMapper.findAllScoreSheetTemplate();
         for (ScoreSheetTemplate scoreSheetTemplate : scoreSheetTemplateList) {
             System.out.println("项目名称是：" + scoreSheetTemplate.getProjectName() + ";    项目编号是：" + scoreSheetTemplate.getProjectNumber()
-                    + ";  项目状态是：" + BidConstant.templateStatus.get(scoreSheetTemplate.getStatus())
+                    + ";  项目状态是：" + BidConstant.templateActiveStatus.get(scoreSheetTemplate.getStatus())
                     + ";   模板生成时间：" + scoreSheetTemplate.getCreateTime());
         }
     }

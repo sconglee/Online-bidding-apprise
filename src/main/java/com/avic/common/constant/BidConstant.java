@@ -25,17 +25,20 @@ public class BidConstant {
     // 评标模板生效状态
     public static final Integer TEMPLATE_ACTIVE = 0;
     public static final Integer TEMPLATE_NO_ACTIVE = 1;
+    public static Map<Integer,String> templateActiveStatus = new HashMap<>();
+    static{
+        templateActiveStatus.put(TEMPLATE_ACTIVE, "生效");
+        templateActiveStatus.put(TEMPLATE_NO_ACTIVE, "未生效");
+    }
 
     // 评标模板删除状态
     public static final Integer TEMPLATE_NO_REMOVE = 0;
     public static final Integer TEMPLATE_REMOVE = 1;
 
-    public static Map<Integer,String> templateStatus = new HashMap<>();
+    public static Map<Integer,String> templateRemoveStatus = new HashMap<>();
     static{
-        templateStatus.put(TEMPLATE_ACTIVE, "生效");
-        templateStatus.put(TEMPLATE_NO_ACTIVE, "未生效");
-        templateStatus.put(TEMPLATE_NO_REMOVE, "评标打分模板未被删除，处于正常状态！");
-        templateStatus.put(TEMPLATE_REMOVE, "评标打分模板已被删除，处于不可用状态！");
+        templateRemoveStatus.put(TEMPLATE_NO_REMOVE, "评标打分模板未被删除，处于正常状态！");
+        templateRemoveStatus.put(TEMPLATE_REMOVE, "评标打分模板已被删除，处于不可用状态！");
     }
 
 
