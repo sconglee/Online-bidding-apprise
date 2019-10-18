@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,9 +161,34 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     * @return java.util.List<com.avic.model.ScoreSheetTemplate>
     **/
     @Override
-    public ScoreSheetTemplate sendScoreSheetTemplateToExpert() {
+    public List<ScoreSheetTemplate> sendScoreSheetTemplateToExpert() {
         logger.info("向评标专家推送评标打分模板：");
-        return scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        List<ScoreSheetTemplate> resultList = new ArrayList<>();
+
+        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        if (scoreSheetTemplate != null) {
+            // 使用","分割出每一个投标单位
+            String[] companyName = scoreSheetTemplate.getScoredComName().split(",");
+           logger.info("待评标公司如下：" + companyName.toString());
+
+            for (int i = 0; i < companyName.length; i++){
+                ScoreSheetTemplate tempTemplate = new ScoreSheetTemplate();
+                tempTemplate.setProjectName(scoreSheetTemplate.getProjectName());
+                tempTemplate.setProjectNumber(scoreSheetTemplate.getProjectNumber());
+                tempTemplate.setTotalItems(scoreSheetTemplate.getTotalItems());
+                tempTemplate.setSequenceNumber(scoreSheetTemplate.getSequenceNumber());
+                tempTemplate.setItemWeight(scoreSheetTemplate.getItemWeight());
+                tempTemplate.setScoredComName(companyName[i]);
+                tempTemplate.setStatus(scoreSheetTemplate.getStatus());
+                tempTemplate.setRemove(scoreSheetTemplate.getRemove());
+                tempTemplate.setCreateTime(scoreSheetTemplate.getCreateTime());
+                tempTemplate.setUpdateTime(scoreSheetTemplate.getUpdateTime());
+
+                resultList.add(tempTemplate);
+            }
+        }
+
+        return resultList;
     }
 
 }

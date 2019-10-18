@@ -25,9 +25,9 @@ import java.util.Map;
  **/
 @Controller
 @RequestMapping(value = "/template")
-public class scoreSheetTemplateController {
+public class ScoreSheetTemplateController {
 
-    private static final Log logger = LogFactory.getLog(scoreSheetTemplateController.class);
+    private static final Log logger = LogFactory.getLog(ScoreSheetTemplateController.class);
 
     @Autowired
     private ScoreSheetTemplateService scoreSheetTemplateService;
@@ -194,6 +194,30 @@ public class scoreSheetTemplateController {
     }
 
 
+    /**
+     * @Author xulei
+     * @Description 下发评标打分模板
+     * @Date 13:46 2019/10/18/018
+     * @Param []
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    @RequestMapping("/sendTemplate")
+    @ResponseBody
+    public Map<String, Object> sendScoreSheetTemplateToExpert() {
+        Map<String, Object> modelMap = new HashMap<>();
+
+        List<ScoreSheetTemplate> resultList = scoreSheetTemplateService.sendScoreSheetTemplateToExpert();
+        if (resultList.isEmpty()) {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "没有符合要求的评标打分模板，请联系项目经理！");
+
+        } else {
+            modelMap.put("success", "true");
+            modelMap.put("data", resultList);
+        }
+
+        return modelMap;
+    }
 
 
 }

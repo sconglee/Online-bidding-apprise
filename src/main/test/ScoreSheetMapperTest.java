@@ -196,16 +196,17 @@ public class ScoreSheetMapperTest {
     * @return void
     **/
     @Test
-    public void sendScoreSheetTemplateToExpertTest() {
-        ScoreSheetTemplate scoreSheetTemplate = new ScoreSheetTemplate();
-        scoreSheetTemplate = scoreSheetTemplateService.sendScoreSheetTemplateToExpert();
+    public void testSendScoreSheetTemplateToExpert() {
+        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        if (scoreSheetTemplate != null) {
+            // 使用","分割出每一个投标单位
+            String[] companyName = scoreSheetTemplate.getScoredComName().split(",");
 
-        if (scoreSheetTemplate == null) {
-            System.out.println("没有符合要求的评标打分模板，请联系项目经理！");
-        } else {
-            System.out.println(scoreSheetTemplate.toString());
+            for (int i = 0; i < companyName.length; i++){
+                System.out.println(companyName[i]);
+                scoreSheetTemplate.setScoredComName(companyName[i]);
+            }
         }
-
     }
 
 

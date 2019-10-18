@@ -143,7 +143,7 @@
     </delete>
 
     <select id="sendScoreSheetTemplateToExpert" resultType="com.avic.model.ScoreSheetTemplate">
-        select projectName, projectNumber, scoredComName
+        select *
         from scoreSheetTemplate
         where status = 0 and remove = 0
     </select>

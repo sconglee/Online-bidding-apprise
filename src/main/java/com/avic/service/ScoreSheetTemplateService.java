@@ -34,5 +34,5 @@ public interface ScoreSheetTemplateService {
      * @Param
      * @return
      **/
-    ScoreSheetTemplate sendScoreSheetTemplateToExpert();
+    List<ScoreSheetTemplate> sendScoreSheetTemplateToExpert();
 }
