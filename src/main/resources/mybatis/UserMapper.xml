@@ -11,8 +11,8 @@
         <result column="account_status" property="accountStatus" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="getUser" resultType="com.avic.model.User">
-        select username, create_time, account_type from users
+    <select id="getUser" resultMap="userMap">
+        select username, create_time, account_type ,account_status from users
     </select>
 
     <insert id="insertUser" parameterType="com.avic.model.User">

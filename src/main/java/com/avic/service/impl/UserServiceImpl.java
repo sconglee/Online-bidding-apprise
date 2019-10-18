@@ -35,15 +35,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
+    public int updateUser(User user) {
         logger.info("重置用户密码");
-        userMapper.updateUser(user);
+        return userMapper.updateUser(user);
     }
 
     @Override
-    public void deleteUser(User user) {
+    public int deleteUserByName(String userName) {
         logger.info("删除用户信息");
-        userMapper.deleteUser(user);
+        return userMapper.deleteUser(userName);
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 /**
  * @author sconglee
  * @date 2019/10/14
@@ -29,6 +31,14 @@ public class UserMapperTest {
         user.setAccountType(1);
         user.setAccountStatus(0);
         System.out.println(userMapper.insertUser(user));
+    }
+
+    @Test
+    public void testGetUser() {
+        List<User> userList = userMapper.getUser();
+        for (User user : userList) {
+            System.out.println(user.getUserName());
+        }
     }
 
     @Test

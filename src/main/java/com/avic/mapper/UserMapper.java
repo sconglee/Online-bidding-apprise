@@ -1,6 +1,7 @@
 package com.avic.mapper;
 
 import com.avic.model.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ public interface UserMapper {
 
     public int insertUser(User user);
 
-    public void updateUser(User user);
+    public int updateUser(User user);
 
-    public void deleteUser(User user);
+    public int deleteUser(@Param("userName") String userName);
 
     public User findUserByUsername(User user);
 }
