@@ -1,3 +1,4 @@
+import com.avic.common.utils.TimeUtil;
 import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.model.ExpertScoreSheet;
 import org.junit.Test;
@@ -35,4 +36,28 @@ public class ExpertScoreSheetMapperTest {
         ExpertScoreSheet expertScoreSheet1 = expertScoreSheetMapper.findScoreInfoByExpertNameAndCompanyName(expertScoreSheet);
         System.out.println(expertScoreSheet1.getPoint());
     }
+
+    @Test
+    public void testInsertExpertScoreSheet() {
+        ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();
+        expertScoreSheet.setProjectName("XX工程GS-1307 高速电视测量系统改造(三次)");
+        expertScoreSheet.setProjectNumber("0730-196012JP0027/04");
+        expertScoreSheet.setCompanyName("临沂");
+        expertScoreSheet.setExpertName("xl");
+        expertScoreSheet.setPoint("1,2,3,4,5,6,7");
+        expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
+        expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
+
+        Integer result = expertScoreSheetMapper.insertExpertScoreSheet(expertScoreSheet);
+        if (result > 0) {
+            System.out.println(expertScoreSheet.getPoint());
+        } else {
+            System.out.println("失败");
+        }
+    }
+
+
+
+
+
 }

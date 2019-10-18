@@ -15,5 +15,7 @@ public interface ExpertScoreSheetMapper {
 
     public ExpertScoreSheet findScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
 
+    Integer insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet);
+
 
 }

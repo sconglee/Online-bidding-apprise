@@ -9,8 +9,8 @@
         <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
         <result column="expertName" property="expertName" jdbcType="VARCHAR"/>
         <result column="point" property="point" jdbcType="VARCHAR"/>
-        <result column="createTime" property="createTime" jdbcType="DATE"/>
-        <result column="updateTime" property="updateTime" jdbcType="DATE"/>
+        <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
+        <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
     
     <select id="findAllExpertScoreByProjectNumber" resultMap="expertScoreSheetMap">
@@ -20,5 +20,58 @@
     <select id="findScoreInfoByExpertNameAndCompanyName" resultType="com.avic.model.ExpertScoreSheet">
         select * from expertscoresheet where expertName = #{expertName} and companyName = #{companyName}
     </select>
+
+    <insert id="insertExpertScoreSheet"  parameterType="com.avic.model.ExpertScoreSheet">
+        insert into expertScoreSheet (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">
+                projectName,
+            </if>
+            <if test="projectNumber != null">
+                projectNumber,
+            </if>
+            <if test="companyName != null">
+                companyName,
+            </if>
+            <if test="expertName != null">
+                expertName,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        values (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">
+                #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectNumber != null">
+                #{projectNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null">
+                #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="expertName != null">
+                #{expertName,jdbcType=VARCHAR},
+            </if>
+            <if test="point != null">
+                #{point,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
 
 </mapper>

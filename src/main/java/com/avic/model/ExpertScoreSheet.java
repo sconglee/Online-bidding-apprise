@@ -7,13 +7,22 @@ import java.util.Date;
  * @date 2019/10/17
  */
 public class ExpertScoreSheet {
+    private Integer id;
     private String projectName;
     private String projectNumber;
     private String companyName;
     private String expertName;
     private String point;
-    private Date createTime;
-    private Date updateTime;
+    private String createTime;
+    private String updateTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getProjectName() {
         return projectName;
@@ -55,19 +64,19 @@ public class ExpertScoreSheet {
         this.point = point;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }
