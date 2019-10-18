@@ -2,6 +2,7 @@ import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.TimeUtil;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.service.ScoreSheetTemplateService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ScoreSheetMapperTest {
 
     @Autowired
     private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
+
+    @Autowired
+    private ScoreSheetTemplateService scoreSheetTemplateService;
 
     /*
     * @Author xulei
@@ -72,7 +76,7 @@ public class ScoreSheetMapperTest {
         scoreSheetTemplateList = scoreSheetTemplateMapper.findAllScoreSheetTemplate();
         for (ScoreSheetTemplate scoreSheetTemplate : scoreSheetTemplateList) {
             System.out.println("项目名称是：" + scoreSheetTemplate.getProjectName() + ";    项目编号是：" + scoreSheetTemplate.getProjectNumber()
-                    + ";  项目状态是：" + BidConstant.templateStatus.get(scoreSheetTemplate.getStatus())
+                    + ";  项目状态是：" + BidConstant.templateActiveStatus.get(scoreSheetTemplate.getStatus())
                     + ";   模板生成时间：" + scoreSheetTemplate.getCreateTime());
         }
     }
@@ -183,6 +187,29 @@ public class ScoreSheetMapperTest {
         scoreSheetTemplateMapper.deleteScoreSheetTemplate(scoreSheetTemplate);
         System.out.println("删除成功！！");
     }
+
+    /**
+    * @Author xulei
+    * @Description 向评标专家下发模板
+    * @Date 9:15 2019/10/18/018
+    * @Param []
+    * @return void
+    **/
+    @Test
+    public void sendScoreSheetTemplateToExpertTest() {
+        ScoreSheetTemplate scoreSheetTemplate = new ScoreSheetTemplate();
+        scoreSheetTemplate = scoreSheetTemplateService.sendScoreSheetTemplateToExpert();
+
+        if (scoreSheetTemplate == null) {
+            System.out.println("没有符合要求的评标打分模板，请联系项目经理！");
+        } else {
+            System.out.println(scoreSheetTemplate.toString());
+        }
+
+    }
+
+
+
 
 
 

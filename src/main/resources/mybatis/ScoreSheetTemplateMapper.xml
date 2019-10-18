@@ -118,10 +118,10 @@
             <if test="remove != null">
                 remove = #{remove,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null and createTime != ''">
                 createTime = #{createTime,jdbcType=VARCHAR},
             </if>
-            <if test="updateTime != null">
+            <if test="updateTime != null and updateTime != '' ">
                 updateTime = #{updateTime,jdbcType=VARCHAR},
             </if>
         </set>
@@ -142,5 +142,10 @@
         delete from scoreSheetTemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
     </delete>
 
+    <select id="sendScoreSheetTemplateToExpert" resultType="com.avic.model.ScoreSheetTemplate">
+        select projectName, projectNumber, scoredComName
+        from scoreSheetTemplate
+        where status = 0 and remove = 0
+    </select>
 
 </mapper>
