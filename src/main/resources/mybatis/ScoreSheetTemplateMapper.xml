@@ -142,5 +142,10 @@
         delete from scoreSheetTemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
     </delete>
 
+    <select id="sendScoreSheetTemplateToExpert" resultType="com.avic.model.ScoreSheetTemplate">
+        select projectName, projectNumber, scoredComName
+        from scoreSheetTemplate
+        where status = 0 and remove = 0
+    </select>
 
 </mapper>

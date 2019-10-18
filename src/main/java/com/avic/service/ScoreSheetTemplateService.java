@@ -15,17 +15,24 @@ import java.util.Map;
 **/
 public interface ScoreSheetTemplateService {
 
-    public List<ScoreSheetTemplate> findAllScoreSheetTemplate();
+    List<ScoreSheetTemplate> findAllScoreSheetTemplate();
 
-    public Integer createScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
+    Integer createScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 
-    public void updateScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
+    void updateScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 
-    public Boolean deleteScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
+    Boolean deleteScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 
-    public ScoreSheetTemplate findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate);
+    ScoreSheetTemplate findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate);
 
-    public Map<String, Object> enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
+    Map<String, Object> enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
 
-
+    /**
+     * @Author xulei
+     * @Description 下发评标打分模板
+     * @Date 9:07 2019/10/18/018
+     * @Param
+     * @return
+     **/
+    ScoreSheetTemplate sendScoreSheetTemplateToExpert();
 }

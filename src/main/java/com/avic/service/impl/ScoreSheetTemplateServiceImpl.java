@@ -151,9 +151,18 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
 
         return true;
     }
-
-
-
-
+    
+    /**
+    * @Author xulei
+    * @Description 下发评标打分模板
+    * @Date 9:09 2019/10/18/018
+    * @Param []
+    * @return java.util.List<com.avic.model.ScoreSheetTemplate>
+    **/
+    @Override
+    public ScoreSheetTemplate sendScoreSheetTemplateToExpert() {
+        logger.info("向评标专家推送评标打分模板：");
+        return scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+    }
 
 }
