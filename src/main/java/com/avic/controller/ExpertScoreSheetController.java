@@ -1,9 +1,7 @@
 package com.avic.controller;
 
-import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.TimeUtil;
 import com.avic.model.ExpertScoreSheet;
-import com.avic.model.ScoreSheetTemplate;
 import com.avic.service.ExpertScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
