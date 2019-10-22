@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -37,12 +38,15 @@ public class ExpertScoreSheetController {
     **/
     @RequestMapping(value = "insertExpertScoreSheet")
     @ResponseBody
-    public Map<String, Object> insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet) {
+    public Map<String, Object> insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet, HttpSession session) {
         Map<String, Object> modelMap = new ModelMap();
         modelMap.put("success", "false");
         modelMap.put("msg", "新增数据失败！！");
 
-        // 直接插入数据库
+        // 从session中获取登录系统的专家用户名，拼接对象数据，然后插入数据库
+        // String expertName = (String) session.getAttribute("userName");
+        expertScoreSheet.setExpertName("xlllllllll");
+
         expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
         Integer insertFlag = expertScoreSheetService.insertExpertScoreSheet(expertScoreSheet);

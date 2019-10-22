@@ -5,17 +5,13 @@ import com.avic.common.utils.MD5;
 import com.avic.model.User;
 import com.avic.service.UserService;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +66,7 @@ public class LoginController {
                 // 把用户登录信息保存在session中
                 session.setAttribute("userName", userName);
                 session.setAttribute("password", password);
+                session.setAttribute("role", userInfo.getAccountType());
 
                 modelMap.put("success", true);
                 modelMap.put("role", userInfo.getAccountType());
