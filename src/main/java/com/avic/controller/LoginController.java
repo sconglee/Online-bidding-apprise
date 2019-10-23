@@ -7,6 +7,7 @@ import com.avic.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +53,7 @@ public class LoginController {
      **/
     @RequestMapping(value = "/loginCheck",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> userLogin(User user, HttpSession session) {
+    public Map<String, Object> userLogin(@RequestBody User user, HttpSession session) {
         String userName = user.getUserName();
         String password = user.getPassWord();
         logger.info("用户登录，用户是：" + userName + "， 密码是： " + password);

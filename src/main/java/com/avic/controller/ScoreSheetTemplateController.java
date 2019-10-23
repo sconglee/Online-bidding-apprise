@@ -8,7 +8,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -39,9 +41,9 @@ public class ScoreSheetTemplateController {
    * @Param [scoreSheetTemplate]
    * @return java.util.Map<java.lang.String,java.lang.Object>
    **/
-   @RequestMapping("/insert")
+   @RequestMapping(value = "/insert",method = RequestMethod.POST)
    @ResponseBody
-    public Map<String, Object> insertScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate) {
+    public Map<String, Object> insertScoreSheetTemplate(@RequestBody ScoreSheetTemplate scoreSheetTemplate) {
        Map<String, Object> modelMap = new HashMap<String, Object>();
        modelMap.put("success", "false");
        modelMap.put("msg", "新增数据失败！！");
@@ -101,7 +103,7 @@ public class ScoreSheetTemplateController {
     **/
     @RequestMapping(value = "/update")
     @ResponseBody
-    public Map<String, Object> updateScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate) {
+    public Map<String, Object> updateScoreSheetTemplate(@RequestBody ScoreSheetTemplate scoreSheetTemplate) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         modelMap.put("success", "false");
         modelMap.put("msg", "新增数据失败！！");
@@ -137,9 +139,10 @@ public class ScoreSheetTemplateController {
    **/
     @RequestMapping(value = "/findTemplateByProjectNameAndNumber")
     @ResponseBody
-    public Map<String, Object> findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate) {
+    public Map<String, Object> findTemplateByProjectNameAndNumber(@RequestBody ScoreSheetTemplate scoreSheetTemplate) {
         Map<String, Object> modelMap = new HashMap<>();
-        
+
+        logger.info("查询条件，项目名称为：" + scoreSheetTemplate.getProjectName() + ", 项目编号为：" + scoreSheetTemplate.getProjectNumber());
         ScoreSheetTemplate resultTemplate = scoreSheetTemplateService.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
         if (resultTemplate == null) {
             modelMap.put("success", "false");
@@ -161,7 +164,7 @@ public class ScoreSheetTemplateController {
     **/
     @RequestMapping(value = "/enableEffectiveOrNot")
     @ResponseBody
-    public Map<String, Object> enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate) {
+    public Map<String, Object> enableEffectiveOrNot(@RequestBody ScoreSheetTemplate scoreSheetTemplate) {
 
         Map<String, Object> modelMap = scoreSheetTemplateService.enableEffectiveOrNot(scoreSheetTemplate);
 
@@ -178,7 +181,7 @@ public class ScoreSheetTemplateController {
     **/
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, Object> deleteScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate) {
+    public Map<String, Object> deleteScoreSheetTemplate(@RequestBody ScoreSheetTemplate scoreSheetTemplate) {
         Map<String, Object> modelMap = new HashMap<>();
 
         Boolean result = scoreSheetTemplateService.deleteScoreSheetTemplate(scoreSheetTemplate);

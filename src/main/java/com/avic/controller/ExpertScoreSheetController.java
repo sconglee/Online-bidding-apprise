@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,7 +39,7 @@ public class ExpertScoreSheetController {
     **/
     @RequestMapping(value = "insertExpertScoreSheet")
     @ResponseBody
-    public Map<String, Object> insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet, HttpSession session) {
+    public Map<String, Object> insertExpertScoreSheet(@RequestBody ExpertScoreSheet expertScoreSheet, HttpSession session) {
         Map<String, Object> modelMap = new ModelMap();
         modelMap.put("success", "false");
         modelMap.put("msg", "新增数据失败！！");
