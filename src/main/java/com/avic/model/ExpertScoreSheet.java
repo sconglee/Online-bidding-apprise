@@ -1,7 +1,5 @@
 package com.avic.model;
 
-import java.util.Date;
-
 /**
  * @author sconglee
  * @date 2019/10/17
