@@ -20,6 +20,7 @@ public interface ScoreSheetTemplateMapper {
 
     void enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
 
+
     /**
      * @Author xulei
      * @Description 下发评标打分模板
