@@ -16,6 +16,8 @@ public interface ScoreSheetTemplateMapper {
 
     ScoreSheetTemplate findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate);
 
+    ScoreSheetTemplate findTemplateById(ScoreSheetTemplate scoreSheetTemplate);
+
     void enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
 
     /**

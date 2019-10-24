@@ -109,7 +109,7 @@ public class ScoreSheetTemplateController {
         modelMap.put("msg", "新增数据失败！！");
 
         // 先查询数据库是否已经存在，如果存在则报错
-        ScoreSheetTemplate result = scoreSheetTemplateService.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+        ScoreSheetTemplate result = scoreSheetTemplateService.findTemplateById(scoreSheetTemplate);
         if (result == null || result.getRemove().equals(BidConstant.TEMPLATE_REMOVE)) {
             // 数据库中不存在，报错
             modelMap.put("success", "false");
@@ -131,19 +131,19 @@ public class ScoreSheetTemplateController {
 
    /**
    * @Author xulei
-   * @Description 根据项目名称 + 项目编号 查询评标打分模板
+   * @Description 根据模板id查询评标打分模板
     * 对应前端 “查看”功能
    * @Date 9:05 2019/10/17/017
    * @Param [scoreSheetTemplate]
    * @return void
    **/
-    @RequestMapping(value = "/findTemplateByProjectNameAndNumber")
+    @RequestMapping(value = "/findTemplateById")
     @ResponseBody
-    public Map<String, Object> findTemplateByProjectNameAndNumber(@RequestBody ScoreSheetTemplate scoreSheetTemplate) {
+    public Map<String, Object> findTemplateById(@RequestBody ScoreSheetTemplate scoreSheetTemplate) {
         Map<String, Object> modelMap = new HashMap<>();
 
-        logger.info("查询条件，项目名称为：" + scoreSheetTemplate.getProjectName() + ", 项目编号为：" + scoreSheetTemplate.getProjectNumber());
-        ScoreSheetTemplate resultTemplate = scoreSheetTemplateService.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+        logger.info("查询条件是模板id为：" + scoreSheetTemplate.getId());
+        ScoreSheetTemplate resultTemplate = scoreSheetTemplateService.findTemplateById(scoreSheetTemplate);
         if (resultTemplate == null) {
             modelMap.put("success", "false");
             modelMap.put("msg", "没有找到对应的评标打分模板！");

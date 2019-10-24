@@ -17,7 +17,7 @@
     </resultMap>
 
     <select id="findAllScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
-        select projectName, projectNumber, status, createTime
+        select id, projectName, projectNumber, status, createTime
         from scoreSheetTemplate
         where remove = 0
     </select>
@@ -125,21 +125,25 @@
                 updateTime = #{updateTime,jdbcType=VARCHAR},
             </if>
         </set>
-        where projectName = #{projectName} and projectNumber = #{projectNumber}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="findTemplateByProjectNameAndNumber" parameterType="com.avic.model.ScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
         select * from scoreSheetTemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
     </select>
 
+    <select id="findTemplateById" parameterType="com.avic.model.ScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
+        select * from scoreSheetTemplate where id = #{id,jdbcType=INTEGER}
+    </select>
+
     <update id="enableEffectiveOrNot" parameterType="com.avic.model.ScoreSheetTemplate">
       update scoreSheetTemplate
       set status = #{status}, updateTime = #{updateTime}
-      where projectName = #{projectName} and projectNumber = #{projectNumber}
+      where id = #{id,jdbcType=INTEGER}
     </update>
 
     <delete id="deleteScoreSheetTemplate" parameterType="String">
-        delete from scoreSheetTemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
+        delete from scoreSheetTemplate where id = #{id,jdbcType=INTEGER}
     </delete>
 
     <select id="sendScoreSheetTemplateToExpert" resultType="com.avic.model.ScoreSheetTemplate">

@@ -114,8 +114,9 @@ public class ScoreSheetTemplate implements Serializable {
 
     @Override
     public String toString() {
-        return "ScoreSheetTemplateMapper{" +
-                "projectName='" + projectName + '\'' +
+        return "ScoreSheetTemplate{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
                 ", projectNumber='" + projectNumber + '\'' +
                 ", totalItems='" + totalItems + '\'' +
                 ", sequenceNumber='" + sequenceNumber + '\'' +
@@ -123,10 +124,8 @@ public class ScoreSheetTemplate implements Serializable {
                 ", scoredComName='" + scoredComName + '\'' +
                 ", status=" + status +
                 ", remove=" + remove +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
                 '}';
     }
-
-
 }

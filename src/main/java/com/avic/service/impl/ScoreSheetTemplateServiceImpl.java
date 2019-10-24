@@ -77,10 +77,23 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     * @Param [scoreSheetTemplate]
     * @return com.avic.model.ScoreSheetTemplate
     **/
-    @Override
+   @Override
     public ScoreSheetTemplate findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate) {
         logger.info("根据项目名称和项目编号查询评分表模板的详情信息");
         return scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+    }
+
+   /**
+   * @Author xulei
+   * @Description 根据id查询模板，并修改数据
+   * @Date 14:01 2019/10/24/024
+   * @Param [scoreSheetTemplate]
+   * @return com.avic.model.ScoreSheetTemplate
+   **/
+   @Override
+    public ScoreSheetTemplate findTemplateById(ScoreSheetTemplate scoreSheetTemplate) {
+        logger.info("根据模板id查询评分表模板的详情信息");
+        return scoreSheetTemplateMapper.findTemplateById(scoreSheetTemplate);
     }
 
     /**
@@ -97,7 +110,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
         modelMap.put("msg", "");
 
         // 先去数据查询数据
-        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateById(scoreSheetTemplate);
         if (result != null && result.getRemove().equals(BidConstant.TEMPLATE_NO_REMOVE)) {
            logger.info("根据项目名称和项目编号查询评标打分模板成功,具体信息为：" + result.toString());
             //查询成功，修改数据，update数据库
@@ -138,7 +151,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     public Boolean deleteScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate) {
         logger.info("删除评分表模板：硬删除");
         // 先去数据查询数据
-        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateById(scoreSheetTemplate);
         if (result != null && result.getRemove().equals(BidConstant.TEMPLATE_NO_REMOVE)) {
             logger.info("根据项目名称和项目编号查询将要删除的评标打分模板成功,具体信息为：" + result.toString());
             //查询成功，执行删除操作

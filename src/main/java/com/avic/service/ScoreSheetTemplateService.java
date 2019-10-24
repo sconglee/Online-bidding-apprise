@@ -25,6 +25,8 @@ public interface ScoreSheetTemplateService {
 
     ScoreSheetTemplate findTemplateByProjectNameAndNumber(ScoreSheetTemplate scoreSheetTemplate);
 
+    ScoreSheetTemplate findTemplateById(ScoreSheetTemplate scoreSheetTemplate);
+
     Map<String, Object> enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
 
     /**

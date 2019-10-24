@@ -52,7 +52,7 @@ public class ScoreSheetMapperTest {
         scoreSheetTemplate.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
         // 先查询数据库是否已经存在，如果存在则报错
-        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateById(scoreSheetTemplate);
         if (result == null || result.getRemove() == BidConstant.TEMPLATE_REMOVE) {
             // 数据库中不存在，执行insert操作
             System.out.println("insert成功：" + scoreSheetTemplateMapper.insertScoreSheetTemplate(scoreSheetTemplate));
@@ -117,7 +117,7 @@ public class ScoreSheetMapperTest {
         scoreSheetTemplate.setProjectName("XX工程GS-1307 高速电视测量系统改造(二次)");
         scoreSheetTemplate.setProjectNumber("0730-196012JP0027/04");
 
-        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateById(scoreSheetTemplate);
         if (result != null && result.getRemove() != BidConstant.TEMPLATE_REMOVE) {
             System.out.println("根据项目名称和项目编号查询评标打分模板成功：");
             System.out.println(result.getSequenceNumber());
@@ -144,7 +144,7 @@ public class ScoreSheetMapperTest {
         scoreSheetTemplate.setProjectNumber("0730-196012JP0027/04");
 
         // 先去数据查询数据
-        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateByProjectNameAndNumber(scoreSheetTemplate);
+        ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateById(scoreSheetTemplate);
         if (result != null && result.getRemove() != BidConstant.TEMPLATE_REMOVE) {
             System.out.println("根据项目名称和项目编号查询评标打分模板成功：");
             System.out.println(result.toString());
