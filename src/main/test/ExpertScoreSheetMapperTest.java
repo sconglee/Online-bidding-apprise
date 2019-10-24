@@ -40,9 +40,9 @@ public class ExpertScoreSheetMapperTest {
     @Test
     public void testInsertExpertScoreSheet() {
         ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();
-        expertScoreSheet.setProjectName("XX工程GS-1307 高速电视测量系统改造(三次)");
-        expertScoreSheet.setProjectNumber("0730-196012JP0027/04");
-        expertScoreSheet.setCompanyName("临沂");
+        expertScoreSheet.setProjectName("XX工程GS-1307 高速电视测量系统改造(二次)");
+        expertScoreSheet.setProjectNumber("0730-196012JP0027/02");
+        expertScoreSheet.setCompanyName("西安");
         expertScoreSheet.setExpertName("xl");
         expertScoreSheet.setPoint("1,2,3,4,5,6,7");
         expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());

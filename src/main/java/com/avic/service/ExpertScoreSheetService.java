@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ExpertScoreSheetService {
 
-    List<ExpertScoreSheet> getAllExpertScoreByProjectNumber(String projectnumber);
+    List<ExpertScoreSheet> getAllExpertScoreByProjectNumber(String projectNumber);
 
     ExpertScoreSheet getScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
 
