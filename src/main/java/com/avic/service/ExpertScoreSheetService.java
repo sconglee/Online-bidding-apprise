@@ -14,6 +14,8 @@ public interface ExpertScoreSheetService {
 
     ExpertScoreSheet getScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
 
+    List<ExpertScoreSheet> getScoreInfoByProjectNumberAndCompanyName(ExpertScoreSheet expertScoreSheet);
+
     Integer insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet);
 
 }

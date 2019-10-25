@@ -35,6 +35,12 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
+    public List<ExpertScoreSheet> getScoreInfoByProjectNumberAndCompanyName(ExpertScoreSheet expertScoreSheet) {
+        logger.info("查询指定项目编号、投标单位的得分信息");
+        return expertScoreSheetMapper.findScoreInfoByProjectNumberAndCompanyName(expertScoreSheet);
+    }
+
+    @Override
     public Integer insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet) {
         logger.info("添加专家打分结果：" + expertScoreSheet.toString());
         return expertScoreSheetMapper.insertExpertScoreSheet(expertScoreSheet);

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.avic.mapper.FinalScoreSheetMapper">
+    <resultMap id="finalScoreSheetMap" type="com.avic.model.FinalScoreSheet">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="projectName" property="projectName" jdbcType="VARCHAR"/>
+        <result column="projectNumber" property="projectNumber" jdbcType="VARCHAR"/>
+        <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
+        <result column="isGenerate" property="isGenerate" jdbcType="INTEGER"/>
+        <result column="averageScore" property="averageScore" jdbcType="VARCHAR"/>
+        <result column="totalScore" property="totalScore" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
+        <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findAllProject" resultMap="finalScoreSheetMap">
+        select projectNumber, projectName, companyName, isGenerate from finalscoresheet
+    </select>
+
+    <update id="updateFinalScore" parameterType="com.avic.model.FinalScoreSheet">
+        update finalscoresheet
+        set isGenerate = #{isGenerate}, averageScore = #{averageScore}, totalScore = #{totalScore}, updateTime = #{updateTime}
+        where projectNumber = #{projectNumber} and companyName = #{companyName}
+    </update>
+
+    <select id="findFinalScoreSheetByProjectNumberAndCompanyName" resultMap="finalScoreSheetMap">
+        select projectName, projectNumber, companyName, averageScore, totalScore
+        from finalscoresheet where projectNumber = #{projectNumber} and companyName = #{companyName}
+    </select>
+
+
+</mapper>

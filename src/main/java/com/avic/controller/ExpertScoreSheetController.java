@@ -5,11 +5,9 @@ import com.avic.model.ExpertScoreSheet;
 import com.avic.service.ExpertScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,7 +68,8 @@ public class ExpertScoreSheetController {
     }
 
     @RequestMapping(value = "getallexportscore")
-    public Map<String, Object> getAllExportScore(@Param("projectNumber") String projectNumber) {
+    @ResponseBody
+    public Map<String, Object> getAllExportScore(@RequestBody String projectNumber) {
         Map map = new HashMap();
         if (projectNumber != null && projectNumber.length() != 0) {
             List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getAllExpertScoreByProjectNumber(projectNumber);
@@ -83,7 +82,8 @@ public class ExpertScoreSheetController {
     }
 
     @RequestMapping(value = "getscoreinfo")
-    public Map<String, Object> getScoreInfo(@ModelAttribute("expertScoreSheet") ExpertScoreSheet expertScoreSheet) {
+    @ResponseBody
+    public Map<String, Object> getScoreInfo(@RequestBody ExpertScoreSheet expertScoreSheet) {
         Map map = new HashMap();
         ExpertScoreSheet expertScoreSheet1 = expertScoreSheetService.getScoreInfoByExpertNameAndCompanyName(expertScoreSheet);
         map.put("expertScoreSheet", expertScoreSheet1);

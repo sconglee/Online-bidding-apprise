@@ -11,7 +11,7 @@ public class FinalScoreSheet {
     private String compangName;
     private int isGenerate;
     private String averageScore;
-    private String totalScore;
+    private int totalScore;
     private String createTime;
     private String updateTime;
 
@@ -55,11 +55,11 @@ public class FinalScoreSheet {
         this.averageScore = averageScore;
     }
 
-    public String getTotalScore() {
+    public int getTotalScore() {
         return totalScore;
     }
 
-    public void setTotalScore(String totalScore) {
+    public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
     }
 

@@ -11,9 +11,11 @@ import java.util.List;
  */
 public interface ExpertScoreSheetMapper {
 
-    public List<ExpertScoreSheet> findAllExpertScoreByProjectNumber(@Param("projectNumber") String projectNumber);
+    List<ExpertScoreSheet> findAllExpertScoreByProjectNumber(@Param("projectNumber") String projectNumber);
 
-    public ExpertScoreSheet findScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
+    ExpertScoreSheet findScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
+
+    List<ExpertScoreSheet> findScoreInfoByProjectNumberAndCompanyName(ExpertScoreSheet expertScoreSheet);
 
     Integer insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet);
 

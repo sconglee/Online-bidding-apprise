@@ -7,8 +7,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,15 +28,17 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("")
-    public String getAllUser(Map<String, Object> map) {
+    @ResponseBody
+    public Map<String, Object> getAllUser(Map<String, Object> map) {
         logger.info("专家管理展示页");
         List<User> userList = userService.findAllUser();
         map.put("users", userList);
-        return "/users";
+        return map;
     }
 
     @RequestMapping("/add")
-    public Map<String, Object> addUser(@ModelAttribute("user") User user) {
+    @ResponseBody
+    public Map<String, Object> addUser(@RequestBody User user) {
         logger.info("新增专家用户");
         Map<String, Object> map = new HashMap<>();
         if (user != null & user.getUserName() != null & user.getPassWord() != null & Integer.valueOf(user.getAccountType()) != null) {
@@ -58,7 +61,8 @@ public class UserController {
     }
 
     @RequestMapping("/update")
-    public Map<String, Object> updateUserPassWord(@ModelAttribute("user") User user) {
+    @ResponseBody
+    public Map<String, Object> updateUserPassWord(@RequestBody User user) {
         Map map = new HashMap();
         User user1 = new User();
         user1.setUserName(user.getUserName());
@@ -74,7 +78,8 @@ public class UserController {
 
 
     @RequestMapping("/delete")
-    public Map<String, Object> deleteUser(@ModelAttribute("user") User user) {
+    @ResponseBody
+    public Map<String, Object> deleteUser(@RequestBody User user) {
         Map map = new HashMap();
         int isDelete = userService.deleteUserByName(user.getUserName());
         if (isDelete == 1) {

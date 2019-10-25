@@ -9,6 +9,7 @@
         <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
         <result column="expertName" property="expertName" jdbcType="VARCHAR"/>
         <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
+        <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="point" property="point" jdbcType="VARCHAR"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
@@ -20,6 +21,10 @@
 
     <select id="findScoreInfoByExpertNameAndCompanyName" resultType="com.avic.model.ExpertScoreSheet">
         select * from expertscoresheet where expertName = #{expertName} and companyName = #{companyName}
+    </select>
+
+    <select id="findScoreInfoByProjectNumberAndCompanyName" resultMap="expertScoreSheetMap">
+        select * from expertscoresheet where projectNumber = #{projectNumber} and companyName = #{companyName}
     </select>
 
     <insert id="insertExpertScoreSheet"  parameterType="com.avic.model.ExpertScoreSheet">
