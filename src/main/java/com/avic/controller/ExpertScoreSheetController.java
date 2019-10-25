@@ -2,7 +2,9 @@ package com.avic.controller;
 
 import com.avic.common.utils.TimeUtil;
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.FinalScoreSheet;
 import com.avic.service.ExpertScoreSheetService;
+import com.avic.service.FinalScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class ExpertScoreSheetController {
     @Autowired
     private ExpertScoreSheetService expertScoreSheetService;
 
+    @Autowired
+    private FinalScoreSheetService finalScoreSheetService;
+
     /**
      * @return java.util.Map<java.lang.String,java.lang.Object>
      * @Author xulei
@@ -52,6 +57,14 @@ public class ExpertScoreSheetController {
 
         expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
+
+        // 向表finalscoresheet中写入数据
+        FinalScoreSheet finalScoreSheet = new FinalScoreSheet();
+        finalScoreSheet.setProjectName(expertScoreSheet.getProjectName());
+        finalScoreSheet.setProjectNumber(expertScoreSheet.getProjectNumber());
+        finalScoreSheet.setCompangName(expertScoreSheet.getCompanyName());
+        finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
+
         Integer insertFlag = expertScoreSheetService.insertExpertScoreSheet(expertScoreSheet);
         if (insertFlag > 0) {
             logger.info("保存专家打分结果成功，具体信息为：" + expertScoreSheet.toString());

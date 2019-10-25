@@ -39,4 +39,9 @@ public class FinalScoreSheetServiceImpl implements FinalScoreSheetService {
         return finalScoreSheetMapper.findFinalScoreSheetByProjectNumberAndCompanyName(finalScoreSheet);
     }
 
+    @Override
+    public int insertFinalScoreSheet(FinalScoreSheet finalScoreSheet) {
+        logger.info("插入数据：");
+        return finalScoreSheetMapper.insertFinalScoreSheet(finalScoreSheet);
+    }
 }

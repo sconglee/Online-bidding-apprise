@@ -14,6 +14,63 @@
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <insert id="insertFinalScoreSheet" parameterType="com.avic.model.FinalScoreSheet">
+        insert into finalscoresheet (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">
+                projectName,
+            </if>
+            <if test="projectNumber != null">
+                projectNumber,
+            </if>
+            <if test="companyName != null">
+                companyName,
+            </if>
+            <if test="isGenerate != null">
+                isGenerate,
+            </if>
+            <if test="averageScore != null">
+                averageScore,
+            </if>
+            <if test="totalScore != null">
+                totalScore,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        values (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="projectName != null">
+                #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectNumber != null">
+                #{projectNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null">
+                #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="isGenerate != null">
+                #{isGenerate,jdbcType=INTEGER},
+            </if>
+            <if test="averageScore != null">
+                #{averageScore,jdbcType=VARCHAR},
+            </if>
+            <if test="totalScore != null">
+                #{totalScore,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
     <select id="findAllProject" resultMap="finalScoreSheetMap">
         select projectNumber, projectName, companyName, isGenerate from finalscoresheet
     </select>
@@ -28,6 +85,7 @@
         select projectName, projectNumber, companyName, averageScore, totalScore
         from finalscoresheet where projectNumber = #{projectNumber} and companyName = #{companyName}
     </select>
+
 
 
 </mapper>
