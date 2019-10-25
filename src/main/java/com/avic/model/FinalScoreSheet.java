@@ -8,7 +8,7 @@ public class FinalScoreSheet {
 
     private String projectNumber;
     private String projectName;
-    private String compangName;
+    private String companyName;
     private int isGenerate;
     private String averageScore;
     private int totalScore;
@@ -31,12 +31,12 @@ public class FinalScoreSheet {
         this.projectName = projectName;
     }
 
-    public String getCompangName() {
-        return compangName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompangName(String compangName) {
-        this.compangName = compangName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public int getIsGenerate() {

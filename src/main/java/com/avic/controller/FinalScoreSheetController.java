@@ -51,7 +51,7 @@ public class FinalScoreSheetController {
         Map map = new HashMap();
         ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();
         expertScoreSheet.setProjectNumber(finalScoreSheet.getProjectNumber());
-        expertScoreSheet.setCompanyName(finalScoreSheet.getCompangName());
+        expertScoreSheet.setCompanyName(finalScoreSheet.getCompanyName());
 
         List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getScoreInfoByProjectNumberAndCompanyName(expertScoreSheet);
         List<String> pointList = new ArrayList<>();
@@ -64,7 +64,7 @@ public class FinalScoreSheetController {
 
         FinalScoreSheet finalScoreSheet1 = new FinalScoreSheet();
         finalScoreSheet1.setProjectNumber(finalScoreSheet.getProjectNumber());
-        finalScoreSheet1.setCompangName(finalScoreSheet.getCompangName());
+        finalScoreSheet1.setCompanyName(finalScoreSheet.getCompanyName());
         finalScoreSheet1.setAverageScore(StringUtils.collectionToDelimitedString(finalScoreList,","));
         finalScoreSheet1.setTotalScore((Integer) mapScore.get("totalScore"));
         finalScoreSheet1.setIsGenerate(1);
@@ -85,7 +85,7 @@ public class FinalScoreSheetController {
     public Map<String, Object> getFinalScoreInfo(@RequestBody FinalScoreSheet finalScoreSheet) {
         Map map = new HashMap();
         String projectNumber = finalScoreSheet.getProjectNumber();
-        String companyName = finalScoreSheet.getCompangName();
+        String companyName = finalScoreSheet.getCompanyName();
 
         if (projectNumber != null & companyName != null) {
             ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();

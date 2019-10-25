@@ -62,7 +62,9 @@ public class ExpertScoreSheetController {
         FinalScoreSheet finalScoreSheet = new FinalScoreSheet();
         finalScoreSheet.setProjectName(expertScoreSheet.getProjectName());
         finalScoreSheet.setProjectNumber(expertScoreSheet.getProjectNumber());
-        finalScoreSheet.setCompangName(expertScoreSheet.getCompanyName());
+        finalScoreSheet.setCompanyName(expertScoreSheet.getCompanyName());
+        finalScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
+        finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
         finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
 
         Integer insertFlag = expertScoreSheetService.insertExpertScoreSheet(expertScoreSheet);
