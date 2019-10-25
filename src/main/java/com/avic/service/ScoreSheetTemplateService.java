@@ -4,6 +4,8 @@ import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.User;
 import com.avic.model.httovo.PaginationRequest;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,4 +45,7 @@ public interface ScoreSheetTemplateService {
      * @return
      **/
     List<ScoreSheetTemplate> sendScoreSheetTemplateToExpert();
+
+    List<ScoreSheetTemplate> assembleDataForSendScoreTemplateToExpert(List<ScoreSheetTemplate> resultList, Integer whichPage, Integer everyNumber);
+
 }

@@ -219,19 +219,28 @@ public class ScoreSheetTemplateController {
      * @Param []
      * @return java.util.Map<java.lang.String,java.lang.Object>
      **/
-    @RequestMapping("/sendTemplate")
+    @RequestMapping("/sendTemplatePagination")
     @ResponseBody
-    public Map<String, Object> sendScoreSheetTemplateToExpert() {
+    public Map<String, Object> sendScoreSheetTemplateToExpertPagination(@RequestBody PaginationRequest paginationRequest) {
         Map<String, Object> modelMap = new HashMap<>();
 
         List<ScoreSheetTemplate> resultList = scoreSheetTemplateService.sendScoreSheetTemplateToExpert();
+
         if (resultList.isEmpty()) {
             modelMap.put("success", "false");
             modelMap.put("msg", "没有符合要求的评标打分模板，请联系项目经理！");
 
         } else {
+            // 组装前端需要的数据格式
+            int whichPage = paginationRequest.getPage();
+            int everyNumber = paginationRequest.getColumns();
+            int count = resultList.size();
+
             modelMap.put("success", "true");
-            modelMap.put("data", resultList);
+            modelMap.put("page", whichPage);
+            modelMap.put("count", count);
+            modelMap.put("total", (int)Math.ceil((double) count / everyNumber));
+            modelMap.put("data", scoreSheetTemplateService.assembleDataForSendScoreTemplateToExpert(resultList,whichPage,everyNumber));
         }
 
         return modelMap;
