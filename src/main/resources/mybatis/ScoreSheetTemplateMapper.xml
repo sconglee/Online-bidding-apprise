@@ -16,10 +16,17 @@
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="findAllScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
-        select id, projectName, projectNumber, status, createTime
+    <select id="findTemplateTotalCount" resultType="Integer">
+        select count(*)
         from scoreSheetTemplate
         where remove = 0
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="findTemplatePagination" parameterType="com.avic.model.httovo.PaginationRequest" resultType="com.avic.model.ScoreSheetTemplate">
+        select id, projectName, projectNumber, status, createTime
+        from scoreSheetTemplate
+        where remove = 0 ORDER BY id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
     </select>
 
     <insert id="insertScoreSheetTemplate"  parameterType="com.avic.model.ScoreSheetTemplate">

@@ -73,12 +73,12 @@ public class ScoreSheetMapperTest {
     public void findAllScoreSheetTemplate() {
         List<ScoreSheetTemplate> scoreSheetTemplateList = new ArrayList<>();
 
-        scoreSheetTemplateList = scoreSheetTemplateMapper.findAllScoreSheetTemplate();
+        /*scoreSheetTemplateList = scoreSheetTemplateMapper.findAllScoreSheetTemplate();
         for (ScoreSheetTemplate scoreSheetTemplate : scoreSheetTemplateList) {
             System.out.println("项目名称是：" + scoreSheetTemplate.getProjectName() + ";    项目编号是：" + scoreSheetTemplate.getProjectNumber()
                     + ";  项目状态是：" + BidConstant.templateActiveStatus.get(scoreSheetTemplate.getStatus())
                     + ";   模板生成时间：" + scoreSheetTemplate.getCreateTime());
-        }
+        }*/
     }
 
     /*
@@ -211,7 +211,18 @@ public class ScoreSheetMapperTest {
     }
 
 
+    public static void main(String[] args) {
+        double a=35;
+        double b=20;
 
+        int aa = 6;
+        int bb = 5;
+
+        double c = (double) aa/bb;
+        System.out.println("c===>"+c);   //1.75
+        System.out.println("c===>"+Math.ceil(c)); //2.0
+        System.out.println(Math.floor(c));  //1.0
+    }
 
 
 

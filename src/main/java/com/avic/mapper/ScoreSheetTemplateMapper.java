@@ -1,14 +1,21 @@
 package com.avic.mapper;
 
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.PaginationRequest;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ScoreSheetTemplateMapper {
 
     Integer insertScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 
-    List<ScoreSheetTemplate> findAllScoreSheetTemplate();
+    Integer findTemplateTotalCount();
+
+    /**
+     分页查询
+    **/
+    List<ScoreSheetTemplate> findTemplatePagination(PaginationRequest paginationRequest);
 
     void updateScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 

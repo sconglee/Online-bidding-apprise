@@ -3,6 +3,7 @@ package com.avic.controller;
 import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.TimeUtil;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ScoreSheetTemplateService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -75,16 +76,30 @@ public class ScoreSheetTemplateController {
     * @Param []
     * @return void
     **/
-   @RequestMapping("/getAllTemplateList")
+   @RequestMapping("/findTemplatePagination")
    @ResponseBody
-    public Map<String, Object> findAllScoreSheetTemplate() {
+    public Map<String, Object> findTemplatePagination(@RequestBody PaginationRequest paginationRequest) {
        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+       //1、根据前端参数->查询ScoreSheetTemplate表
+       int whichPage = paginationRequest.getPage();
+       int everyNumber = paginationRequest.getColumns();
+       paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
+
 
        List<ScoreSheetTemplate> scoreSheetTemplateList = new ArrayList<>();
        // 只查询当前处于未被删除的模板
-       scoreSheetTemplateList = scoreSheetTemplateService.findAllScoreSheetTemplate();
+       // 2、查询数据总数
+       Integer count = scoreSheetTemplateService.findTemplateTotalCount();
+
+       // 3、查询当页的数据信息
+       scoreSheetTemplateList = scoreSheetTemplateService.findTemplatePagination(paginationRequest);
+
        if (!scoreSheetTemplateList.isEmpty()) {
            modelMap.put("success", "true");
+           modelMap.put("page", paginationRequest.getPage());
+           modelMap.put("count", count);
+           modelMap.put("total", (int)Math.ceil((double) count / everyNumber));
            modelMap.put("data", scoreSheetTemplateList);
        } else {
            modelMap.put("success", "false");

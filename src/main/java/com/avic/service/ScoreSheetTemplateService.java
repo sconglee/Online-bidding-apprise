@@ -2,6 +2,7 @@ package com.avic.service;
 
 import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.User;
+import com.avic.model.httovo.PaginationRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,12 @@ import java.util.Map;
 **/
 public interface ScoreSheetTemplateService {
 
-    List<ScoreSheetTemplate> findAllScoreSheetTemplate();
+    Integer findTemplateTotalCount();
+    
+    /**
+    分页查询
+    **/
+    List<ScoreSheetTemplate> findTemplatePagination(PaginationRequest paginationRequest);
 
     Integer createScoreSheetTemplate(ScoreSheetTemplate scoreSheetTemplate);
 

@@ -5,6 +5,7 @@ import com.avic.common.utils.MD5;
 import com.avic.common.utils.TimeUtil;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ScoreSheetTemplateService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,9 +39,22 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     * @return java.util.List<com.avic.model.ScoreSheetTemplate>
     **/
     @Override
-    public List<ScoreSheetTemplate> findAllScoreSheetTemplate() {
+    public Integer findTemplateTotalCount() {
         logger.info("获取评分表模板信息列表");
-        return scoreSheetTemplateMapper.findAllScoreSheetTemplate();
+        return scoreSheetTemplateMapper.findTemplateTotalCount();
+    }
+
+    /**
+    * @Author xulei
+    * @Description 分页查询
+    * @Date 9:18 2019/10/25/025
+    * @Param [paginationRequest]
+    * @return java.util.List<com.avic.model.ScoreSheetTemplate>
+    **/
+    @Override
+    public List<ScoreSheetTemplate> findTemplatePagination(PaginationRequest paginationRequest) {
+        logger.info("获取评分表模板信息列表--分页查询：");
+        return scoreSheetTemplateMapper.findTemplatePagination(paginationRequest);
     }
 
     /**
