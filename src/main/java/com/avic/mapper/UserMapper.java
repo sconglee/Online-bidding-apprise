@@ -1,6 +1,7 @@
 package com.avic.mapper;
 
 import com.avic.model.User;
+import com.avic.model.httovo.PaginationRequest;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,13 +12,15 @@ import java.util.List;
  */
 public interface UserMapper {
 
-    public List<User> getUser();
+    int findUserCount();
 
-    public int insertUser(User user);
+    List<User> getUserPaginationRequest(PaginationRequest paginationRequest);
 
-    public int updateUser(User user);
+    int insertUser(User user);
 
-    public int deleteUser(@Param("userName") String userName);
+    int updateUser(User user);
 
-    public User findUserByUsername(User user);
+    int deleteUser(@Param("userName") String userName);
+
+    User findUserByUsername(User user);
 }

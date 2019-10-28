@@ -33,13 +33,6 @@ public class UserMapperTest {
         System.out.println(userMapper.insertUser(user));
     }
 
-    @Test
-    public void testGetUser() {
-        List<User> userList = userMapper.getUser();
-        for (User user : userList) {
-            System.out.println(user.getUserName());
-        }
-    }
 
     @Test
     public void findUserByUserName() {

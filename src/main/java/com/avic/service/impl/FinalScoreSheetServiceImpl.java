@@ -2,6 +2,7 @@ package com.avic.service.impl;
 
 import com.avic.mapper.FinalScoreSheetMapper;
 import com.avic.model.FinalScoreSheet;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.FinalScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,9 +23,15 @@ public class FinalScoreSheetServiceImpl implements FinalScoreSheetService {
     private FinalScoreSheetMapper finalScoreSheetMapper;
 
     @Override
-    public List<FinalScoreSheet> getAllProject() {
+    public int getProjectCount() {
+        logger.info("查询项目总数");
+        return finalScoreSheetMapper.findProjectCount();
+    }
+
+    @Override
+    public List<FinalScoreSheet> getProjectByPagination(PaginationRequest paginationRequest) {
         logger.info("查询综合得分表项目列表");
-        return finalScoreSheetMapper.findAllProject();
+        return finalScoreSheetMapper.findProjectByPagination(paginationRequest);
     }
 
     @Override

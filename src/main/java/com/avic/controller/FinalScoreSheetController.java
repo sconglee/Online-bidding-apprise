@@ -4,6 +4,7 @@ import com.avic.common.utils.CountFinalScore;
 import com.avic.common.utils.TimeUtil;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.FinalScoreSheet;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.FinalScoreSheetService;
 import org.apache.commons.logging.Log;
@@ -35,13 +36,28 @@ public class FinalScoreSheetController {
     private ExpertScoreSheetService expertScoreSheetService;
 
 
-    @RequestMapping("")
+    @RequestMapping("/getprojectinfo")
     @ResponseBody
-    public Map<String, Object> getAllProjectInfo() {
+    public Map<String, Object> getProjectInfo(@RequestBody PaginationRequest paginationRequest) {
         Map map = new HashMap();
-        List<FinalScoreSheet> finalScoreSheetList = finalScoreSheetService.getAllProject();
-        map.put("projectInfo", finalScoreSheetList);
-        map.put("msg", "查询成功！");
+        int whichPage = paginationRequest.getPage();
+        int everyNumber = paginationRequest.getColumns();
+        paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
+        int count = finalScoreSheetService.getProjectCount();
+
+        List<FinalScoreSheet> finalScoreSheetList = finalScoreSheetService.getProjectByPagination(paginationRequest);
+        if (!finalScoreSheetList.isEmpty()) {
+            map.put("page", paginationRequest.getPage());
+            map.put("count", count);
+            map.put("total", (int) Math.ceil((double) count / everyNumber));
+            map.put("projectInfo", finalScoreSheetList);
+            map.put("msg", "查询成功！");
+            map.put("success", "true");
+        } else {
+            map.put("msg", "没有查询到项目信息！");
+            map.put("success", "false");
+        }
+
         return map;
     }
 
@@ -72,11 +88,12 @@ public class FinalScoreSheetController {
 
         int isUpdate = finalScoreSheetService.updateFinalScoreSheet(finalScoreSheet1);
         if (isUpdate == 1) {
+            map.put("success", "true");
             map.put("msg", "得分表生成成功！");
         } else {
+            map.put("success", "false");
             map.put("msg", "得分表生成失败！");
         }
-
         return map;
     }
 

@@ -4,6 +4,7 @@ import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ExpertScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,9 +30,15 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
 
     @Override
-    public List<ExpertScoreSheet> getAllExpertScoreByProjectNumber(String projectNumber) {
-        logger.info("查询已提交的评分");
-        return expertScoreSheetMapper.findAllExpertScoreByProjectNumber(projectNumber);
+    public int getExportScoreCount(String projectNumber) {
+        logger.info("获取已提交的打分列表总数");
+        return expertScoreSheetMapper.findExportScoreCount(projectNumber);
+    }
+
+    @Override
+    public List<ExpertScoreSheet> getExpertScoreByProjectNumberAndPagination(String projectNumber, PaginationRequest paginationRequest) {
+        logger.info("按页查询已提交的评分");
+        return expertScoreSheetMapper.findExpertScoreByProjectNumberAndPagination(projectNumber, paginationRequest);
     }
 
     @Override

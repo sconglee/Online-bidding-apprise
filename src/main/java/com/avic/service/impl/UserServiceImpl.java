@@ -2,6 +2,7 @@ package com.avic.service.impl;
 
 import com.avic.mapper.UserMapper;
 import com.avic.model.User;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,9 +24,15 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public List<User> findAllUser() {
-        logger.info("获取所有用户信息");
-        return userMapper.getUser();
+    public int getUserCount() {
+        logger.info("获取用户信息总条数");
+        return userMapper.findUserCount();
+    }
+
+    @Override
+    public List<User> findUserPaginationRequest(PaginationRequest paginationRequest) {
+        logger.info("按页获取用户信息");
+        return userMapper.getUserPaginationRequest(paginationRequest);
     }
 
     @Override

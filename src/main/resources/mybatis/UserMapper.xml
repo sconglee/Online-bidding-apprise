@@ -11,8 +11,14 @@
         <result column="account_status" property="accountStatus" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="getUser" resultMap="userMap">
-        select username, create_time, account_type ,account_status from users
+    <select id="getUserPaginationRequest" parameterType="com.avic.model.httovo.PaginationRequest" resultType="com.avic.model.User">
+        select username, create_time, account_type ,account_status
+        from users
+        order by id limit #{startNumber}, #{columns}
+    </select>
+
+    <select id="findUserCount">
+        select count(*) from users
     </select>
 
     <insert id="insertUser" parameterType="com.avic.model.User">

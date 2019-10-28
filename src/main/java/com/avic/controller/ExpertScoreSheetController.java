@@ -2,6 +2,7 @@ package com.avic.controller;
 
 import com.avic.common.utils.TimeUtil;
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.model.FinalScoreSheet;
 import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.FinalScoreSheetService;
@@ -82,16 +83,31 @@ public class ExpertScoreSheetController {
         return modelMap;
     }
 
-    @RequestMapping(value = "getallexportscore")
+    @RequestMapping(value = "getexportscore")
     @ResponseBody
-    public Map<String, Object> getAllExportScore(@RequestBody String projectNumber) {
+    public Map<String, Object> getAllExportScore(@RequestBody String projectNumber, PaginationRequest paginationRequest) {
         Map map = new HashMap();
         if (projectNumber != null && projectNumber.length() != 0) {
-            List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getAllExpertScoreByProjectNumber(projectNumber);
-            map.put("expertScoreSheetList", expertScoreSheetList);
-            map.put("msg", "查询打分列表成功！");
+            int whichPage = paginationRequest.getPage();
+            int everyNumber = paginationRequest.getColumns();
+            paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
+            int count = expertScoreSheetService.getExportScoreCount(projectNumber);
+
+            List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNumberAndPagination(projectNumber, paginationRequest);
+            if (!expertScoreSheetList.isEmpty()) {
+                map.put("page", paginationRequest.getPage());
+                map.put("count", count);
+                map.put("total", (int) Math.ceil((double) count / everyNumber));
+                map.put("expertScoreSheetList", expertScoreSheetList);
+                map.put("msg", "查询打分列表成功！");
+                map.put("success", "true");
+            } else {
+                map.put("msg", "没有查询到打分表！");
+                map.put("success", "false");
+            }
         } else {
             map.put("msg", "无效的项目编号！");
+            map.put("success", "false");
         }
         return map;
     }
@@ -101,8 +117,15 @@ public class ExpertScoreSheetController {
     public Map<String, Object> getScoreInfo(@RequestBody ExpertScoreSheet expertScoreSheet) {
         Map map = new HashMap();
         ExpertScoreSheet expertScoreSheet1 = expertScoreSheetService.getScoreInfoByExpertNameAndCompanyName(expertScoreSheet);
-        map.put("expertScoreSheet", expertScoreSheet1);
-        map.put("msg", "查询打分详情信息成功！");
+        if (expertScoreSheet1 != null) {
+            map.put("expertScoreSheet", expertScoreSheet1);
+            map.put("success", "true");
+            map.put("msg", "查询打分详情信息成功！");
+        } else {
+            map.put("success", "false");
+            map.put("msg", "查询打分详情信息失败！");
+        }
+
         return map;
     }
 

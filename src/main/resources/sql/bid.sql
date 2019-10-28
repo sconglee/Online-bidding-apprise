@@ -51,7 +51,7 @@ CREATE TABLE `finalscoresheet`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `projectNumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `projectName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `compangName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `companyName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `isGenerate` int(255) UNSIGNED ZEROFILL NOT NULL COMMENT '是否已生成得分表，默认为0',
   `averageScore` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '各项平均得分',
   `totalScore` int(11) NULL DEFAULT NULL COMMENT '最终总得分',

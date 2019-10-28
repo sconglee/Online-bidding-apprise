@@ -1,6 +1,7 @@
 package com.avic.mapper;
 
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.httovo.PaginationRequest;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.List;
  */
 public interface ExpertScoreSheetMapper {
 
-    List<ExpertScoreSheet> findAllExpertScoreByProjectNumber(@Param("projectNumber") String projectNumber);
+    int findExportScoreCount(@Param("projectNumber") String projectNumber);
+
+    List<ExpertScoreSheet> findExpertScoreByProjectNumberAndPagination(@Param("projectNumber") String projectNumber, PaginationRequest paginationRequest);
 
     ExpertScoreSheet findScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
 
