@@ -150,7 +150,7 @@
       where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <delete id="deleteScoreSheetTemplate" parameterType="String">
+    <delete id="deleteScoreSheetTemplate" parameterType="INTEGER">
         delete from scoresheettemplate where id = #{id,jdbcType=INTEGER}
     </delete>
 
