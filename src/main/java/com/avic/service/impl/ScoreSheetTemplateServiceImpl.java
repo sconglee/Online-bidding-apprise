@@ -3,9 +3,12 @@ package com.avic.service.impl;
 import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.MD5;
 import com.avic.common.utils.TimeUtil;
+import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
+import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.httovo.PaginationRequest;
+import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.ScoreSheetTemplateService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,6 +33,12 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
 
     @Autowired
     private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
+
+    @Autowired
+    private ExpertScoreSheetMapper expertScoreSheetMapper;
+
+    @Autowired
+    private ExpertScoreSheetService expertScoreSheetService;
 
     /**
     * @Author xulei
@@ -141,6 +150,14 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
             result.setUpdateTime(TimeUtil.getTimeByDefautFormat());
             scoreSheetTemplateMapper.enableEffectiveOrNot(result);
 
+            if (result.getStatus().equals(BidConstant.TEMPLATE_ACTIVE)) {
+                // 设置生效之后，说明随后专家会使用该模板，因此可以预先insert到expertscoresheet中，status使用默认值1（未打分）
+                // 之后在专家登录页，直接把expertscoresheet表根据projectName+projectNumbe查询，以列表形式展示
+                List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate();
+                // 批量执行插入操作
+                expertScoreSheetMapper.insertExpertScoreSheetForeach(expertScoreSheetList);
+            }
+
             logger.info("评标打分模板“生效/失效”成功,具体信息为：" + result.toString());
 
         } else {
@@ -193,7 +210,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
         logger.info("向评标专家推送评标打分模板：");
         List<ScoreSheetTemplate> resultList = new ArrayList<>();
 
-        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        /*ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
         if (scoreSheetTemplate != null) {
             // 使用","分割出每一个投标单位
             String[] companyName = scoreSheetTemplate.getScoredComName().split(",");
@@ -214,7 +231,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
 
                 resultList.add(tempTemplate);
             }
-        }
+        }*/
 
         return resultList;
     }

@@ -18,4 +18,6 @@ public interface ExpertScoreSheetService {
 
     Integer insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet);
 
+    List<ExpertScoreSheet> getExpertScoreSheetFromTemplate();
+
 }

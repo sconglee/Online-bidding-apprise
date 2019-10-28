@@ -19,5 +19,6 @@ public interface ExpertScoreSheetMapper {
 
     Integer insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet);
 
+    Integer insertExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
 
 }

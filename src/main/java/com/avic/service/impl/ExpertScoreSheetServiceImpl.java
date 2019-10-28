@@ -1,13 +1,16 @@
 package com.avic.service.impl;
 
 import com.avic.mapper.ExpertScoreSheetMapper;
+import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.ScoreSheetTemplate;
 import com.avic.service.ExpertScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +24,9 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
 
     @Autowired
     private ExpertScoreSheetMapper expertScoreSheetMapper;
+
+    @Autowired
+    private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
 
     @Override
     public List<ExpertScoreSheet> getAllExpertScoreByProjectNumber(String projectNumber) {
@@ -45,5 +51,32 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
         logger.info("添加专家打分结果：" + expertScoreSheet.toString());
         return expertScoreSheetMapper.insertExpertScoreSheet(expertScoreSheet);
     }
+
+    @Override
+    public List<ExpertScoreSheet> getExpertScoreSheetFromTemplate() {
+        List<ExpertScoreSheet> resultList = new ArrayList<>();
+
+        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        if (scoreSheetTemplate != null) {
+            // 使用","分割出每一个投标单位
+            String[] companyName = scoreSheetTemplate.getScoredComName().split(",");
+            logger.info("待评标公司如下：" + companyName.toString());
+
+            for (int i = 0; i < companyName.length; i++){
+                ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();
+                expertScoreSheet.setProjectName(scoreSheetTemplate.getProjectName());
+                expertScoreSheet.setProjectNumber(scoreSheetTemplate.getProjectNumber());
+                expertScoreSheet.setTotalItems(scoreSheetTemplate.getTotalItems());
+                expertScoreSheet.setItemWeight(scoreSheetTemplate.getItemWeight());
+                expertScoreSheet.setCompanyName(companyName[i]);
+                expertScoreSheet.setCreateTime(scoreSheetTemplate.getCreateTime());
+                expertScoreSheet.setUpdateTime(scoreSheetTemplate.getUpdateTime());
+
+                resultList.add(expertScoreSheet);
+            }
+        }
+        return resultList;
+    }
+
 
 }
