@@ -19,5 +19,6 @@ public interface FinalScoreSheetMapper {
 
     FinalScoreSheet findFinalScoreSheetByProjectNumberAndCompanyName(FinalScoreSheet finalScoreSheet);
 
+    int insertFinalScoreSheet(FinalScoreSheet finalScoreSheet);
 
 }

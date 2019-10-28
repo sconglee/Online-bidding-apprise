@@ -8,6 +8,7 @@
         <result column="projectNumber" property="projectNumber" jdbcType="VARCHAR"/>
         <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
         <result column="expertName" property="expertName" jdbcType="VARCHAR"/>
+        <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="point" property="point" jdbcType="VARCHAR"/>
@@ -34,7 +35,7 @@
     </select>
 
     <insert id="insertExpertScoreSheet"  parameterType="com.avic.model.ExpertScoreSheet">
-        insert into expertScoreSheet (
+        insert into expertscoresheet (
         <trim prefix="" suffix=")" suffixOverrides=",">
             <if test="projectName != null">
                 projectName,
@@ -50,6 +51,9 @@
             </if>
             <if test="itemWeight != null">
                 itemWeight,
+            </if>
+            <if test="totalItems != null">
+                totalItems,
             </if>
             <if test="point != null">
                 point,
@@ -77,6 +81,9 @@
             </if>
             <if test="itemWeight != null">
                 #{itemWeight,jdbcType=VARCHAR},
+            </if>
+            <if test="totalItems != null">
+                #{totalItems, jdbcType=VARCHAR},
             </if>
             <if test="point != null">
                 #{point,jdbcType=VARCHAR},

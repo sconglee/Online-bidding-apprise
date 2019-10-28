@@ -19,4 +19,6 @@ public interface FinalScoreSheetService {
 
     FinalScoreSheet getFinalScoreSheetByProjectNumberAndCompanyName(FinalScoreSheet finalScoreSheet);
 
+    int insertFinalScoreSheet(FinalScoreSheet finalScoreSheet);
+
 }

@@ -18,19 +18,19 @@
 
     <select id="findTemplateTotalCount" resultType="Integer">
         select count(*)
-        from scoreSheetTemplate
+        from scoresheettemplate
         where remove = 0
     </select>
 
     <!-- 分页查询 -->
     <select id="findTemplatePagination" parameterType="com.avic.model.httovo.PaginationRequest" resultType="com.avic.model.ScoreSheetTemplate">
         select id, projectName, projectNumber, status, createTime
-        from scoreSheetTemplate
+        from scoresheettemplate
         where remove = 0 ORDER BY id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
     </select>
 
     <insert id="insertScoreSheetTemplate"  parameterType="com.avic.model.ScoreSheetTemplate">
-        insert into scoreSheetTemplate (
+        insert into scoresheettemplate (
         <trim prefix="" suffix=")" suffixOverrides=",">
             <if test="projectName != null">
                 projectName,
@@ -99,7 +99,7 @@
     </insert>
 
     <update id="updateScoreSheetTemplate" parameterType="com.avic.model.ScoreSheetTemplate">
-        update scoreSheetTemplate
+        update scoresheettemplate
         <set>
             <if test="projectName != null and projectName != ''">
                 projectName = #{projectName,jdbcType=VARCHAR},
@@ -137,26 +137,26 @@
 
 
     <select id="findTemplateByProjectNameAndNumber" parameterType="com.avic.model.ScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
-        select * from scoreSheetTemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
+        select * from scoresheettemplate where projectName = #{projectName} and projectNumber = #{projectNumber}
     </select>
 
     <select id="findTemplateById" parameterType="com.avic.model.ScoreSheetTemplate" resultType="com.avic.model.ScoreSheetTemplate">
-        select * from scoreSheetTemplate where id = #{id,jdbcType=INTEGER}
+        select * from scoresheettemplate where id = #{id,jdbcType=INTEGER}
     </select>
 
     <update id="enableEffectiveOrNot" parameterType="com.avic.model.ScoreSheetTemplate">
-      update scoreSheetTemplate
+      update scoresheettemplate
       set status = #{status}, updateTime = #{updateTime}
       where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <delete id="deleteScoreSheetTemplate" parameterType="String">
-        delete from scoreSheetTemplate where id = #{id,jdbcType=INTEGER}
+    <delete id="deleteScoreSheetTemplate" parameterType="INTEGER">
+        delete from scoresheettemplate where id = #{id,jdbcType=INTEGER}
     </delete>
 
     <select id="sendScoreSheetTemplateToExpert" resultType="com.avic.model.ScoreSheetTemplate">
         select *
-        from scoreSheetTemplate
+        from scoresheettemplate
         where status = 0 and remove = 0
     </select>
 
