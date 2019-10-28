@@ -29,7 +29,7 @@
     </select>
 
     <insert id="insertExpertScoreSheet"  parameterType="com.avic.model.ExpertScoreSheet">
-        insert into expertScoreSheet (
+        insert into expertscoresheet (
         <trim prefix="" suffix=")" suffixOverrides=",">
             <if test="projectName != null">
                 projectName,
