@@ -20,13 +20,6 @@ public class ExpertScoreSheetMapperTest {
     @Autowired
     private ExpertScoreSheetMapper expertScoreSheetMapper;
 
-    @Test
-    public void testFindAllExpertScoreByProjectNumber() {
-        List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetMapper.findAllExpertScoreByProjectNumber("0730-196012JP0027/02");
-        for (ExpertScoreSheet expertScoreSheet : expertScoreSheetList) {
-            System.out.println(expertScoreSheet.getCompanyName());
-        }
-    }
 
     @Test
     public void testFindScoreInfoByExpertNameAndCompanyName() {
