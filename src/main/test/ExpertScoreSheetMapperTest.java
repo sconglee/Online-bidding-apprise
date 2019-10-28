@@ -41,7 +41,7 @@ public class ExpertScoreSheetMapperTest {
         expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
-        Integer result = expertScoreSheetMapper.insertExpertScoreSheet(expertScoreSheet);
+        Integer result = expertScoreSheetMapper.updateExpertScoreSheet(expertScoreSheet);
         if (result > 0) {
             System.out.println(expertScoreSheet.getPoint());
         } else {

@@ -49,7 +49,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     **/
     @Override
     public Integer findTemplateTotalCount() {
-        logger.info("获取评分表模板信息列表");
+        logger.info("获取评分表模板信息列表--总数：");
         return scoreSheetTemplateMapper.findTemplateTotalCount();
     }
 
@@ -200,50 +200,12 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
 
     /**
     * @Author xulei
-    * @Description 下发评标打分模板
-    * @Date 9:09 2019/10/18/018
-    * @Param []
-    * @return java.util.List<com.avic.model.ScoreSheetTemplate>
-    **/
-    @Override
-    public List<ScoreSheetTemplate> sendScoreSheetTemplateToExpert() {
-        logger.info("向评标专家推送评标打分模板：");
-        List<ScoreSheetTemplate> resultList = new ArrayList<>();
-
-        /*ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
-        if (scoreSheetTemplate != null) {
-            // 使用","分割出每一个投标单位
-            String[] companyName = scoreSheetTemplate.getScoredComName().split(",");
-            logger.info("待评标公司如下：" + companyName.toString());
-
-            for (int i = 0; i < companyName.length; i++){
-                ScoreSheetTemplate tempTemplate = new ScoreSheetTemplate();
-                tempTemplate.setProjectName(scoreSheetTemplate.getProjectName());
-                tempTemplate.setProjectNumber(scoreSheetTemplate.getProjectNumber());
-                tempTemplate.setTotalItems(scoreSheetTemplate.getTotalItems());
-                tempTemplate.setSequenceNumber(scoreSheetTemplate.getSequenceNumber());
-                tempTemplate.setItemWeight(scoreSheetTemplate.getItemWeight());
-                tempTemplate.setScoredComName(companyName[i]);
-                tempTemplate.setStatus(scoreSheetTemplate.getStatus());
-                tempTemplate.setRemove(scoreSheetTemplate.getRemove());
-                tempTemplate.setCreateTime(scoreSheetTemplate.getCreateTime());
-                tempTemplate.setUpdateTime(scoreSheetTemplate.getUpdateTime());
-
-                resultList.add(tempTemplate);
-            }
-        }*/
-
-        return resultList;
-    }
-
-    /**
-    * @Author xulei
     * @Description 向专家下发打分表时，组装分页数据
     * @Date 10:35 2019/10/25/025
     * @Param 
     * @return 
     **/
-    @Override
+    /*@Override
     public List<ScoreSheetTemplate> assembleDataForSendScoreTemplateToExpert(List<ScoreSheetTemplate> resultList, Integer whichPage, Integer everyNumber) {
         int dataCount = resultList.size();
         int startNumber = (whichPage - 1) * everyNumber;
@@ -260,7 +222,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
             dataList.add(resultList.get(index));
         }
         return dataList;
-    }
+    }*/
 
 
 

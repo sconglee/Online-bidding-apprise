@@ -35,74 +35,56 @@
         select * from expertscoresheet where projectNumber = #{projectNumber} and companyName = #{companyName}
     </select>
 
-    <insert id="insertExpertScoreSheet"  parameterType="com.avic.model.ExpertScoreSheet">
-        insert into expertscoresheet (
-        <trim prefix="" suffix=")" suffixOverrides=",">
-            <if test="projectName != null">
-                projectName,
+    <select id="findScoreSheetTotalCount" resultType="Integer">
+        select count(*)
+        from expertscoresheet
+        where status = 1
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="findScoreSheetPagination" parameterType="com.avic.model.httovo.PaginationRequest" resultType="com.avic.model.ExpertScoreSheet">
+        select *
+        from expertscoresheet
+        where status = 1 ORDER BY id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
+    </select>
+
+    <update id="updateExpertScoreSheet"  parameterType="com.avic.model.ExpertScoreSheet">
+        update expertscoresheet
+        <set>
+            <if test="projectName != null and projectName != ''">
+                projectName = #{projectName,jdbcType=VARCHAR},
             </if>
-            <if test="projectNumber != null">
-                projectNumber,
+            <if test="projectNumber != null and projectNumber != ''">
+                projectNumber = #{projectNumber,jdbcType=VARCHAR},
             </if>
-            <if test="companyName != null">
-                companyName,
+            <if test="companyName != null and companyName != ''">
+                companyName = #{companyName,jdbcType=VARCHAR},
             </if>
-            <if test="expertName != null">
-                expertName,
+            <if test="expertName != null and expertName != ''">
+                expertName = #{expertName,jdbcType=VARCHAR},
             </if>
-            <if test="itemWeight != null">
-                itemWeight,
+            <if test="itemWeight != null and itemWeight != ''">
+                itemWeight = #{itemWeight,jdbcType=VARCHAR},
             </if>
-            <if test="totalItems != null">
-                totalItems,
+            <if test="totalItems != null and totalItems != ''">
+                totalItems = #{totalItems,jdbcType=VARCHAR},
             </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="point != null">
-                point,
-            </if>
-            <if test="createTime != null">
-                createTime,
-            </if>
-            <if test="updateTime != null">
-                updateTime,
-            </if>
-        </trim>
-        values (
-        <trim prefix="" suffix=")" suffixOverrides=",">
-            <if test="projectName != null">
-                #{projectName,jdbcType=VARCHAR},
-            </if>
-            <if test="projectNumber != null">
-                #{projectNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="companyName != null">
-                #{companyName,jdbcType=VARCHAR},
-            </if>
-            <if test="expertName != null">
-                #{expertName,jdbcType=VARCHAR},
-            </if>
-            <if test="itemWeight != null">
-                #{itemWeight,jdbcType=VARCHAR},
-            </if>
-            <if test="totalItems != null">
-                #{totalItems, jdbcType=VARCHAR},
-            </if>
-            <if test="point != null">
-                #{point,jdbcType=VARCHAR},
+            <if test="point != null and point != ''">
+                point = #{point,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                #{status,jdbcType=INTEGER},
+                status = #{status,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=VARCHAR},
+            <if test="createTime != null and createTime != ''">
+                createTime = #{createTime,jdbcType=VARCHAR},
             </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=VARCHAR},
+            <if test="updateTime != null and updateTime != '' ">
+                updateTime = #{updateTime,jdbcType=VARCHAR},
             </if>
-        </trim>
-    </insert>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
 
     <insert id="insertExpertScoreSheetForeach" parameterType="java.util.List" >
         <foreach collection="list" item="expertScoreSheet" separator=";">

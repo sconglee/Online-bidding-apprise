@@ -54,9 +54,9 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
-    public Integer insertExpertScoreSheet(ExpertScoreSheet expertScoreSheet) {
+    public Integer updateExpertScoreSheet(ExpertScoreSheet expertScoreSheet) {
         logger.info("添加专家打分结果：" + expertScoreSheet.toString());
-        return expertScoreSheetMapper.insertExpertScoreSheet(expertScoreSheet);
+        return expertScoreSheetMapper.updateExpertScoreSheet(expertScoreSheet);
     }
 
     @Override
@@ -85,5 +85,54 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
         return resultList;
     }
 
+    @Override
+    public Integer findScoreSheetTotalCount() {
+        logger.info("获取专家评分表模板信息列表--总数：");
+        return expertScoreSheetMapper.findScoreSheetTotalCount();
+    }
+
+    @Override
+    public List<ExpertScoreSheet> findScoreSheetPagination(PaginationRequest paginationRequest) {
+        logger.info("获取评分表模板信息列表--分页查询：");
+        return expertScoreSheetMapper.findScoreSheetPagination(paginationRequest);
+    }
+
+    /**
+     * @Author xulei
+     * @Description 下发评标打分模板
+     * @Date 9:09 2019/10/18/018
+     * @Param []
+     * @return java.util.List<com.avic.model.ScoreSheetTemplate>
+     **/
+    /*@Override
+    public List<ScoreSheetTemplate> sendScoreSheetTemplateToExpert() {
+        logger.info("向评标专家推送评标打分模板：");
+        List<ScoreSheetTemplate> resultList = new ArrayList<>();*/
+
+        /*ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        if (scoreSheetTemplate != null) {
+            // 使用","分割出每一个投标单位
+            String[] companyName = scoreSheetTemplate.getScoredComName().split(",");
+            logger.info("待评标公司如下：" + companyName.toString());
+
+            for (int i = 0; i < companyName.length; i++){
+                ScoreSheetTemplate tempTemplate = new ScoreSheetTemplate();
+                tempTemplate.setProjectName(scoreSheetTemplate.getProjectName());
+                tempTemplate.setProjectNumber(scoreSheetTemplate.getProjectNumber());
+                tempTemplate.setTotalItems(scoreSheetTemplate.getTotalItems());
+                tempTemplate.setSequenceNumber(scoreSheetTemplate.getSequenceNumber());
+                tempTemplate.setItemWeight(scoreSheetTemplate.getItemWeight());
+                tempTemplate.setScoredComName(companyName[i]);
+                tempTemplate.setStatus(scoreSheetTemplate.getStatus());
+                tempTemplate.setRemove(scoreSheetTemplate.getRemove());
+                tempTemplate.setCreateTime(scoreSheetTemplate.getCreateTime());
+                tempTemplate.setUpdateTime(scoreSheetTemplate.getUpdateTime());
+
+                resultList.add(tempTemplate);
+            }
+        }*/
+
+        /*return resultList;
+    }*/
 
 }

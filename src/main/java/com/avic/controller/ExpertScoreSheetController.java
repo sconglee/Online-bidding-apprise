@@ -2,6 +2,7 @@ package com.avic.controller;
 
 import com.avic.common.utils.TimeUtil;
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.httovo.PaginationRequest;
 import com.avic.model.FinalScoreSheet;
 import com.avic.service.ExpertScoreSheetService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,9 +47,9 @@ public class ExpertScoreSheetController {
      * @Date 16:33 2019/10/18/018
      * @Param []
      **/
-    @RequestMapping(value = "insertExpertScoreSheet")
+    @RequestMapping(value = "updateExpertScoreSheet")
     @ResponseBody
-    public Map<String, Object> insertExpertScoreSheet(@RequestBody ExpertScoreSheet expertScoreSheet, HttpSession session) {
+    public Map<String, Object> updateExpertScoreSheet(@RequestBody ExpertScoreSheet expertScoreSheet, HttpSession session) {
         Map<String, Object> modelMap = new ModelMap();
         modelMap.put("success", "false");
         modelMap.put("msg", "新增数据失败！！");
@@ -68,7 +70,7 @@ public class ExpertScoreSheetController {
         finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
         finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
 
-        Integer insertFlag = expertScoreSheetService.insertExpertScoreSheet(expertScoreSheet);
+        Integer insertFlag = expertScoreSheetService.updateExpertScoreSheet(expertScoreSheet);
         if (insertFlag > 0) {
             logger.info("保存专家打分结果成功，具体信息为：" + expertScoreSheet.toString());
             modelMap.put("success", "true");
@@ -127,6 +129,46 @@ public class ExpertScoreSheetController {
         }
 
         return map;
+    }
+
+    /**
+    * @Author xulei
+    * @Description 下发评标打分模板
+    * @Date 16:31 2019/10/28/028
+    * @Param [paginationRequest]
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    **/
+    @RequestMapping("/sendTemplatePagination")
+    @ResponseBody
+    public Map<String, Object> sendScoreSheetTemplateToExpertPagination(@RequestBody PaginationRequest paginationRequest) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        //1、根据前端参数->查询ScoreSheetTemplate表
+        int whichPage = paginationRequest.getPage();
+        int everyNumber = paginationRequest.getColumns();
+        paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
+
+
+        List<ExpertScoreSheet> expertScoreSheetList = new ArrayList<>();
+        // 只查询当前处于未打分的表
+        // 2、查询数据总数
+        Integer count = expertScoreSheetService.findScoreSheetTotalCount();
+
+        // 3、查询当页的数据信息
+        expertScoreSheetList = expertScoreSheetService.findScoreSheetPagination(paginationRequest);
+
+        if (!expertScoreSheetList.isEmpty()) {
+            modelMap.put("success", "true");
+            modelMap.put("page", paginationRequest.getPage());
+            modelMap.put("count", count);
+            modelMap.put("total", (int)Math.ceil((double) count / everyNumber));
+            modelMap.put("data", expertScoreSheetList);
+        } else {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "数据为空！！");
+        }
+
+        return modelMap;
     }
 
 }

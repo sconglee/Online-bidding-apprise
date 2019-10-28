@@ -37,15 +37,7 @@ public interface ScoreSheetTemplateService {
 
     Map<String, Object> enableEffectiveOrNot(ScoreSheetTemplate scoreSheetTemplate);
 
-    /**
-     * @Author xulei
-     * @Description 下发评标打分模板
-     * @Date 9:07 2019/10/18/018
-     * @Param
-     * @return
-     **/
-    List<ScoreSheetTemplate> sendScoreSheetTemplateToExpert();
 
-    List<ScoreSheetTemplate> assembleDataForSendScoreTemplateToExpert(List<ScoreSheetTemplate> resultList, Integer whichPage, Integer everyNumber);
+    /*List<ScoreSheetTemplate> assembleDataForSendScoreTemplateToExpert(List<ScoreSheetTemplate> resultList, Integer whichPage, Integer everyNumber);*/
 
 }
