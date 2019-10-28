@@ -2,6 +2,7 @@ package com.avic.service;
 
 
 import com.avic.model.User;
+import com.avic.model.httovo.PaginationRequest;
 
 import java.util.List;
 
@@ -11,7 +12,10 @@ import java.util.List;
  */
 public interface UserService {
 
-    List<User> findAllUser();
+
+    int getUserCount();
+
+    List<User> findUserPaginationRequest(PaginationRequest paginationRequest);
 
     int addUser(User user);
 

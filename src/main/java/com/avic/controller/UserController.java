@@ -2,6 +2,7 @@ package com.avic.controller;
 
 import com.avic.common.utils.MD5;
 import com.avic.model.User;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.UserService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,12 +28,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("")
+    @RequestMapping("/getuser")
     @ResponseBody
-    public Map<String, Object> getAllUser(Map<String, Object> map) {
+    public Map<String, Object> getAllUser(@RequestBody PaginationRequest paginationRequest) {
         logger.info("专家管理展示页");
-        List<User> userList = userService.findAllUser();
-        map.put("users", userList);
+        Map map = new HashMap();
+
+        int whichPage = paginationRequest.getPage();
+        int everyNumber = paginationRequest.getColumns();
+        paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
+        int count = userService.getUserCount();
+
+        List<User> userList = userService.findUserPaginationRequest(paginationRequest);
+        if (!userList.isEmpty()) {
+            map.put("page", paginationRequest.getPage());
+            map.put("count", count);
+            map.put("total", (int) Math.ceil((double) count / everyNumber));
+            map.put("users", userList);
+            map.put("success", "true");
+        } else {
+            map.put("msg", "没有查询到用户信息！");
+            map.put("success", "false");
+        }
         return map;
     }
 
@@ -45,16 +62,19 @@ public class UserController {
             User user1 = new User();
             user1.setUserName(user.getUserName());
             user1.setPassWord(MD5.getMD5(user.getPassWord()));
-            user1.setAccountType(user.getAccountType());
+            user1.setAccountType(1);
             user1.setAccountStatus(0);
 
             int isAdd = userService.addUser(user1);
             if (isAdd == 1) {
+                map.put("success", "true");
                 map.put("msg", "账号信息创建成功！");
             } else {
+                map.put("success", "false");
                 map.put("msg", "用户名已存在！");
             }
         } else {
+            map.put("success", "false");
             map.put("msg", "请输入账号信息！");
         }
         return map;
@@ -69,8 +89,10 @@ public class UserController {
         user1.setPassWord(MD5.getMD5(user.getPassWord()));
         int isUpdate = userService.updateUser(user1);
         if (isUpdate == 1) {
+            map.put("success", "true");
             map.put("msg", "重置密码成功！");
         } else {
+            map.put("success", "false");
             map.put("msg", "重置密码失败！");
         }
         return map;
@@ -83,8 +105,10 @@ public class UserController {
         Map map = new HashMap();
         int isDelete = userService.deleteUserByName(user.getUserName());
         if (isDelete == 1) {
+            map.put("success", "true");
             map.put("msg", "删除账号信息成功！");
         } else {
+            map.put("success", "false");
             map.put("msg", "删除账号信息失败！");
         }
         return map;

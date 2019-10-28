@@ -14,9 +14,15 @@
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
-    
-    <select id="findAllExpertScoreByProjectNumber" resultMap="expertScoreSheetMap">
-        select projectName, projectNumber, companyName, expertName, updateTime from expertscoresheet where projectNumber = #{projectNumber}
+
+    <select id="findExportScoreCount">
+        select count(*) from expertscoresheet where projectNumber = #{projectNumber};
+    </select>
+
+    <select id="findExpertScoreByProjectNumberAndPagination" resultMap="expertScoreSheetMap">
+        select projectName, projectNumber, companyName, expertName, updateTime
+        from expertscoresheet
+        where projectNumber = #{projectNumber} order by id limit #{startNumber}, #{columns}
     </select>
 
     <select id="findScoreInfoByExpertNameAndCompanyName" resultType="com.avic.model.ExpertScoreSheet">

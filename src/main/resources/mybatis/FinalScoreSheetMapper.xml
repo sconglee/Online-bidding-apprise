@@ -14,8 +14,13 @@
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="findAllProject" resultMap="finalScoreSheetMap">
-        select projectNumber, projectName, companyName, isGenerate from finalscoresheet
+    <select id="findProjectCount">
+        select count(*) from finalscoresheet
+    </select>
+
+    <select id="findProjectByPagination" resultMap="finalScoreSheetMap">
+        select projectNumber, projectName, companyName, isGenerate
+        from finalscoresheet order by id limit #{startNumber}, #{columns}
     </select>
 
     <update id="updateFinalScore" parameterType="com.avic.model.FinalScoreSheet">

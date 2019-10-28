@@ -1,6 +1,7 @@
 package com.avic.service;
 
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.httovo.PaginationRequest;
 
 import java.util.List;
 
@@ -10,7 +11,10 @@ import java.util.List;
  */
 public interface ExpertScoreSheetService {
 
-    List<ExpertScoreSheet> getAllExpertScoreByProjectNumber(String projectNumber);
+
+    int getExportScoreCount(String projectNumber);
+
+    List<ExpertScoreSheet> getExpertScoreByProjectNumberAndPagination(String projectNumber, PaginationRequest paginationRequest);
 
     ExpertScoreSheet getScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
 
