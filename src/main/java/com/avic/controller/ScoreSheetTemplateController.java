@@ -212,40 +212,6 @@ public class ScoreSheetTemplateController {
     }
 
 
-    /**
-     * @Author xulei
-     * @Description 下发评标打分模板
-     * @Date 13:46 2019/10/18/018
-     * @Param []
-     * @return java.util.Map<java.lang.String,java.lang.Object>
-     **/
-    @RequestMapping("/sendTemplatePagination")
-    @ResponseBody
-    public Map<String, Object> sendScoreSheetTemplateToExpertPagination(@RequestBody PaginationRequest paginationRequest) {
-        Map<String, Object> modelMap = new HashMap<>();
-
-        List<ScoreSheetTemplate> resultList = scoreSheetTemplateService.sendScoreSheetTemplateToExpert();
-
-        if (resultList.isEmpty()) {
-            modelMap.put("success", "false");
-            modelMap.put("msg", "没有符合要求的评标打分模板，请联系项目经理！");
-
-        } else {
-            // 组装前端需要的数据格式
-            int whichPage = paginationRequest.getPage();
-            int everyNumber = paginationRequest.getColumns();
-            int count = resultList.size();
-
-            modelMap.put("success", "true");
-            modelMap.put("page", whichPage);
-            modelMap.put("count", count);
-            modelMap.put("total", (int)Math.ceil((double) count / everyNumber));
-            modelMap.put("data", scoreSheetTemplateService.assembleDataForSendScoreTemplateToExpert(resultList,whichPage,everyNumber));
-        }
-
-        return modelMap;
-    }
-
 
 
 }

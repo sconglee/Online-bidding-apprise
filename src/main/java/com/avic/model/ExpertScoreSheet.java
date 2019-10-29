@@ -12,6 +12,7 @@ public class ExpertScoreSheet {
     private String expertName;
     private String itemWeight;
     private String totalItems;
+    private Integer status;
     private String point;
     private String createTime;
     private String updateTime;
@@ -70,6 +71,14 @@ public class ExpertScoreSheet {
 
     public void setItemWeight(String itemWeight) {
         this.itemWeight = itemWeight;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getPoint() {

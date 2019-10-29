@@ -1,8 +1,11 @@
 package com.avic.controller;
 
 import com.avic.common.utils.TimeUtil;
+import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.FinalScoreSheet;
+import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetPagination;
 import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.FinalScoreSheetService;
@@ -14,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +40,9 @@ public class ExpertScoreSheetController {
     @Autowired
     private FinalScoreSheetService finalScoreSheetService;
 
+    @Autowired
+    private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
+
     /**
      * @return java.util.Map<java.lang.String,java.lang.Object>
      * @Author xulei
@@ -43,9 +50,9 @@ public class ExpertScoreSheetController {
      * @Date 16:33 2019/10/18/018
      * @Param []
      **/
-    @RequestMapping(value = "insertExpertScoreSheet")
+    @RequestMapping(value = "updateExpertScoreSheet")
     @ResponseBody
-    public Map<String, Object> insertExpertScoreSheet(@RequestBody ExpertScoreSheet expertScoreSheet, HttpSession session) {
+    public Map<String, Object> updateExpertScoreSheet(@RequestBody ExpertScoreSheet expertScoreSheet, HttpSession session) {
         Map<String, Object> modelMap = new ModelMap();
         modelMap.put("success", "false");
         modelMap.put("msg", "新增数据失败！！");
@@ -66,7 +73,7 @@ public class ExpertScoreSheetController {
         finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
         finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
 
-        Integer insertFlag = expertScoreSheetService.insertExpertScoreSheet(expertScoreSheet);
+        Integer insertFlag = expertScoreSheetService.updateExpertScoreSheet(expertScoreSheet);
         if (insertFlag > 0) {
             logger.info("保存专家打分结果成功，具体信息为：" + expertScoreSheet.toString());
             modelMap.put("success", "true");
@@ -125,6 +132,54 @@ public class ExpertScoreSheetController {
         }
 
         return map;
+    }
+
+    /**
+    * @Author xulei
+    * @Description 下发评标打分模板
+    * @Date 16:31 2019/10/28/028
+    * @Param [paginationRequest]
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    **/
+    @RequestMapping("/getExpertScoreSheetListPagination")
+    @ResponseBody
+    public Map<String, Object> getExpertScoreSheetListPagination(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        // 1、到scoreSheetTemplate表中查询唯一生效的模板
+        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        logger.info("专家打分列表的查询条件：projectName：" + scoreSheetTemplate.getProjectName() + "  ,projectNumber:" + scoreSheetTemplate.getProjectNumber());
+
+        //1、根据上面scoreSheetTemplate中的name和number，查询expertScoreSheet表
+        int whichPage = expertScoreSheetPagination.getPage();
+        int everyNumber = expertScoreSheetPagination.getColumns();
+        expertScoreSheetPagination.setStartNumber((whichPage - 1) * everyNumber);
+        expertScoreSheetPagination.setProjectName(scoreSheetTemplate.getProjectName());
+        expertScoreSheetPagination.setProjectNumber(scoreSheetTemplate.getProjectNumber());
+
+
+        List<ExpertScoreSheet> expertScoreSheetList = new ArrayList<>();
+        // 只查询当前处于未打分的表
+        // 2、查询数据总数
+        Integer count = expertScoreSheetService.findScoreSheetTotalCount(expertScoreSheetPagination);
+        logger.info("总数为：" + count);
+
+        // 3、查询当页的数据信息
+        expertScoreSheetList = expertScoreSheetService.findScoreSheetPagination(expertScoreSheetPagination);
+        logger.info("数据为：" + expertScoreSheetList.size());
+
+        if (!expertScoreSheetList.isEmpty()) {
+            modelMap.put("success", "true");
+            modelMap.put("page", expertScoreSheetPagination.getPage());
+            modelMap.put("count", count);
+            modelMap.put("total", (int)Math.ceil((double) count / everyNumber));
+            modelMap.put("data", expertScoreSheetList);
+        } else {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "数据为空！！");
+        }
+
+        return modelMap;
     }
 
 }

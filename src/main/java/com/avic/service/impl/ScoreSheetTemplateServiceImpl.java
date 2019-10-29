@@ -3,9 +3,12 @@ package com.avic.service.impl;
 import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.MD5;
 import com.avic.common.utils.TimeUtil;
+import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
+import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.httovo.PaginationRequest;
+import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.ScoreSheetTemplateService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +34,12 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     @Autowired
     private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
 
+    @Autowired
+    private ExpertScoreSheetMapper expertScoreSheetMapper;
+
+    @Autowired
+    private ExpertScoreSheetService expertScoreSheetService;
+
     /**
     * @Author xulei
     * @Description 获取所有有效的评标打分模板信息
@@ -40,7 +49,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
     **/
     @Override
     public Integer findTemplateTotalCount() {
-        logger.info("获取评分表模板信息列表");
+        logger.info("获取评分表模板信息列表--总数：");
         return scoreSheetTemplateMapper.findTemplateTotalCount();
     }
 
@@ -123,11 +132,20 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
         modelMap.put("success", "true");
         modelMap.put("msg", "");
 
-        // 先去数据查询数据
+        // 1、判断是否已经存在"生效"状态的模板---全局只能有一个生效模板
+        ScoreSheetTemplate statusScoreSheetTemplate = null;
+        statusScoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        if (statusScoreSheetTemplate != null && !statusScoreSheetTemplate.getId().equals(scoreSheetTemplate.getId())) {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "已经存在生效的评标打分模板，请使其失效后再重试！！");
+            return modelMap;
+        }
+
+        // 2、校验数据库是否存在前端传过来的数据--先去数据查询
         ScoreSheetTemplate result = scoreSheetTemplateMapper.findTemplateById(scoreSheetTemplate);
         if (result != null && result.getRemove().equals(BidConstant.TEMPLATE_NO_REMOVE)) {
            logger.info("根据项目名称和项目编号查询评标打分模板成功,具体信息为：" + result.toString());
-            //查询成功，修改数据，update数据库
+            // 3、查询成功--update数据库
             if (result.getStatus().equals(BidConstant.TEMPLATE_NO_ACTIVE)) {
                 // 设置为0 生效
                 result.setStatus(BidConstant.TEMPLATE_ACTIVE);
@@ -137,9 +155,27 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
                 result.setStatus(BidConstant.TEMPLATE_NO_ACTIVE);
                 modelMap.put("msg", "评标打分模板已失效！！");
             }
-
             result.setUpdateTime(TimeUtil.getTimeByDefautFormat());
             scoreSheetTemplateMapper.enableEffectiveOrNot(result);
+
+            // 4、如果是设置status为生效状态：说明随后专家会使用该模板，因此可以预先insert到expertscoresheet中，status使用默认值1（未打分）
+            // 之后在专家登录首页，根据projectName + projectNumber 组合查询expertscoresheet表，并以分页列表形式展示
+            if (result.getStatus().equals(BidConstant.TEMPLATE_ACTIVE)) {
+                List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate();
+
+                // 4.1 先根据name+number查询数据库是否已经存在，如果没有则执行insert，否则执行delete再insert。
+                ExpertScoreSheet selectCondition = new ExpertScoreSheet();
+                selectCondition.setProjectName(result.getProjectName());
+                selectCondition.setProjectNumber(result.getProjectNumber());
+                List<ExpertScoreSheet> deleteExpertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNumberAndProjectNumber(selectCondition);
+                if (deleteExpertScoreSheetList.size() == expertScoreSheetList.size()) {
+                    // 执行批量删除
+                    expertScoreSheetMapper.deleteExpertScoreForeachById(deleteExpertScoreSheetList);
+                }
+
+                // 4.2 批量执行插入操作。
+                expertScoreSheetMapper.insertExpertScoreSheetForeach(expertScoreSheetList);
+            }
 
             logger.info("评标打分模板“生效/失效”成功,具体信息为：" + result.toString());
 
@@ -183,50 +219,12 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
 
     /**
     * @Author xulei
-    * @Description 下发评标打分模板
-    * @Date 9:09 2019/10/18/018
-    * @Param []
-    * @return java.util.List<com.avic.model.ScoreSheetTemplate>
-    **/
-    @Override
-    public List<ScoreSheetTemplate> sendScoreSheetTemplateToExpert() {
-        logger.info("向评标专家推送评标打分模板：");
-        List<ScoreSheetTemplate> resultList = new ArrayList<>();
-
-        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
-        if (scoreSheetTemplate != null) {
-            // 使用","分割出每一个投标单位
-            String[] companyName = scoreSheetTemplate.getScoredComName().split(",");
-            logger.info("待评标公司如下：" + companyName.toString());
-
-            for (int i = 0; i < companyName.length; i++){
-                ScoreSheetTemplate tempTemplate = new ScoreSheetTemplate();
-                tempTemplate.setProjectName(scoreSheetTemplate.getProjectName());
-                tempTemplate.setProjectNumber(scoreSheetTemplate.getProjectNumber());
-                tempTemplate.setTotalItems(scoreSheetTemplate.getTotalItems());
-                tempTemplate.setSequenceNumber(scoreSheetTemplate.getSequenceNumber());
-                tempTemplate.setItemWeight(scoreSheetTemplate.getItemWeight());
-                tempTemplate.setScoredComName(companyName[i]);
-                tempTemplate.setStatus(scoreSheetTemplate.getStatus());
-                tempTemplate.setRemove(scoreSheetTemplate.getRemove());
-                tempTemplate.setCreateTime(scoreSheetTemplate.getCreateTime());
-                tempTemplate.setUpdateTime(scoreSheetTemplate.getUpdateTime());
-
-                resultList.add(tempTemplate);
-            }
-        }
-
-        return resultList;
-    }
-
-    /**
-    * @Author xulei
     * @Description 向专家下发打分表时，组装分页数据
     * @Date 10:35 2019/10/25/025
     * @Param 
     * @return 
     **/
-    @Override
+    /*@Override
     public List<ScoreSheetTemplate> assembleDataForSendScoreTemplateToExpert(List<ScoreSheetTemplate> resultList, Integer whichPage, Integer everyNumber) {
         int dataCount = resultList.size();
         int startNumber = (whichPage - 1) * everyNumber;
@@ -243,7 +241,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
             dataList.add(resultList.get(index));
         }
         return dataList;
-    }
+    }*/
 
 
 
