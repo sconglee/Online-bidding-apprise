@@ -97,6 +97,12 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
         return expertScoreSheetMapper.findScoreSheetPagination(paginationRequest);
     }
 
+    @Override
+    public List<ExpertScoreSheet> getExpertScoreByProjectNumberAndProjectNumber(ExpertScoreSheet expertScoreSheet) {
+        logger.info("根据项目名称+项目编号获取专家打分表信息：");
+        return expertScoreSheetMapper.getExpertScoreByProjectNumberAndProjectNumber(expertScoreSheet);
+    }
+
     /**
      * @Author xulei
      * @Description 下发评标打分模板

@@ -32,4 +32,5 @@ public interface ExpertScoreSheetService {
      **/
     List<ExpertScoreSheet> findScoreSheetPagination(PaginationRequest paginationRequest);
 
+    List<ExpertScoreSheet> getExpertScoreByProjectNumberAndProjectNumber(ExpertScoreSheet expertScoreSheet);
 }

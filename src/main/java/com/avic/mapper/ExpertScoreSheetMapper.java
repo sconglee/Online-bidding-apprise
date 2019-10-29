@@ -31,4 +31,9 @@ public interface ExpertScoreSheetMapper {
      分页查询
      **/
     List<ExpertScoreSheet> findScoreSheetPagination(PaginationRequest paginationRequest);
+
+    List<ExpertScoreSheet> getExpertScoreByProjectNumberAndProjectNumber(ExpertScoreSheet expertScoreSheet);
+
+    Integer deleteExpertScoreForeachById(List<ExpertScoreSheet> expertScoreSheetList);
+
 }

@@ -31,6 +31,10 @@
         select * from expertscoresheet where expertName = #{expertName} and companyName = #{companyName}
     </select>
 
+    <select id="getExpertScoreByProjectNumberAndProjectNumber" resultType="com.avic.model.ExpertScoreSheet">
+        select * from expertscoresheet where projectName = #{projectName} and projectNumber = #{projectNumber}
+    </select>
+
     <select id="findScoreInfoByProjectNumberAndCompanyName" resultMap="expertScoreSheetMap">
         select * from expertscoresheet where projectNumber = #{projectNumber} and companyName = #{companyName}
     </select>
@@ -157,5 +161,11 @@
         </foreach>
     </insert>
 
+    <delete id="deleteExpertScoreForeachById" parameterType="java.util.List" >
+        delete from expertscoresheet where id in
+        <foreach collection="list" item="expertScoreSheet" separator="," open="(" close=")">
+            #{expertScoreSheet.id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
 
 </mapper>
