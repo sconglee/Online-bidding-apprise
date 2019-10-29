@@ -17,7 +17,7 @@ public interface ExpertScoreSheetMapper {
 
     int findExportScoreCount(@Param("projectNumber") String projectNumber);
 
-    List<Map<String, Object>> findExpertScoreByProjectNumberAndPagination(@Param("projectNumber") String projectNumber, PaginationRequest paginationRequest);
+    List<Map<String, Object>> findExpertScoreByProjectNumberAndPagination(ExpertScoreSheetPagination expertScoreSheetPagination);
 
     ExpertScoreSheet findScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
 

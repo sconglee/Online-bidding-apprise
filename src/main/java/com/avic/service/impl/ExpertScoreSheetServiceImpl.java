@@ -38,9 +38,9 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
-    public List<Map<String, Object>> getExpertScoreByProjectNumberAndPagination(String projectNumber, PaginationRequest paginationRequest) {
+    public List<Map<String, Object>> getExpertScoreByProjectNumberAndPagination(ExpertScoreSheetPagination expertScoreSheetPagination) {
         logger.info("按页查询已提交的评分");
-        return expertScoreSheetMapper.findExpertScoreByProjectNumberAndPagination(projectNumber, paginationRequest);
+        return expertScoreSheetMapper.findExpertScoreByProjectNumberAndPagination(expertScoreSheetPagination);
     }
 
     @Override

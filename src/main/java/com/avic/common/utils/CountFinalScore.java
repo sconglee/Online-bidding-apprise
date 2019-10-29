@@ -16,11 +16,12 @@ public class CountFinalScore {
         List<List<String>> pointList1 = new ArrayList<>();
         List<String> itemWeightList = Arrays.asList(itemWeight.split(","));
         int expertNumber = pointList.size();
-        int Number = pointList1.get(0).size();
+
 
         for (String point : pointList) {
             pointList1.add(Arrays.asList(point.split(",")));
         }
+        int Number = pointList1.get(0).size();
 
         List<List<String>> pointList2 = new ArrayList<>();
         for (int i = 0; i < Number; i++) {
@@ -28,26 +29,26 @@ public class CountFinalScore {
         }
 
         //去掉最高分和最低分然后求取平均分
-        List<Integer> averageScoreList = new ArrayList<>();
+        List<Float> averageScoreList = new ArrayList<>();
         for (List<String> pointList3 : pointList2) {
-            int sum = 0;
-            int averageScore = 0;
+            float sum = 0;
+            float averageScore = 0;
             for (int z = 0; z < pointList3.size(); z++) {
-                sum = Integer.parseInt(pointList3.get(z)) + sum;
+                sum = Float.parseFloat(pointList3.get(z)) + sum;
             }
-            averageScore = (sum - Integer.parseInt(Collections.max(pointList3)) - Integer.parseInt(Collections.min(pointList3))) / (expertNumber - 2);
+            averageScore = (sum - Float.parseFloat(Collections.max(pointList3)) - Float.parseFloat(Collections.min(pointList3))) / (expertNumber - 2);
             averageScoreList.add(averageScore);
         }
 
         List<String> finalScoreList = new ArrayList<>();
         for (int k = 0; k < Number; k++) {
-            finalScoreList.add(String.valueOf(averageScoreList.get(k) * Integer.parseInt(itemWeightList.get(k))));
+            finalScoreList.add(String.valueOf(averageScoreList.get(k) * Float.parseFloat(itemWeightList.get(k))));
         }
 
         //最后总得分
-        int totalScore = 0;
+        float totalScore = 0;
         for (int m = 0; m < finalScoreList.size(); m++) {
-            totalScore = Integer.parseInt(finalScoreList.get(m)) + totalScore;
+            totalScore = Float.parseFloat(finalScoreList.get(m)) + totalScore;
         }
 
         map.put("finalScore", finalScoreList);

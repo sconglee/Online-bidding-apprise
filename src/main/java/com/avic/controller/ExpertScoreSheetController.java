@@ -90,17 +90,18 @@ public class ExpertScoreSheetController {
 
     @RequestMapping(value = "getexportscore", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getAllExportScore(@RequestParam(value = "projectNumber") String projectNumber, @RequestBody PaginationRequest paginationRequest) {
+    public Map<String, Object> getAllExportScore(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) {
         Map map = new HashMap();
+        String projectNumber = expertScoreSheetPagination.getProjectNumber();
         if (projectNumber != null && projectNumber.length() != 0) {
-            int whichPage = paginationRequest.getPage();
-            int everyNumber = paginationRequest.getColumns();
-            paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
+            int whichPage = expertScoreSheetPagination.getPage();
+            int everyNumber = expertScoreSheetPagination.getColumns();
+            expertScoreSheetPagination.setStartNumber((whichPage - 1) * everyNumber);
             int count = expertScoreSheetService.getExportScoreCount(projectNumber);
 
-            List<Map<String, Object>> expertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNumberAndPagination(projectNumber, paginationRequest);
+            List<Map<String, Object>> expertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNumberAndPagination(expertScoreSheetPagination);
             if (!expertScoreSheetList.isEmpty()) {
-                map.put("page", paginationRequest.getPage());
+                map.put("page", expertScoreSheetPagination.getPage());
                 map.put("count", count);
                 map.put("total", (int) Math.ceil((double) count / everyNumber));
                 map.put("expertScoreSheetList", expertScoreSheetList);

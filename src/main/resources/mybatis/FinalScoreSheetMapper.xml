@@ -9,7 +9,7 @@
         <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
         <result column="isGenerate" property="isGenerate" jdbcType="INTEGER"/>
         <result column="averageScore" property="averageScore" jdbcType="VARCHAR"/>
-        <result column="totalScore" property="totalScore" jdbcType="INTEGER"/>
+        <result column="totalScore" property="totalScore" jdbcType="FLOAT"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>

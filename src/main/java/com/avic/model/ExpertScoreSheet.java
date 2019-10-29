@@ -12,10 +12,19 @@ public class ExpertScoreSheet {
     private String expertName;
     private String itemWeight;
     private String totalItems;
+    private String itemCount;
     private Integer status;
     private String point;
     private String createTime;
     private String updateTime;
+
+    public String getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(String itemCount) {
+        this.itemCount = itemCount;
+    }
 
     public String getTotalItems() {
         return totalItems;

@@ -82,7 +82,7 @@ public class FinalScoreSheetController {
         finalScoreSheet1.setProjectNumber(finalScoreSheet.getProjectNumber());
         finalScoreSheet1.setCompanyName(finalScoreSheet.getCompanyName());
         finalScoreSheet1.setAverageScore(StringUtils.collectionToDelimitedString(finalScoreList,","));
-        finalScoreSheet1.setTotalScore((Integer) mapScore.get("totalScore"));
+        finalScoreSheet1.setTotalScore((Float) mapScore.get("totalScore"));
         finalScoreSheet1.setIsGenerate(1);
         finalScoreSheet1.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
@@ -116,12 +116,14 @@ public class FinalScoreSheetController {
             }
             String itemWeight = expertScoreSheetList.get(0).getItemWeight();
             String totalItems = expertScoreSheetList.get(0).getTotalItems();
+            String itemCount = expertScoreSheetList.get(0).getItemCount();
 
             FinalScoreSheet finalScoreSheet1 = finalScoreSheetService.getFinalScoreSheetByProjectNumberAndCompanyName(finalScoreSheet);
 
             if (itemWeight != null & totalItems != null & finalScoreSheet1 != null) {
                 map.put("totalItems", totalItems);
                 map.put("itemWeight", itemWeight);
+                map.put("itemCount", itemCount);
                 map.put("pointList", pointList);
                 map.put("finalScoreSheet", finalScoreSheet1);
                 map.put("msg", "查询得分表详情成功！");

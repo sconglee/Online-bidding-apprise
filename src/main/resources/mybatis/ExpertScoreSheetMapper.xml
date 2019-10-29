@@ -11,6 +11,7 @@
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
+        <result column="itemCount" property="itemCount" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER" />
         <result column="point" property="point" jdbcType="VARCHAR"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
