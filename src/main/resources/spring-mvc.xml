@@ -22,6 +22,17 @@
     <!-- 静态资源默认servlet配置 -->
     <mvc:default-servlet-handler/>
 
+    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+        <property name="simpleDateFormat" value="yyyy-MM-dd HH:mm:ss" />
+    </bean>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
     <!-- 在spring-mvc.xml文件中加入这段配置后，spring返回给页面的都是utf-8编码了 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">

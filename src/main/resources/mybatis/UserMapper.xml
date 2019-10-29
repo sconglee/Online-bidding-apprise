@@ -11,13 +11,20 @@
         <result column="account_status" property="accountStatus" jdbcType="INTEGER"/>
     </resultMap>
 
-    <select id="getUserPaginationRequest" parameterType="com.avic.model.httovo.PaginationRequest" resultType="com.avic.model.User">
+    <resultMap id="partUserMap" type="java.util.HashMap">
+        <result column="username" property="userName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="account_type" property="accountType" jdbcType="INTEGER"/>
+        <result column="account_status" property="accountStatus" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getUserPaginationRequest" parameterType="com.avic.model.httovo.PaginationRequest" resultMap="partUserMap">
         select username, create_time, account_type ,account_status
         from users
         order by id limit #{startNumber}, #{columns}
     </select>
 
-    <select id="findUserCount">
+    <select id="findUserCount" resultType="Integer">
         select count(*) from users
     </select>
 

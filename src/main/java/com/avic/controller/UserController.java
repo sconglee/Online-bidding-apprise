@@ -39,16 +39,17 @@ public class UserController {
         paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
         int count = userService.getUserCount();
 
-        List<User> userList = userService.findUserPaginationRequest(paginationRequest);
+        List<Map<String, Object>> userList = userService.findUserPaginationRequest(paginationRequest);
         if (!userList.isEmpty()) {
             map.put("page", paginationRequest.getPage());
             map.put("count", count);
             map.put("total", (int) Math.ceil((double) count / everyNumber));
             map.put("users", userList);
-            map.put("success", "true");
+            map.put("msg", "查询用户信息成功！");
+            map.put("success", true);
         } else {
             map.put("msg", "没有查询到用户信息！");
-            map.put("success", "false");
+            map.put("success", false);
         }
         return map;
     }
@@ -67,14 +68,14 @@ public class UserController {
 
             int isAdd = userService.addUser(user1);
             if (isAdd == 1) {
-                map.put("success", "true");
+                map.put("success", true);
                 map.put("msg", "账号信息创建成功！");
             } else {
-                map.put("success", "false");
+                map.put("success", false);
                 map.put("msg", "用户名已存在！");
             }
         } else {
-            map.put("success", "false");
+            map.put("success", false);
             map.put("msg", "请输入账号信息！");
         }
         return map;
@@ -89,10 +90,10 @@ public class UserController {
         user1.setPassWord(MD5.getMD5(user.getPassWord()));
         int isUpdate = userService.updateUser(user1);
         if (isUpdate == 1) {
-            map.put("success", "true");
+            map.put("success", true);
             map.put("msg", "重置密码成功！");
         } else {
-            map.put("success", "false");
+            map.put("success", false);
             map.put("msg", "重置密码失败！");
         }
         return map;
@@ -105,10 +106,10 @@ public class UserController {
         Map map = new HashMap();
         int isDelete = userService.deleteUserByName(user.getUserName());
         if (isDelete == 1) {
-            map.put("success", "true");
+            map.put("success", true);
             map.put("msg", "删除账号信息成功！");
         } else {
-            map.put("success", "false");
+            map.put("success", false);
             map.put("msg", "删除账号信息失败！");
         }
         return map;

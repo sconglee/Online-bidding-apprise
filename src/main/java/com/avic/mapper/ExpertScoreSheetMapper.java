@@ -5,6 +5,7 @@ import com.avic.model.httovo.PaginationRequest;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sconglee
@@ -14,7 +15,7 @@ public interface ExpertScoreSheetMapper {
 
     int findExportScoreCount(@Param("projectNumber") String projectNumber);
 
-    List<ExpertScoreSheet> findExpertScoreByProjectNumberAndPagination(@Param("projectNumber") String projectNumber, PaginationRequest paginationRequest);
+    List<Map<String, Object>> findExpertScoreByProjectNumberAndPagination(@Param("projectNumber") String projectNumber, PaginationRequest paginationRequest);
 
     ExpertScoreSheet findScoreInfoByExpertNameAndCompanyName(ExpertScoreSheet expertScoreSheet);
 

@@ -4,6 +4,7 @@ import com.avic.model.FinalScoreSheet;
 import com.avic.model.httovo.PaginationRequest;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sconglee
@@ -13,7 +14,7 @@ public interface FinalScoreSheetMapper {
 
     int findProjectCount();
 
-    List<FinalScoreSheet> findProjectByPagination(PaginationRequest paginationRequest);
+    List<Map<String, Object>> findProjectByPagination(PaginationRequest paginationRequest);
 
     int updateFinalScore(FinalScoreSheet finalScoreSheet);
 

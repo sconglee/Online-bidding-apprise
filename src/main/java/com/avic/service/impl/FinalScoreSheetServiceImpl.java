@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sconglee
@@ -29,7 +30,7 @@ public class FinalScoreSheetServiceImpl implements FinalScoreSheetService {
     }
 
     @Override
-    public List<FinalScoreSheet> getProjectByPagination(PaginationRequest paginationRequest) {
+    public List<Map<String, Object>> getProjectByPagination(PaginationRequest paginationRequest) {
         logger.info("查询综合得分表项目列表");
         return finalScoreSheetMapper.findProjectByPagination(paginationRequest);
     }

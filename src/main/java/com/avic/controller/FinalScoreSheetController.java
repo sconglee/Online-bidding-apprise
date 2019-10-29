@@ -45,17 +45,17 @@ public class FinalScoreSheetController {
         paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
         int count = finalScoreSheetService.getProjectCount();
 
-        List<FinalScoreSheet> finalScoreSheetList = finalScoreSheetService.getProjectByPagination(paginationRequest);
+        List<Map<String, Object>> finalScoreSheetList = finalScoreSheetService.getProjectByPagination(paginationRequest);
         if (!finalScoreSheetList.isEmpty()) {
             map.put("page", paginationRequest.getPage());
             map.put("count", count);
             map.put("total", (int) Math.ceil((double) count / everyNumber));
             map.put("projectInfo", finalScoreSheetList);
             map.put("msg", "查询成功！");
-            map.put("success", "true");
+            map.put("success", true);
         } else {
             map.put("msg", "没有查询到项目信息！");
-            map.put("success", "false");
+            map.put("success", false);
         }
 
         return map;
@@ -88,10 +88,10 @@ public class FinalScoreSheetController {
 
         int isUpdate = finalScoreSheetService.updateFinalScoreSheet(finalScoreSheet1);
         if (isUpdate == 1) {
-            map.put("success", "true");
+            map.put("success", true);
             map.put("msg", "得分表生成成功！");
         } else {
-            map.put("success", "false");
+            map.put("success", false);
             map.put("msg", "得分表生成失败！");
         }
         return map;
@@ -119,13 +119,20 @@ public class FinalScoreSheetController {
 
             FinalScoreSheet finalScoreSheet1 = finalScoreSheetService.getFinalScoreSheetByProjectNumberAndCompanyName(finalScoreSheet);
 
-            map.put("totalItems", totalItems);
-            map.put("itemWeight", itemWeight);
-            map.put("pointList", pointList);
-            map.put("finalScoreSheet", finalScoreSheet1);
-            map.put("msg", "查询得分表详情成功！");
+            if (itemWeight != null & totalItems != null & finalScoreSheet1 != null) {
+                map.put("totalItems", totalItems);
+                map.put("itemWeight", itemWeight);
+                map.put("pointList", pointList);
+                map.put("finalScoreSheet", finalScoreSheet1);
+                map.put("msg", "查询得分表详情成功！");
+                map.put("success", true);
+            } else {
+                map.put("msg", "还没有生成得分表！");
+                map.put("success", false);
+            }
         } else {
             map.put("msg", "查询得分表详情失败！");
+            map.put("success", false);
         }
         return map;
 

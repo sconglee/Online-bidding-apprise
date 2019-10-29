@@ -14,11 +14,18 @@
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="findProjectCount">
+    <resultMap id="partFinalScoreSheetMap" type="java.util.HashMap">
+        <result column="projectName" property="projectName" jdbcType="VARCHAR"/>
+        <result column="projectNumber" property="projectNumber" jdbcType="VARCHAR"/>
+        <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
+        <result column="isGenerate" property="isGenerate" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="findProjectCount" resultType="Integer">
         select count(*) from finalscoresheet
     </select>
 
-    <select id="findProjectByPagination" resultMap="finalScoreSheetMap">
+    <select id="findProjectByPagination" resultMap="partFinalScoreSheetMap">
         select projectNumber, projectName, companyName, isGenerate
         from finalscoresheet order by id limit #{startNumber}, #{columns}
     </select>
@@ -79,11 +86,6 @@
             </if>
         </trim>
     </insert>
-
-    <select id="findAllProject" resultMap="finalScoreSheetMap">
-        select projectNumber, projectName, companyName, isGenerate from finalscoresheet
->>>>>>> ff68fd0cc3aec8fd605bf3bd048b8de4ad14b554
-    </select>
 
     <update id="updateFinalScore" parameterType="com.avic.model.FinalScoreSheet">
         update finalscoresheet

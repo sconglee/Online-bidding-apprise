@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sconglee
@@ -30,7 +31,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
-    public List<ExpertScoreSheet> getExpertScoreByProjectNumberAndPagination(String projectNumber, PaginationRequest paginationRequest) {
+    public List<Map<String, Object>> getExpertScoreByProjectNumberAndPagination(String projectNumber, PaginationRequest paginationRequest) {
         logger.info("按页查询已提交的评分");
         return expertScoreSheetMapper.findExpertScoreByProjectNumberAndPagination(projectNumber, paginationRequest);
     }

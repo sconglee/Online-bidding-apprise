@@ -2,8 +2,8 @@ package com.avic.controller;
 
 import com.avic.common.utils.TimeUtil;
 import com.avic.model.ExpertScoreSheet;
-import com.avic.model.httovo.PaginationRequest;
 import com.avic.model.FinalScoreSheet;
+import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.FinalScoreSheetService;
 import org.apache.commons.logging.Log;
@@ -11,9 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -83,9 +81,9 @@ public class ExpertScoreSheetController {
         return modelMap;
     }
 
-    @RequestMapping(value = "getexportscore")
+    @RequestMapping(value = "getexportscore", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> getAllExportScore(@RequestBody String projectNumber, PaginationRequest paginationRequest) {
+    public Map<String, Object> getAllExportScore(@RequestParam(value = "projectNumber") String projectNumber, @RequestBody PaginationRequest paginationRequest) {
         Map map = new HashMap();
         if (projectNumber != null && projectNumber.length() != 0) {
             int whichPage = paginationRequest.getPage();
@@ -93,21 +91,21 @@ public class ExpertScoreSheetController {
             paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
             int count = expertScoreSheetService.getExportScoreCount(projectNumber);
 
-            List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNumberAndPagination(projectNumber, paginationRequest);
+            List<Map<String, Object>> expertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNumberAndPagination(projectNumber, paginationRequest);
             if (!expertScoreSheetList.isEmpty()) {
                 map.put("page", paginationRequest.getPage());
                 map.put("count", count);
                 map.put("total", (int) Math.ceil((double) count / everyNumber));
                 map.put("expertScoreSheetList", expertScoreSheetList);
                 map.put("msg", "查询打分列表成功！");
-                map.put("success", "true");
+                map.put("success", true);
             } else {
                 map.put("msg", "没有查询到打分表！");
-                map.put("success", "false");
+                map.put("success", false);
             }
         } else {
             map.put("msg", "无效的项目编号！");
-            map.put("success", "false");
+            map.put("success", false);
         }
         return map;
     }
@@ -119,10 +117,10 @@ public class ExpertScoreSheetController {
         ExpertScoreSheet expertScoreSheet1 = expertScoreSheetService.getScoreInfoByExpertNameAndCompanyName(expertScoreSheet);
         if (expertScoreSheet1 != null) {
             map.put("expertScoreSheet", expertScoreSheet1);
-            map.put("success", "true");
+            map.put("success", true);
             map.put("msg", "查询打分详情信息成功！");
         } else {
-            map.put("success", "false");
+            map.put("success", false);
             map.put("msg", "查询打分详情信息失败！");
         }
 

@@ -5,6 +5,7 @@ import com.avic.model.httovo.PaginationRequest;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sconglee
@@ -14,7 +15,7 @@ public interface UserMapper {
 
     int findUserCount();
 
-    List<User> getUserPaginationRequest(PaginationRequest paginationRequest);
+    List<Map<String, Object>> getUserPaginationRequest(PaginationRequest paginationRequest);
 
     int insertUser(User user);
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author sconglee
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUserPaginationRequest(PaginationRequest paginationRequest) {
+    public List<Map<String, Object>> findUserPaginationRequest(PaginationRequest paginationRequest) {
         logger.info("按页获取用户信息");
         return userMapper.getUserPaginationRequest(paginationRequest);
     }
