@@ -78,4 +78,18 @@ public class FinalScoreSheet {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "FinalScoreSheet{" +
+                "projectNumber='" + projectNumber + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", isGenerate=" + isGenerate +
+                ", averageScore='" + averageScore + '\'' +
+                ", totalScore=" + totalScore +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                '}';
+    }
 }

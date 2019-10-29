@@ -69,15 +69,15 @@ public class LoginController {
                 session.setAttribute("password", password);
                 session.setAttribute("role", userInfo.getAccountType());
 
-                modelMap.put("success", true);
+                modelMap.put("success", "true");
                 modelMap.put("role", userInfo.getAccountType());
                 modelMap.put("msg", "用户登录成功");
             } else {
-                modelMap.put("success", false);
+                modelMap.put("success", "false");
                 modelMap.put("msg", "用户名或密码错误");
             }
         } else {
-            modelMap.put("success", false);
+            modelMap.put("success", "false");
             modelMap.put("msg", "用户名和密码均不能为空");
         }
         return modelMap;

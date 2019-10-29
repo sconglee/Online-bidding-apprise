@@ -12,7 +12,11 @@ public class ExpertScoreSheet {
     private String expertName;
     private String itemWeight;
     private String totalItems;
+<<<<<<< HEAD
     private String itemCount;
+=======
+    private String sequenceNumber;
+>>>>>>> 788aa35d237d57f4ca96b690abe91343bf5cbb11
     private Integer status;
     private String point;
     private String createTime;
@@ -80,6 +84,14 @@ public class ExpertScoreSheet {
 
     public void setItemWeight(String itemWeight) {
         this.itemWeight = itemWeight;
+    }
+
+    public String getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(String sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
     public Integer getStatus() {
