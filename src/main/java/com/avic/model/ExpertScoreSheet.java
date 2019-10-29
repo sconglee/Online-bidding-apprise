@@ -12,6 +12,7 @@ public class ExpertScoreSheet {
     private String expertName;
     private String itemWeight;
     private String totalItems;
+    private String sequenceNumber;
     private Integer status;
     private String point;
     private String createTime;
@@ -71,6 +72,14 @@ public class ExpertScoreSheet {
 
     public void setItemWeight(String itemWeight) {
         this.itemWeight = itemWeight;
+    }
+
+    public String getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(String sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
     }
 
     public Integer getStatus() {

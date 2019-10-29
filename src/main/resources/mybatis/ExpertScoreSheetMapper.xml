@@ -9,6 +9,7 @@
         <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
         <result column="expertName" property="expertName" jdbcType="VARCHAR"/>
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
+        <result column="sequenceNumber" property="sequenceNumber" jdbcType="VARCHAR"/>
         <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER" />
@@ -82,6 +83,9 @@
             <if test="totalItems != null and totalItems != ''">
                 totalItems = #{totalItems,jdbcType=VARCHAR},
             </if>
+            <if test="sequenceNumber != null and sequenceNumber != ''">
+                sequenceNumber = #{sequenceNumber,jdbcType=VARCHAR},
+            </if>
             <if test="point != null and point != ''">
                 point = #{point,jdbcType=VARCHAR},
             </if>
@@ -121,6 +125,9 @@
                 <if test="expertScoreSheet.totalItems != null">
                     totalItems,
                 </if>
+                <if test="expertScoreSheet.sequenceNumber != null">
+                    sequenceNumber,
+                </if>
                 <if test="expertScoreSheet.status != null">
                     status,
                 </if>
@@ -153,6 +160,9 @@
                 </if>
                 <if test="expertScoreSheet.totalItems != null">
                     #{expertScoreSheet.totalItems, jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.sequenceNumber != null">
+                    #{expertScoreSheet.sequenceNumber,jdbcType=VARCHAR},
                 </if>
                 <if test="expertScoreSheet.point != null">
                     #{expertScoreSheet.point,jdbcType=VARCHAR},

@@ -77,6 +77,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
                 expertScoreSheet.setProjectNumber(scoreSheetTemplate.getProjectNumber());
                 expertScoreSheet.setTotalItems(scoreSheetTemplate.getTotalItems());
                 expertScoreSheet.setItemWeight(scoreSheetTemplate.getItemWeight());
+                expertScoreSheet.setSequenceNumber(scoreSheetTemplate.getSequenceNumber());
                 expertScoreSheet.setCompanyName(companyName[i]);
                 expertScoreSheet.setCreateTime(scoreSheetTemplate.getCreateTime());
                 expertScoreSheet.setUpdateTime(scoreSheetTemplate.getUpdateTime());
