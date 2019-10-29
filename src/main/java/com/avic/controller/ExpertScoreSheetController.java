@@ -57,21 +57,26 @@ public class ExpertScoreSheetController {
         modelMap.put("success", "false");
         modelMap.put("msg", "新增数据失败！！");
 
-        // 从session中获取登录系统的专家用户名，拼接对象数据，然后插入数据库
+        // 1、从session中获取登录系统的专家用户名，拼接对象数据，然后插入数据库
         // String expertName = (String) session.getAttribute("userName");
         expertScoreSheet.setExpertName("xlllllllll");
 
         expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
-        // 向表finalscoresheet中写入数据
+        // 2、向表finalscoresheet中写入数据
         FinalScoreSheet finalScoreSheet = new FinalScoreSheet();
         finalScoreSheet.setProjectName(expertScoreSheet.getProjectName());
         finalScoreSheet.setProjectNumber(expertScoreSheet.getProjectNumber());
         finalScoreSheet.setCompanyName(expertScoreSheet.getCompanyName());
         finalScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
         finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
-        //finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
+        // 2.1 校验finalscoresheet是否已经存在，如果不存在则insert。
+        FinalScoreSheet finalScoreSheet1 = null;
+        finalScoreSheet1 = finalScoreSheetService.findFinalScoreSheetByCondtion(finalScoreSheet);
+        if (finalScoreSheet1 == null) {
+            //finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
+        }
 
         Integer insertFlag = expertScoreSheetService.updateExpertScoreSheet(expertScoreSheet);
         if (insertFlag > 0) {
