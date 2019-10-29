@@ -12,11 +12,8 @@ public class ExpertScoreSheet {
     private String expertName;
     private String itemWeight;
     private String totalItems;
-<<<<<<< HEAD
     private String itemCount;
-=======
     private String sequenceNumber;
->>>>>>> 788aa35d237d57f4ca96b690abe91343bf5cbb11
     private Integer status;
     private String point;
     private String createTime;
