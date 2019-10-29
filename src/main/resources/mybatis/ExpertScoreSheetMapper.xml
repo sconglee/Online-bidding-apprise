@@ -39,17 +39,18 @@
         select * from expertscoresheet where projectNumber = #{projectNumber} and companyName = #{companyName}
     </select>
 
-    <select id="findScoreSheetTotalCount" resultType="Integer">
+    <select id="findScoreSheetTotalCount" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="Integer">
         select count(*)
         from expertscoresheet
-        where status = 1
+        where status = 1 and projectName = #{projectName} and projectNumber = #{projectNumber}
     </select>
 
     <!-- 分页查询 -->
-    <select id="findScoreSheetPagination" parameterType="com.avic.model.httovo.PaginationRequest" resultType="com.avic.model.ExpertScoreSheet">
+    <select id="findScoreSheetPagination" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="com.avic.model.ExpertScoreSheet">
         select *
         from expertscoresheet
-        where status = 1 ORDER BY id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
+        where status = 1 and projectName = #{projectName} and projectNumber = #{projectNumber}
+        ORDER BY id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
     </select>
 
     <update id="updateExpertScoreSheet"  parameterType="com.avic.model.ExpertScoreSheet">

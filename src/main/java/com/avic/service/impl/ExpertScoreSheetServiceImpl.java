@@ -4,6 +4,7 @@ import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetPagination;
 import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ExpertScoreSheetService;
 import org.apache.commons.logging.Log;
@@ -86,15 +87,15 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
-    public Integer findScoreSheetTotalCount() {
+    public Integer findScoreSheetTotalCount(ExpertScoreSheetPagination expertScoreSheetPagination) {
         logger.info("获取专家评分表模板信息列表--总数：");
-        return expertScoreSheetMapper.findScoreSheetTotalCount();
+        return expertScoreSheetMapper.findScoreSheetTotalCount(expertScoreSheetPagination);
     }
 
     @Override
-    public List<ExpertScoreSheet> findScoreSheetPagination(PaginationRequest paginationRequest) {
+    public List<ExpertScoreSheet> findScoreSheetPagination(ExpertScoreSheetPagination expertScoreSheetPagination) {
         logger.info("获取评分表模板信息列表--分页查询：");
-        return expertScoreSheetMapper.findScoreSheetPagination(paginationRequest);
+        return expertScoreSheetMapper.findScoreSheetPagination(expertScoreSheetPagination);
     }
 
     @Override

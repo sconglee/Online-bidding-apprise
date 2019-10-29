@@ -2,6 +2,7 @@ package com.avic.mapper;
 
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetPagination;
 import com.avic.model.httovo.PaginationRequest;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,12 +26,12 @@ public interface ExpertScoreSheetMapper {
 
     Integer insertExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
 
-    Integer findScoreSheetTotalCount();
+    Integer findScoreSheetTotalCount(ExpertScoreSheetPagination expertScoreSheetPagination);
 
     /**
      分页查询
      **/
-    List<ExpertScoreSheet> findScoreSheetPagination(PaginationRequest paginationRequest);
+    List<ExpertScoreSheet> findScoreSheetPagination(ExpertScoreSheetPagination expertScoreSheetPagination);
 
     List<ExpertScoreSheet> getExpertScoreByProjectNumberAndProjectNumber(ExpertScoreSheet expertScoreSheet);
 

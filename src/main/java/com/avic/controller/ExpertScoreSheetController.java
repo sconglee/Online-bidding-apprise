@@ -1,8 +1,10 @@
 package com.avic.controller;
 
 import com.avic.common.utils.TimeUtil;
+import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetPagination;
 import com.avic.model.httovo.PaginationRequest;
 import com.avic.model.FinalScoreSheet;
 import com.avic.service.ExpertScoreSheetService;
@@ -39,6 +41,9 @@ public class ExpertScoreSheetController {
 
     @Autowired
     private FinalScoreSheetService finalScoreSheetService;
+
+    @Autowired
+    private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
 
     /**
      * @return java.util.Map<java.lang.String,java.lang.Object>
@@ -138,28 +143,36 @@ public class ExpertScoreSheetController {
     * @Param [paginationRequest]
     * @return java.util.Map<java.lang.String,java.lang.Object>
     **/
-    @RequestMapping("/sendTemplatePagination")
+    @RequestMapping("/getExpertScoreSheetListPagination")
     @ResponseBody
-    public Map<String, Object> sendScoreSheetTemplateToExpertPagination(@RequestBody PaginationRequest paginationRequest) {
+    public Map<String, Object> getExpertScoreSheetListPagination(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
-        //1、根据前端参数->查询ScoreSheetTemplate表
-        int whichPage = paginationRequest.getPage();
-        int everyNumber = paginationRequest.getColumns();
-        paginationRequest.setStartNumber((whichPage - 1) * everyNumber);
+        // 1、到scoreSheetTemplate表中查询唯一生效的模板
+        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        logger.info("专家打分列表的查询条件：projectName：" + scoreSheetTemplate.getProjectName() + "  ,projectNumber:" + scoreSheetTemplate.getProjectNumber());
+
+        //1、根据上面scoreSheetTemplate中的name和number，查询expertScoreSheet表
+        int whichPage = expertScoreSheetPagination.getPage();
+        int everyNumber = expertScoreSheetPagination.getColumns();
+        expertScoreSheetPagination.setStartNumber((whichPage - 1) * everyNumber);
+        expertScoreSheetPagination.setProjectName(scoreSheetTemplate.getProjectName());
+        expertScoreSheetPagination.setProjectNumber(scoreSheetTemplate.getProjectNumber());
 
 
         List<ExpertScoreSheet> expertScoreSheetList = new ArrayList<>();
         // 只查询当前处于未打分的表
         // 2、查询数据总数
-        Integer count = expertScoreSheetService.findScoreSheetTotalCount();
+        Integer count = expertScoreSheetService.findScoreSheetTotalCount(expertScoreSheetPagination);
+        logger.info("总数为：" + count);
 
         // 3、查询当页的数据信息
-        expertScoreSheetList = expertScoreSheetService.findScoreSheetPagination(paginationRequest);
+        expertScoreSheetList = expertScoreSheetService.findScoreSheetPagination(expertScoreSheetPagination);
+        logger.info("数据为：" + expertScoreSheetList.size());
 
         if (!expertScoreSheetList.isEmpty()) {
             modelMap.put("success", "true");
-            modelMap.put("page", paginationRequest.getPage());
+            modelMap.put("page", expertScoreSheetPagination.getPage());
             modelMap.put("count", count);
             modelMap.put("total", (int)Math.ceil((double) count / everyNumber));
             modelMap.put("data", expertScoreSheetList);
