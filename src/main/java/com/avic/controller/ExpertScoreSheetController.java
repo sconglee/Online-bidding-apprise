@@ -62,7 +62,6 @@ public class ExpertScoreSheetController {
         logger.info("保存用户登录信息，用户名是：" + expertName);
 
         expertScoreSheet.setExpertName(expertName);
-        expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
         // 2、向表finalscoresheet中写入数据
