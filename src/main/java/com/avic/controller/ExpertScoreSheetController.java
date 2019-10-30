@@ -58,9 +58,10 @@ public class ExpertScoreSheetController {
         modelMap.put("msg", "新增数据失败！！");
 
         // 1、从session中获取登录系统的专家用户名，拼接对象数据，然后插入数据库
-        // String expertName = (String) session.getAttribute("userName");
-        expertScoreSheet.setExpertName("xlllllllll");
+        // String expertName = "xlllllllll";
+        String expertName = (String) session.getAttribute("userName");
 
+        expertScoreSheet.setExpertName(expertName);
         expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
