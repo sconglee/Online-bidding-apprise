@@ -153,13 +153,21 @@ public class ExpertScoreSheetController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
         // 1、到scoreSheetTemplate表中查询唯一生效的模板
-        ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
-        logger.info("专家打分列表的查询条件：projectName：" + scoreSheetTemplate.getProjectName() + "  ,projectNumber:" + scoreSheetTemplate.getProjectNumber());
+        ScoreSheetTemplate scoreSheetTemplate = null;
+        scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        if (scoreSheetTemplate == null) {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "不存在处于生效状态的评标打分模板，请联系项目经理！");
+            return modelMap;
+        }
 
         //1、根据上面scoreSheetTemplate中的name和number，查询expertScoreSheet表
         int whichPage = expertScoreSheetPagination.getPage();
         int everyNumber = expertScoreSheetPagination.getColumns();
         expertScoreSheetPagination.setStartNumber((whichPage - 1) * everyNumber);
+
+        logger.info("专家打分列表的查询条件：projectName：" + scoreSheetTemplate.getProjectName()
+                + "  ,projectNumber:" + scoreSheetTemplate.getProjectNumber());
         expertScoreSheetPagination.setProjectName(scoreSheetTemplate.getProjectName());
         expertScoreSheetPagination.setProjectNumber(scoreSheetTemplate.getProjectNumber());
 
