@@ -58,10 +58,9 @@ public class ExpertScoreSheetController {
 
         // 1、从session中获取登录系统的专家用户名，拼接对象数据，然后插入数据库
         // String expertName = "xlllllllll";
-        String expertName = (String) session.getAttribute("userName");
+        /*String expertName = (String) session.getAttribute("userName");
         logger.info("保存用户登录信息，用户名是：" + expertName);
-
-        expertScoreSheet.setExpertName(expertName);
+        expertScoreSheet.setExpertName(expertName);*/
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
         // 2、向表finalscoresheet中写入数据
