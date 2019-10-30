@@ -84,6 +84,9 @@
             <if test="totalItems != null and totalItems != ''">
                 totalItems = #{totalItems,jdbcType=VARCHAR},
             </if>
+            <if test="itemCount != null and itemCount != ''">
+                itemCount = #{itemCount,jdbcType=VARCHAR},
+            </if>
             <if test="sequenceNumber != null and sequenceNumber != ''">
                 sequenceNumber = #{sequenceNumber,jdbcType=VARCHAR},
             </if>
@@ -126,6 +129,9 @@
                 <if test="expertScoreSheet.totalItems != null">
                     totalItems,
                 </if>
+                <if test="expertScoreSheet.itemCount != null">
+                    itemCount,
+                </if>
                 <if test="expertScoreSheet.sequenceNumber != null">
                     sequenceNumber,
                 </if>
@@ -161,6 +167,9 @@
                 </if>
                 <if test="expertScoreSheet.totalItems != null">
                     #{expertScoreSheet.totalItems, jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.itemCount != null">
+                    #{expertScoreSheet.itemCount, jdbcType=VARCHAR},
                 </if>
                 <if test="expertScoreSheet.sequenceNumber != null">
                     #{expertScoreSheet.sequenceNumber,jdbcType=VARCHAR},
