@@ -26,8 +26,7 @@ import java.util.Map;
  **/
 @Controller
 public class LoginController {
-
-    private static Log logger = LogFactory.getLog(LoginController.class);
+    protected static final Log logger = LogFactory.getLog(LoginController.class);
 
     @Autowired
     private UserService userService;

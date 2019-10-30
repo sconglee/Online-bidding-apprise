@@ -31,7 +31,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/expertScore")
 public class ExpertScoreSheetController {
-    private final static Log logger = LogFactory.getLog(ExpertScoreSheetController.class);
+    protected static final Log logger = LogFactory.getLog(ExpertScoreSheetController.class);
 
     @Autowired
     private ExpertScoreSheetService expertScoreSheetService;
