@@ -68,6 +68,7 @@ public class LoginController {
                 session.setAttribute("userName", userName);
                 session.setAttribute("password", password);
                 session.setAttribute("role", userInfo.getAccountType());
+                logger.info("保存用户登录信息，用户名是：" + userName + ", 密码是：" + password + ", 角色是：" + userInfo.getAccountType());
 
                 modelMap.put("success", "true");
                 modelMap.put("role", userInfo.getAccountType());
