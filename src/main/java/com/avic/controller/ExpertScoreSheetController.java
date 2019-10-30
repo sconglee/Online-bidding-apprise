@@ -75,7 +75,7 @@ public class ExpertScoreSheetController {
         FinalScoreSheet finalScoreSheet1 = null;
         finalScoreSheet1 = finalScoreSheetService.findFinalScoreSheetByCondtion(finalScoreSheet);
         if (finalScoreSheet1 == null) {
-            //finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
+            finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
         }
 
         Integer insertFlag = expertScoreSheetService.updateExpertScoreSheet(expertScoreSheet);
