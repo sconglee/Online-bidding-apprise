@@ -4,7 +4,8 @@ import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.MD5;
 import com.avic.model.User;
 import com.avic.service.UserService;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    private static Logger logger = Logger.getLogger(LoginController.class);
+    private static Log logger = LogFactory.getLog(LoginController.class);
 
     @Autowired
     private UserService userService;
