@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,16 +52,19 @@ public class ExpertScoreSheetController {
      **/
     @RequestMapping(value = "updateExpertScoreSheet")
     @ResponseBody
-    public Map<String, Object> updateExpertScoreSheet(@RequestBody ExpertScoreSheet expertScoreSheet, HttpSession session) {
+    public Map<String, Object> updateExpertScoreSheet(@RequestBody ExpertScoreSheet expertScoreSheet, HttpServletRequest request ) {
         Map<String, Object> modelMap = new ModelMap();
         modelMap.put("success", "false");
         modelMap.put("msg", "新增数据失败！！");
 
         // 1、从session中获取登录系统的专家用户名，拼接对象数据，然后插入数据库
-        // String expertName = "xlllllllll";
-        /*String expertName = (String) session.getAttribute("userName");
-        logger.info("保存用户登录信息，用户名是：" + expertName);
-        expertScoreSheet.setExpertName(expertName);*/
+        HttpSession session = request.getSession();
+        String expertName = (String) session.getAttribute("userName");
+        logger.info("登录系统时保存的用户名信息，用户名是：" + expertName);
+        if (!expertName.isEmpty()) {
+            expertScoreSheet.setExpertName(expertName);
+        }
+
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 
         // 2、向表finalscoresheet中写入数据

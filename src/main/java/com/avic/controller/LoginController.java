@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class LoginController {
      **/
     @RequestMapping(value = "/loginCheck",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> userLogin(@RequestBody User user, HttpSession session) {
+    public Map<String, Object> userLogin(@RequestBody User user, HttpServletRequest request ) {
         String userName = user.getUserName();
         String password = user.getPassWord();
         logger.info("用户登录，用户是：" + userName + "， 密码是： " + password);
@@ -65,6 +66,7 @@ public class LoginController {
 
             if (userInfo != null && userInfo.getAccountStatus() != BidConstant.USER_STATUS_CANCEL) {
                 // 把用户登录信息保存在session中
+                HttpSession session = request.getSession(true);
                 session.setAttribute("userName", userName);
                 session.setAttribute("password", password);
                 session.setAttribute("role", userInfo.getAccountType());

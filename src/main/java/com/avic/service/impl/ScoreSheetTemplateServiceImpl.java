@@ -216,33 +216,4 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
         return true;
     }
 
-
-    /**
-    * @Author xulei
-    * @Description 向专家下发打分表时，组装分页数据
-    * @Date 10:35 2019/10/25/025
-    * @Param 
-    * @return 
-    **/
-    /*@Override
-    public List<ScoreSheetTemplate> assembleDataForSendScoreTemplateToExpert(List<ScoreSheetTemplate> resultList, Integer whichPage, Integer everyNumber) {
-        int dataCount = resultList.size();
-        int startNumber = (whichPage - 1) * everyNumber;
-        int endNumber = startNumber + everyNumber;
-
-        // 如果总数小于每页显示条数，可以直接返回数据
-        if (dataCount <= everyNumber) {
-            return resultList;
-        }
-
-        // 如果总数比每页显示数据小，则直接遍历list取startNumber和endNumber之间的数据
-        List<ScoreSheetTemplate> dataList = new ArrayList<>();
-        for (int index = startNumber; index < endNumber && index < dataCount; index++) {
-            dataList.add(resultList.get(index));
-        }
-        return dataList;
-    }*/
-
-
-
 }
