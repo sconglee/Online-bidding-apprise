@@ -44,4 +44,9 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <!-- 设置session生效时间 24小时-->
+    <session-config>
+        <session-timeout>1440</session-timeout>
+    </session-config>
+
 </web-app>
