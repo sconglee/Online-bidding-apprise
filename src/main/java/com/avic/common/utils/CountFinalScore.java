@@ -1,5 +1,8 @@
 package com.avic.common.utils;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.util.*;
 
 /**
@@ -8,10 +11,14 @@ import java.util.*;
  */
 public class CountFinalScore {
 
+    private final static Log logger = LogFactory.getLog(CountFinalScore.class);
+
     private CountFinalScore() {
     }
 
     public static Map<String, Object> getFinalScore(List<String> pointList, String itemWeight) {
+
+
         Map map = new HashMap();
         List<List<String>> pointList1 = new ArrayList<>();
         List<String> itemWeightList = Arrays.asList(itemWeight.split(","));
@@ -27,6 +34,9 @@ public class CountFinalScore {
         for (int i = 0; i < Number; i++) {
             pointList2.add(ConvertList(pointList1, i));
         }
+        logger.info(pointList2);
+        logger.info(expertNumber);
+        logger.info("-----------------------------");
 
         //去掉最高分和最低分然后求取平均分
         List<Float> averageScoreList = new ArrayList<>();
@@ -37,9 +47,12 @@ public class CountFinalScore {
                 sum = Float.parseFloat(pointList3.get(z)) + sum;
             }
             averageScore = (sum - Float.parseFloat(Collections.max(pointList3)) - Float.parseFloat(Collections.min(pointList3))) / (expertNumber - 2);
+            logger.info((sum - Float.parseFloat(Collections.max(pointList3)) - Float.parseFloat(Collections.min(pointList3))) / (expertNumber - 2));
             averageScoreList.add(averageScore);
         }
-
+        logger.info(averageScoreList);
+        logger.info(itemWeightList);
+        logger.info("________________________");
         List<String> finalScoreList = new ArrayList<>();
         for (int k = 0; k < Number; k++) {
             finalScoreList.add(String.valueOf(averageScoreList.get(k) * Float.parseFloat(itemWeightList.get(k))));
@@ -50,6 +63,8 @@ public class CountFinalScore {
         for (int m = 0; m < finalScoreList.size(); m++) {
             totalScore = Float.parseFloat(finalScoreList.get(m)) + totalScore;
         }
+        logger.info(finalScoreList);
+        logger.info(totalScore);
 
         map.put("finalScore", finalScoreList);
         map.put("totalScore", totalScore);
