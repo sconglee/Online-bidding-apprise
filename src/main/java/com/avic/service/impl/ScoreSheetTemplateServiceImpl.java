@@ -158,7 +158,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
             result.setUpdateTime(TimeUtil.getTimeByDefautFormat());
             scoreSheetTemplateMapper.enableEffectiveOrNot(result);
 
-            // 4、如果是设置status为生效状态：说明随后专家会使用该模板，因此可以预先insert到expertscoresheet中，status使用默认值1（未打分）
+            /*// 4、如果是设置status为生效状态：说明随后专家会使用该模板，因此可以预先insert到expertscoresheet中，status使用默认值1（未打分）
             // 之后在专家登录首页，根据projectName + projectNumber 组合查询expertscoresheet表，并以分页列表形式展示
             if (result.getStatus().equals(BidConstant.TEMPLATE_ACTIVE)) {
                 List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate();
@@ -175,7 +175,7 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
 
                 // 4.2 批量执行插入操作。
                 expertScoreSheetMapper.insertExpertScoreSheetForeach(expertScoreSheetList);
-            }
+            }*/
 
             logger.info("评标打分模板“生效/失效”成功,具体信息为：" + result.toString());
 

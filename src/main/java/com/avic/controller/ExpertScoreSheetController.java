@@ -1,6 +1,7 @@
 package com.avic.controller;
 
 import com.avic.common.utils.TimeUtil;
+import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.FinalScoreSheet;
@@ -42,6 +43,9 @@ public class ExpertScoreSheetController {
 
     @Autowired
     private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
+
+    @Autowired
+    private ExpertScoreSheetMapper expertScoreSheetMapper;
 
     /**
      * @return java.util.Map<java.lang.String,java.lang.Object>
@@ -145,11 +149,47 @@ public class ExpertScoreSheetController {
 
     /**
     * @Author xulei
-    * @Description 下发评标打分模板
+    * @Description 专家登陆系统后，展示待打分列表
+     * 1、向expertScoreSheet表中写入数据（如果不存在）
+     * 2、分页查询，前端展示
     * @Date 16:31 2019/10/28/028
     * @Param [paginationRequest]
     * @return java.util.Map<java.lang.String,java.lang.Object>
     **/
+    @RequestMapping("/getExpertScoreSheetListPagination")
+    @ResponseBody
+    public Map<String, Object> getExpertScoreSheetListPagination(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        // 1、到scoreSheetTemplate表中查询唯一生效的模板
+        ScoreSheetTemplate scoreSheetTemplate = null;
+        scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
+        if (scoreSheetTemplate == null) {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "不存在处于生效状态的评标打分模板，请联系项目经理！");
+            return modelMap;
+        }
+
+        // 1、获取当前专家需要打分的expertScoreSheet列表，并插入expertScoreSheet表中
+        List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate(expertScoreSheetPagination.getExpertName());
+        for (ExpertScoreSheet expertScoreSheet : expertScoreSheetList) {
+            System.out.println("teset: " + expertScoreSheet.getCompanyName());
+        }
+        expertScoreSheetMapper.insertExpertScoreSheetForeach(expertScoreSheetList);
+
+        // 2、查询分页数据展示列表
+        modelMap = expertScoreSheetService.findScoreSheetPaginationInfo(scoreSheetTemplate,expertScoreSheetPagination);
+
+        return modelMap;
+    }
+
+    /**
+     * @Author xulei
+     * @Description 展示待打分列表
+     * @Date 16:31 2019/10/28/028
+     * @Param [paginationRequest]
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     **//*
     @RequestMapping("/getExpertScoreSheetListPagination")
     @ResponseBody
     public Map<String, Object> getExpertScoreSheetListPagination(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) {
@@ -197,6 +237,7 @@ public class ExpertScoreSheetController {
         }
 
         return modelMap;
-    }
+    }*/
+
 
 }

@@ -19,6 +19,15 @@ public class ExpertScoreSheetPagination extends PaginationRequest {
      **/
     private String projectNumber;
 
+    /**
+    专家名称
+    **/
+    private String expertName;
+    
+    /**
+    公司名称
+    **/
+    private String companyName;
 
     public String getProjectName() {
         return projectName;
@@ -35,4 +44,21 @@ public class ExpertScoreSheetPagination extends PaginationRequest {
     public void setProjectNumber(String projectNumber) {
         this.projectNumber = projectNumber;
     }
+
+    public String getExpertName() {
+        return expertName;
+    }
+
+    public void setExpertName(String expertName) {
+        this.expertName = expertName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
 }

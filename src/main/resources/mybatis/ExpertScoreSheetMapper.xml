@@ -52,14 +52,14 @@
     <select id="findScoreSheetTotalCount" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="Integer">
         select count(*)
         from expertscoresheet
-        where projectName = #{projectName} and projectNumber = #{projectNumber}
+        where expertName = #{expertName} and projectNumber = #{projectNumber} and expertName = #{expertName}
     </select>
 
     <!-- 分页查询 -->
     <select id="findScoreSheetPagination" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="com.avic.model.ExpertScoreSheet">
         select *
         from expertscoresheet
-        where projectName = #{projectName} and projectNumber = #{projectNumber}
+        where projectName = #{projectName} and projectNumber = #{projectNumber} and expertName = #{expertName}
         ORDER BY id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
     </select>
 
@@ -148,8 +148,8 @@
                     updateTime,
                 </if>
             </trim>
-            values (
-            <trim prefix="" suffix=")" suffixOverrides=",">
+            select
+            <trim prefix="" suffix="" suffixOverrides=",">
                 <if test="expertScoreSheet.projectName != null">
                     #{expertScoreSheet.projectName,jdbcType=VARCHAR},
                 </if>
@@ -187,6 +187,13 @@
                     #{expertScoreSheet.updateTime,jdbcType=VARCHAR},
                 </if>
             </trim>
+            where not exists
+            (select 1 from expertscoresheet
+                where projectName=#{expertScoreSheet.projectName}
+                and projectNumber=#{expertScoreSheet.projectNumber}
+                and companyName=#{expertScoreSheet.companyName}
+                and expertName = #{expertScoreSheet.expertName}
+            )
         </foreach>
     </insert>
 
