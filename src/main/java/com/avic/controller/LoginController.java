@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +28,7 @@ import java.util.Map;
  **/
 @Controller
 public class LoginController {
-    protected static final Log logger = LogFactory.getLog(LoginController.class);
+    private static final Log logger = LogFactory.getLog(LoginController.class);
 
     @Autowired
     private UserService userService;
@@ -83,6 +84,34 @@ public class LoginController {
             modelMap.put("success", "false");
             modelMap.put("msg", "用户名和密码均不能为空");
         }
+        return modelMap;
+    }
+
+
+    /**
+    * @Author xulei
+    * @Description 用户退出
+    * @Date 9:00 2019/10/31/031
+    * @Param [request]
+    * @return java.util.Map<java.lang.String,java.lang.Object>
+    **/
+    @RequestMapping(value = "/userLogout",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> userLogout(HttpServletRequest request) {
+        Map<String, Object> modelMap = new ModelMap();
+        modelMap.put("success", "false");
+        modelMap.put("msg", "用户退出失败！");
+
+        // 1、从session中获取登录系统的专家用户名，拼接对象数据，然后插入数据库
+        HttpSession session = request.getSession();
+        String expertName = (String) session.getAttribute("userName");
+        if (!expertName.isEmpty()) {
+            logger.info("用户退出，用户名是：" + expertName);
+            session.removeAttribute("userName");
+            modelMap.put("success", "true");
+            modelMap.put("msg", "成功退出！");
+        }
+
         return modelMap;
     }
 
