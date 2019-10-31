@@ -167,11 +167,11 @@ public class ScoreSheetTemplateServiceImpl implements ScoreSheetTemplateService 
                 ExpertScoreSheet selectCondition = new ExpertScoreSheet();
                 selectCondition.setProjectName(result.getProjectName());
                 selectCondition.setProjectNumber(result.getProjectNumber());
-                List<ExpertScoreSheet> deleteExpertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNumberAndProjectNumber(selectCondition);
-                if (deleteExpertScoreSheetList.size() == expertScoreSheetList.size()) {
+                List<ExpertScoreSheet> deleteExpertScoreSheetList = expertScoreSheetService.getExpertScoreByProjectNameAndProjectNumber(selectCondition);
+                //if (deleteExpertScoreSheetList.size() == expertScoreSheetList.size()) {
                     // 执行批量删除
                     expertScoreSheetMapper.deleteExpertScoreForeachById(deleteExpertScoreSheetList);
-                }
+                //}
 
                 // 4.2 批量执行插入操作。
                 expertScoreSheetMapper.insertExpertScoreSheetForeach(expertScoreSheetList);

@@ -101,7 +101,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
-    public List<ExpertScoreSheet> getExpertScoreByProjectNumberAndProjectNumber(ExpertScoreSheet expertScoreSheet) {
+    public List<ExpertScoreSheet> getExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet) {
         logger.info("根据项目名称+项目编号获取专家打分表信息：");
         return expertScoreSheetMapper.getExpertScoreByProjectNumberAndProjectNumber(expertScoreSheet);
     }
