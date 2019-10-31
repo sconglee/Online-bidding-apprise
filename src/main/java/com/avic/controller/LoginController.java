@@ -75,6 +75,7 @@ public class LoginController {
 
                 modelMap.put("success", "true");
                 modelMap.put("role", userInfo.getAccountType());
+                modelMap.put("data", userName);
                 modelMap.put("msg", "用户登录成功");
             } else {
                 modelMap.put("success", "false");
