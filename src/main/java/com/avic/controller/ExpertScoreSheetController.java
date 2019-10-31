@@ -61,9 +61,9 @@ public class ExpertScoreSheetController {
         HttpSession session = request.getSession();
         String expertName = (String) session.getAttribute("userName");
         logger.info("登录系统时保存的用户名信息，用户名是：" + expertName);
-        if (!expertName.isEmpty()) {
+        /*if (!expertName.isEmpty()) {
             expertScoreSheet.setExpertName(expertName);
-        }
+        }*/
 
         expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 

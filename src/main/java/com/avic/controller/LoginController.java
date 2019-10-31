@@ -95,7 +95,7 @@ public class LoginController {
     * @Param [request]
     * @return java.util.Map<java.lang.String,java.lang.Object>
     **/
-    @RequestMapping(value = "/userLogout",method = RequestMethod.POST)
+    @RequestMapping(value = "/userLogout")
     @ResponseBody
     public Map<String, Object> userLogout(HttpServletRequest request) {
         Map<String, Object> modelMap = new ModelMap();
