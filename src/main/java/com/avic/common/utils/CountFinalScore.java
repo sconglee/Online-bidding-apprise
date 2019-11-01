@@ -19,6 +19,9 @@ public class CountFinalScore {
     public static Map<String, Object> getFinalScore(List<String> pointList, String itemWeight) {
 
 
+        logger.info(pointList);
+        logger.info(itemWeight);
+        logger.info(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
         Map map = new HashMap();
         List<List<String>> pointList1 = new ArrayList<>();
         List<String> itemWeightList = Arrays.asList(itemWeight.split(","));
@@ -43,11 +46,20 @@ public class CountFinalScore {
         for (List<String> pointList3 : pointList2) {
             float sum = 0;
             float averageScore = 0;
+            logger.info("!!!!!!!!!!!!!!!!!!!!");
+            logger.info(pointList3);
             for (int z = 0; z < pointList3.size(); z++) {
                 sum = Float.parseFloat(pointList3.get(z)) + sum;
             }
-            averageScore = (sum - Float.parseFloat(Collections.max(pointList3)) - Float.parseFloat(Collections.min(pointList3))) / (expertNumber - 2);
-            logger.info((sum - Float.parseFloat(Collections.max(pointList3)) - Float.parseFloat(Collections.min(pointList3))) / (expertNumber - 2));
+            List<Integer> integerList = new ArrayList<>();
+            for (String x : pointList3) {
+                integerList.add(Integer.parseInt(x));
+            }
+            averageScore = (sum - Collections.max(integerList) - Collections.min(integerList)) / (expertNumber - 2);
+            logger.info("'''''''''''''''");
+            logger.info(Collections.max(integerList));
+            logger.info(Collections.min(integerList));
+            logger.info("''''''''''''''''");
             averageScoreList.add(averageScore);
         }
         logger.info(averageScoreList);
