@@ -148,7 +148,9 @@
                     updateTime = #{expertScoreSheet.updateTime,jdbcType=VARCHAR},
                 </if>
             </set>
-            where projectName = #{expertScoreSheet.projectName} and projectNumber = #{expertScoreSheet.projectNumber}
+            where projectName = #{expertScoreSheet.projectName}
+            and projectNumber = #{expertScoreSheet.projectNumber}
+            and companyName = #{expertScoreSheet.companyName}
         </foreach>
     </update>
 
