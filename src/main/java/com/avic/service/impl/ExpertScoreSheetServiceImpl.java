@@ -12,7 +12,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.MultiDoc;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,9 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
 
     @Autowired
     private ScoreSheetTemplateMapper scoreSheetTemplateMapper;
+
+    @Autowired
+    private ExpertScoreSheetService expertScoreSheetService;
 
     @Override
     public int getExportScoreCount(String projectNumber) {
@@ -62,7 +67,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
-    public List<ExpertScoreSheet> getExpertScoreSheetFromTemplate() {
+    public List<ExpertScoreSheet> getExpertScoreSheetFromTemplate(String expertName) {
         List<ExpertScoreSheet> resultList = new ArrayList<>();
 
         ScoreSheetTemplate scoreSheetTemplate = scoreSheetTemplateMapper.sendScoreSheetTemplateToExpert();
@@ -79,12 +84,14 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
                 expertScoreSheet.setItemWeight(scoreSheetTemplate.getItemWeight());
                 expertScoreSheet.setSequenceNumber(scoreSheetTemplate.getSequenceNumber());
                 expertScoreSheet.setCompanyName(companyName[i]);
+                expertScoreSheet.setExpertName(expertName);
                 expertScoreSheet.setCreateTime(scoreSheetTemplate.getCreateTime());
                 expertScoreSheet.setUpdateTime(scoreSheetTemplate.getUpdateTime());
 
                 resultList.add(expertScoreSheet);
             }
         }
+        System.out.println("数组长度：" + resultList.size());
         return resultList;
     }
 
@@ -106,6 +113,48 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
         return expertScoreSheetMapper.getExpertScoreByProjectNumberAndProjectNumber(expertScoreSheet);
     }
 
+    @Override
+    public Map<String, Object> findScoreSheetPaginationInfo(ScoreSheetTemplate scoreSheetTemplate,ExpertScoreSheetPagination expertScoreSheetPagination) {
+        Map<String, Object> modelMap = new HashMap<>();
 
+        //1、根据上面scoreSheetTemplate中的name和number，查询expertScoreSheet表
+        int whichPage = expertScoreSheetPagination.getPage();
+        int everyNumber = expertScoreSheetPagination.getColumns();
+        expertScoreSheetPagination.setStartNumber((whichPage - 1) * everyNumber);
 
+        logger.info("专家打分列表的查询条件：projectName：" + scoreSheetTemplate.getProjectName()
+                + "  ,projectNumber:" + scoreSheetTemplate.getProjectNumber()
+                + "   ,expertName: " + expertScoreSheetPagination.getExpertName());
+        expertScoreSheetPagination.setProjectName(scoreSheetTemplate.getProjectName());
+        expertScoreSheetPagination.setProjectNumber(scoreSheetTemplate.getProjectNumber());
+
+        List<ExpertScoreSheet> expertScoreSheetPaginationList = new ArrayList<>();
+        // 只查询当前处于未打分的表
+        // 2、查询数据总数
+        Integer count = expertScoreSheetService.findScoreSheetTotalCount(expertScoreSheetPagination);
+        logger.info("总数为：" + count);
+
+        // 3、查询当页的数据信息
+        expertScoreSheetPaginationList = expertScoreSheetService.findScoreSheetPagination(expertScoreSheetPagination);
+        logger.info("数据为：" + expertScoreSheetPaginationList.size());
+
+        if (!expertScoreSheetPaginationList.isEmpty()) {
+            modelMap.put("success", "true");
+            modelMap.put("page", expertScoreSheetPagination.getPage());
+            modelMap.put("count", count);
+            modelMap.put("total", (int)Math.ceil((double) count / everyNumber));
+            modelMap.put("data", expertScoreSheetPaginationList);
+        } else {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "数据为空！！");
+        }
+
+        return modelMap;
+    }
+
+    @Override
+    public Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList) {
+        logger.info("修改模板之后，根据项目名称 + 项目编号 批量修改expertScoreSheet：" );
+        return expertScoreSheetMapper.updateExpertScoreSheetForeach(expertScoreSheetList);
+    }
 }

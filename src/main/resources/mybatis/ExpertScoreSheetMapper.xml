@@ -52,14 +52,14 @@
     <select id="findScoreSheetTotalCount" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="Integer">
         select count(*)
         from expertscoresheet
-        where projectName = #{projectName} and projectNumber = #{projectNumber}
+        where expertName = #{expertName} and projectNumber = #{projectNumber} and expertName = #{expertName}
     </select>
 
     <!-- 分页查询 -->
     <select id="findScoreSheetPagination" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="com.avic.model.ExpertScoreSheet">
         select *
         from expertscoresheet
-        where projectName = #{projectName} and projectNumber = #{projectNumber}
+        where projectName = #{projectName} and projectNumber = #{projectNumber} and expertName = #{expertName}
         ORDER BY id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
     </select>
 
@@ -107,6 +107,51 @@
     </update>
 
 
+    <update id="updateExpertScoreSheetForeach"  parameterType="java.util.List">
+        <foreach collection="list" item="expertScoreSheet" separator=";">
+            update expertscoresheet
+            <set>
+                <if test="expertScoreSheet.projectName != null and expertScoreSheet.projectName != ''">
+                    projectName = #{expertScoreSheet.projectName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.projectNumber != null and expertScoreSheet.projectNumber != ''">
+                    projectNumber = #{expertScoreSheet.projectNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.companyName != null and expertScoreSheet.companyName != ''">
+                    companyName = #{expertScoreSheet.companyName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.expertName != null and expertScoreSheet.expertName != ''">
+                    expertName = #{expertScoreSheet.expertName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.itemWeight != null and expertScoreSheet.itemWeight != ''">
+                    itemWeight = #{expertScoreSheet.itemWeight,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.totalItems != null and expertScoreSheet.totalItems != ''">
+                    totalItems = #{expertScoreSheet.totalItems,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.itemCount != null and expertScoreSheet.itemCount != ''">
+                    itemCount = #{expertScoreSheet.itemCount,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.sequenceNumber != null and expertScoreSheet.sequenceNumber != ''">
+                    sequenceNumber = #{expertScoreSheet.sequenceNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.point != null and expertScoreSheet.point != ''">
+                    point = #{expertScoreSheet.point,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.status != null">
+                    status = #{expertScoreSheet.status,jdbcType=INTEGER},
+                </if>
+                <if test="expertScoreSheet.status == null">
+                    status = 1,
+                </if>
+                <if test="expertScoreSheet.updateTime != null and expertScoreSheet.updateTime != '' ">
+                    updateTime = #{expertScoreSheet.updateTime,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where projectName = #{expertScoreSheet.projectName} and projectNumber = #{expertScoreSheet.projectNumber}
+        </foreach>
+    </update>
+
     <insert id="insertExpertScoreSheetForeach" parameterType="java.util.List" >
         <foreach collection="list" item="expertScoreSheet" separator=";">
             insert into expertscoresheet (
@@ -148,8 +193,8 @@
                     updateTime,
                 </if>
             </trim>
-            values (
-            <trim prefix="" suffix=")" suffixOverrides=",">
+            select
+            <trim prefix="" suffix="" suffixOverrides=",">
                 <if test="expertScoreSheet.projectName != null">
                     #{expertScoreSheet.projectName,jdbcType=VARCHAR},
                 </if>
@@ -187,6 +232,13 @@
                     #{expertScoreSheet.updateTime,jdbcType=VARCHAR},
                 </if>
             </trim>
+            where not exists
+            (select 1 from expertscoresheet
+                where projectName=#{expertScoreSheet.projectName}
+                and projectNumber=#{expertScoreSheet.projectNumber}
+                and companyName=#{expertScoreSheet.companyName}
+                and expertName = #{expertScoreSheet.expertName}
+            )
         </foreach>
     </insert>
 

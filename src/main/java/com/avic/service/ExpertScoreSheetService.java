@@ -1,6 +1,7 @@
 package com.avic.service;
 
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.httovo.ExpertScoreSheetPagination;
 
 import java.util.List;
@@ -23,14 +24,19 @@ public interface ExpertScoreSheetService {
 
     Integer updateExpertScoreSheet(ExpertScoreSheet expertScoreSheet);
 
-    List<ExpertScoreSheet> getExpertScoreSheetFromTemplate();
+    List<ExpertScoreSheet> getExpertScoreSheetFromTemplate(String expertName);
 
-    Integer findScoreSheetTotalCount(ExpertScoreSheetPagination expertScoreSheetPagination);
 
     /**
      分页查询
      **/
+    Integer findScoreSheetTotalCount(ExpertScoreSheetPagination expertScoreSheetPagination);
     List<ExpertScoreSheet> findScoreSheetPagination(ExpertScoreSheetPagination expertScoreSheetPagination);
+    Map<String,Object> findScoreSheetPaginationInfo(ScoreSheetTemplate scoreSheetTemplate, ExpertScoreSheetPagination expertScoreSheetPagination);
+
 
     List<ExpertScoreSheet> getExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet);
+
+    Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
+
 }

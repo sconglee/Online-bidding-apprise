@@ -75,6 +75,7 @@ public class LoginController {
 
                 modelMap.put("success", "true");
                 modelMap.put("role", userInfo.getAccountType());
+                modelMap.put("data", userName);
                 modelMap.put("msg", "用户登录成功");
             } else {
                 modelMap.put("success", "false");
@@ -95,7 +96,7 @@ public class LoginController {
     * @Param [request]
     * @return java.util.Map<java.lang.String,java.lang.Object>
     **/
-    @RequestMapping(value = "/userLogout",method = RequestMethod.POST)
+    @RequestMapping(value = "/userLogout")
     @ResponseBody
     public Map<String, Object> userLogout(HttpServletRequest request) {
         Map<String, Object> modelMap = new ModelMap();
