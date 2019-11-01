@@ -9,7 +9,7 @@
         <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
         <result column="isGenerate" property="isGenerate" jdbcType="INTEGER"/>
         <result column="averageScore" property="averageScore" jdbcType="VARCHAR"/>
-        <result column="totalScore" property="totalScore" jdbcType="FLOAT"/>
+        <result column="totalScore" property="totalScore" jdbcType="DOUBLE"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
@@ -76,7 +76,7 @@
                 #{averageScore,jdbcType=VARCHAR},
             </if>
             <if test="totalScore != null">
-                #{totalScore,jdbcType=INTEGER},
+                #{totalScore,jdbcType=DOUBLE},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=VARCHAR},
@@ -117,7 +117,7 @@
                 and a.averageScore = #{averageScore,jdbcType=INTEGER}
             </if>
             <if test="totalScore != null ">
-                and a.totalScore = #{totalScore,jdbcType=INTEGER}
+                and a.totalScore = #{totalScore,jdbcType=DOUBLE}
             </if>
         </where>
     </select>

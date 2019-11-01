@@ -3,6 +3,7 @@ package com.avic.common.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -42,23 +43,23 @@ public class CountFinalScore {
         logger.info("-----------------------------");
 
         //去掉最高分和最低分然后求取平均分
-        List<Float> averageScoreList = new ArrayList<>();
+        List<Double> averageScoreList = new ArrayList<>();
         for (List<String> pointList3 : pointList2) {
-            float sum = 0;
-            float averageScore = 0;
+            double sum = 0;
+            double averageScore = 0;
             logger.info("!!!!!!!!!!!!!!!!!!!!");
             logger.info(pointList3);
             for (int z = 0; z < pointList3.size(); z++) {
                 sum = Float.parseFloat(pointList3.get(z)) + sum;
             }
-            List<Integer> integerList = new ArrayList<>();
+            List<Double> doubleList = new ArrayList<>();
             for (String x : pointList3) {
-                integerList.add(Integer.parseInt(x));
+                doubleList.add(Double.valueOf(x));
             }
-            averageScore = (sum - Collections.max(integerList) - Collections.min(integerList)) / (expertNumber - 2);
+            averageScore = (sum - Collections.max(doubleList) - Collections.min(doubleList)) / (expertNumber - 2);
             logger.info("'''''''''''''''");
-            logger.info(Collections.max(integerList));
-            logger.info(Collections.min(integerList));
+            logger.info(Collections.max(doubleList));
+            logger.info(Collections.min(doubleList));
             logger.info("''''''''''''''''");
             averageScoreList.add(averageScore);
         }
@@ -66,14 +67,15 @@ public class CountFinalScore {
         logger.info(itemWeightList);
         logger.info("________________________");
         List<String> finalScoreList = new ArrayList<>();
+        DecimalFormat df = new DecimalFormat(".##");
         for (int k = 0; k < Number; k++) {
-            finalScoreList.add(String.valueOf(averageScoreList.get(k) * Float.parseFloat(itemWeightList.get(k))));
+            finalScoreList.add(df.format(averageScoreList.get(k) * Double.valueOf(itemWeightList.get(k))));
         }
 
         //最后总得分
-        float totalScore = 0;
+        double totalScore = 0;
         for (int m = 0; m < finalScoreList.size(); m++) {
-            totalScore = Float.parseFloat(finalScoreList.get(m)) + totalScore;
+            totalScore = Double.valueOf(finalScoreList.get(m)) + totalScore;
         }
         logger.info(finalScoreList);
         logger.info(totalScore);

@@ -74,6 +74,8 @@ public class FinalScoreSheetController {
         for (ExpertScoreSheet expertScoreSheet1 : expertScoreSheetList) {
             pointList.add(expertScoreSheet1.getPoint());
         }
+        logger.info(expertScoreSheetList.size());
+        logger.info(expertScoreSheetList.get(0));
         String itemWeight = expertScoreSheetList.get(0).getItemWeight();
         Map mapScore = CountFinalScore.getFinalScore(pointList, itemWeight);
         List<String> finalScoreList = (List<String>) mapScore.get("finalScore");
@@ -82,11 +84,9 @@ public class FinalScoreSheetController {
         finalScoreSheet1.setProjectNumber(finalScoreSheet.getProjectNumber());
         finalScoreSheet1.setCompanyName(finalScoreSheet.getCompanyName());
         finalScoreSheet1.setAverageScore(StringUtils.collectionToDelimitedString(finalScoreList,","));
-        finalScoreSheet1.setTotalScore((Float) mapScore.get("totalScore"));
+        finalScoreSheet1.setTotalScore((Double) mapScore.get("totalScore"));
         finalScoreSheet1.setIsGenerate(1);
         finalScoreSheet1.setUpdateTime(TimeUtil.getTimeByDefautFormat());
-        logger.info(StringUtils.collectionToDelimitedString(finalScoreList,","));
-        logger.info(((Float) mapScore.get("totalScore")));
 
 
         int isUpdate = finalScoreSheetService.updateFinalScoreSheet(finalScoreSheet1);
