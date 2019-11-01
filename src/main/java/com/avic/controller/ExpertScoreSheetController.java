@@ -175,6 +175,7 @@ public class ExpertScoreSheetController {
         for (ExpertScoreSheet expertScoreSheet : expertScoreSheetList) {
             System.out.println("teset: " + expertScoreSheet.getCompanyName());
         }
+        // 根据projectName、projectNumber、companyName、 expertName四个字段查询expertScoreSheet表，如果不存在就insert。
         expertScoreSheetMapper.insertExpertScoreSheetForeach(expertScoreSheetList);
 
         // 2、查询分页数据展示列表

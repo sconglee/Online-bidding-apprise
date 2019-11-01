@@ -151,4 +151,10 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
 
         return modelMap;
     }
+
+    @Override
+    public Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList) {
+        logger.info("修改模板之后，根据项目名称 + 项目编号 批量修改expertScoreSheet：" );
+        return expertScoreSheetMapper.updateExpertScoreSheetForeach(expertScoreSheetList);
+    }
 }

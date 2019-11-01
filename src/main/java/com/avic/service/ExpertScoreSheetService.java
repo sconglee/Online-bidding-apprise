@@ -37,4 +37,6 @@ public interface ExpertScoreSheetService {
 
     List<ExpertScoreSheet> getExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet);
 
+    Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
+
 }

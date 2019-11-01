@@ -26,6 +26,11 @@ public interface ExpertScoreSheetMapper {
     Integer updateExpertScoreSheet(ExpertScoreSheet expertScoreSheet);
 
     Integer insertExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
+    
+    /**
+    * 批量update
+    **/
+    Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
 
     Integer findScoreSheetTotalCount(ExpertScoreSheetPagination expertScoreSheetPagination);
 

@@ -2,8 +2,10 @@ package com.avic.controller;
 
 import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.TimeUtil;
+import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.httovo.PaginationRequest;
+import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.ScoreSheetTemplateService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,6 +36,9 @@ public class ScoreSheetTemplateController {
 
     @Autowired
     private ScoreSheetTemplateService scoreSheetTemplateService;
+
+    @Autowired
+    private ExpertScoreSheetService expertScoreSheetService;
 
    /**
    * @Author xulei
@@ -135,6 +140,10 @@ public class ScoreSheetTemplateController {
             scoreSheetTemplate.setUpdateTime(TimeUtil.getTimeByDefautFormat());
             logger.info("修改评标打分模板，具体数据为：" + scoreSheetTemplate.toString());
             scoreSheetTemplateService.updateScoreSheetTemplate(scoreSheetTemplate);
+
+            // 根据projectName、projectNumber、两个字段查询expertScoreSheet表，如果存在就update。
+            List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate("");
+            expertScoreSheetService.updateExpertScoreSheetForeach(expertScoreSheetList);
 
             modelMap.put("success", "true");
             modelMap.put("msg", "修改评标打分模板成功！！");
