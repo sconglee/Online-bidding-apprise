@@ -27,6 +27,7 @@ CREATE TABLE `expertscoresheet` (
   `expertName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '打分专家名称登录该系统的用户名',
   `totalItems` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `sequenceNumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '分项序号（使用逗号分割）',
+  `itemCount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '1' COMMENT '0：已打分；1：未打分',
   `itemWeight` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '权重',
   `point` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '专家打分（每个投标单位的每个评分项具体得分，使用逗号分割）',
