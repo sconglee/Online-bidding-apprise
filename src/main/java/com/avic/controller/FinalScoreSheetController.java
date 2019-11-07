@@ -73,11 +73,17 @@ public class FinalScoreSheetController {
         List<String> pointList = new ArrayList<>();
         for (ExpertScoreSheet expertScoreSheet1 : expertScoreSheetList) {
             pointList.add(expertScoreSheet1.getPoint());
+            if (expertScoreSheet1.getPoint() == null) {
+                map.put("success", false);
+                map.put("msg", "至少有一个专家未提交打分！");
+                return map;
+            }
         }
         logger.info(expertScoreSheetList.size());
         logger.info(expertScoreSheetList.get(0));
-        String itemWeight = expertScoreSheetList.get(0).getItemWeight();
-        Map mapScore = CountFinalScore.getFinalScore(pointList, itemWeight);
+        //String itemWeight = expertScoreSheetList.get(0).getItemWeight();
+        //Map mapScore = CountFinalScore.getItemAverageAndTotalScore(pointList, itemWeight);
+        Map mapScore = CountFinalScore.getExpertAverageAndTotalScore(pointList);
         List<String> finalScoreList = (List<String>) mapScore.get("finalScore");
 
         FinalScoreSheet finalScoreSheet1 = new FinalScoreSheet();

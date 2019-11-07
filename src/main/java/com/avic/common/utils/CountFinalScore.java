@@ -17,7 +17,50 @@ public class CountFinalScore {
     private CountFinalScore() {
     }
 
-    public static Map<String, Object> getFinalScore(List<String> pointList, String itemWeight) {
+    public static Map<String, Object> getExpertAverageAndTotalScore(List<String> pointList) {
+
+        logger.info(pointList);
+        int expertNumber = pointList.size();
+        Map map = new HashMap();
+        List<List<String>> pointList1 = new ArrayList<>();
+        for (String point : pointList) {
+            pointList1.add(Arrays.asList(point.split(",")));
+        }
+
+        //求每个专家打分的和
+        List<String> finalScoreList = new ArrayList<>();
+        DecimalFormat df = new DecimalFormat(".##");
+        for (List<String> pointList2 : pointList1) {
+            double sum = 0;
+            for (String point : pointList2) {
+                sum = Double.valueOf(point) + sum;
+            }
+            finalScoreList.add(df.format(sum));
+        }
+        logger.info(finalScoreList);
+
+        //去掉一个最高分一个最低分求取平均分
+        double sumScore = 0;
+        List<Double> doubleList = new ArrayList<>();
+        for (String point : finalScoreList) {
+            double doublePoint = Double.valueOf(point);
+            sumScore = doublePoint + sumScore;
+            doubleList.add(doublePoint);
+        }
+        double totalScore = (sumScore - Collections.max(doubleList) - Collections.min(doubleList)) / (expertNumber - 2);
+
+        logger.info(sumScore);
+        logger.info(Collections.max(doubleList));
+        logger.info(Collections.min(doubleList));
+        logger.info(totalScore);
+
+        map.put("finalScore", finalScoreList);
+        map.put("totalScore", totalScore);
+
+        return map;
+    }
+
+    public static Map<String, Object> getItemAverageAndTotalScore(List<String> pointList, String itemWeight) {
 
 
         logger.info(pointList);
@@ -27,7 +70,6 @@ public class CountFinalScore {
         List<List<String>> pointList1 = new ArrayList<>();
         List<String> itemWeightList = Arrays.asList(itemWeight.split(","));
         int expertNumber = pointList.size();
-
 
         for (String point : pointList) {
             pointList1.add(Arrays.asList(point.split(",")));
