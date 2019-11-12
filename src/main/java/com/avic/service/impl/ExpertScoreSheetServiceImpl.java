@@ -87,6 +87,8 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
                 expertScoreSheet.setExpertName(expertName);
                 expertScoreSheet.setCreateTime(scoreSheetTemplate.getCreateTime());
                 expertScoreSheet.setUpdateTime(scoreSheetTemplate.getUpdateTime());
+                expertScoreSheet.setEvaluIndexDesc(scoreSheetTemplate.getEvaluIndexDesc());
+                expertScoreSheet.setDescription(scoreSheetTemplate.getDescription());
 
                 resultList.add(expertScoreSheet);
             }

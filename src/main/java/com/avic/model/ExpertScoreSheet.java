@@ -19,6 +19,9 @@ public class ExpertScoreSheet {
     private String createTime;
     private String updateTime;
 
+    private String evaluIndexDesc;
+    private String description ;
+
     public String getItemCount() {
         return itemCount;
     }
@@ -121,5 +124,42 @@ public class ExpertScoreSheet {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getEvaluIndexDesc() {
+        return evaluIndexDesc;
+    }
+
+    public void setEvaluIndexDesc(String evaluIndexDesc) {
+        this.evaluIndexDesc = evaluIndexDesc;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "ExpertScoreSheet{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", projectNumber='" + projectNumber + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", expertName='" + expertName + '\'' +
+                ", itemWeight='" + itemWeight + '\'' +
+                ", totalItems='" + totalItems + '\'' +
+                ", itemCount='" + itemCount + '\'' +
+                ", sequenceNumber='" + sequenceNumber + '\'' +
+                ", status=" + status +
+                ", point='" + point + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", evaluIndexDesc='" + evaluIndexDesc + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

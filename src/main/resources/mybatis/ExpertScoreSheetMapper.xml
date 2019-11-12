@@ -17,6 +17,9 @@
         <result column="point" property="point" jdbcType="VARCHAR"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+
+        <result column="evaluIndexDesc" property="evaluIndexDesc" jdbcType="VARCHAR"/>
+        <result column="description " property="description" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="partExpertScoreSheetMap" type="java.util.HashMap">
@@ -102,6 +105,12 @@
             <if test="updateTime != null and updateTime != '' ">
                 updateTime = #{updateTime,jdbcType=VARCHAR},
             </if>
+            <if test="evaluIndexDesc != null and evaluIndexDesc != ''">
+                evaluIndexDesc = #{evaluIndexDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -146,6 +155,12 @@
                 </if>
                 <if test="expertScoreSheet.updateTime != null and expertScoreSheet.updateTime != '' ">
                     updateTime = #{expertScoreSheet.updateTime,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.evaluIndexDesc != null and expertScoreSheet.evaluIndexDesc != ''">
+                    evaluIndexDesc = #{expertScoreSheet.evaluIndexDesc,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.description != null and expertScoreSheet.description != ''">
+                    description = #{expertScoreSheet.description,jdbcType=VARCHAR},
                 </if>
             </set>
             where projectName = #{expertScoreSheet.projectName}
@@ -194,6 +209,12 @@
                 <if test="expertScoreSheet.updateTime != null">
                     updateTime,
                 </if>
+                <if test="expertScoreSheet.evaluIndexDesc != null">
+                    evaluIndexDesc,
+                </if>
+                <if test="expertScoreSheet.description != null">
+                    description,
+                </if>
             </trim>
             select
             <trim prefix="" suffix="" suffixOverrides=",">
@@ -232,6 +253,12 @@
                 </if>
                 <if test="expertScoreSheet.updateTime != null">
                     #{expertScoreSheet.updateTime,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.evaluIndexDesc != null">
+                    #{expertScoreSheet.evaluIndexDesc,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.description != null">
+                    #{expertScoreSheet.description,jdbcType=VARCHAR},
                 </if>
             </trim>
             where not exists
