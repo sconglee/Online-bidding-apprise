@@ -24,6 +24,9 @@ public class ScoreSheetTemplate implements Serializable {
     private String createTime;
     private String updateTime;
 
+    private String evaluIndexDesc;
+    private String description ;
+
     public Integer getId() {
         return id;
     }
@@ -112,6 +115,22 @@ public class ScoreSheetTemplate implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getEvaluIndexDesc() {
+        return evaluIndexDesc;
+    }
+
+    public void setEvaluIndexDesc(String evaluIndexDesc) {
+        this.evaluIndexDesc = evaluIndexDesc;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "ScoreSheetTemplate{" +
@@ -126,6 +145,8 @@ public class ScoreSheetTemplate implements Serializable {
                 ", remove=" + remove +
                 ", createTime='" + createTime + '\'' +
                 ", updateTime='" + updateTime + '\'' +
+                ", evaluIndexDesc='" + evaluIndexDesc + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

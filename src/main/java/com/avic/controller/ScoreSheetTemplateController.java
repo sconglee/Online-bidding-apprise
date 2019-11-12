@@ -143,7 +143,9 @@ public class ScoreSheetTemplateController {
 
             // 根据projectName、projectNumber、两个字段查询expertScoreSheet表，如果存在就update。
             List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate("");
-            expertScoreSheetService.updateExpertScoreSheetForeach(expertScoreSheetList);
+            if (expertScoreSheetList.size() > 0) {
+                expertScoreSheetService.updateExpertScoreSheetForeach(expertScoreSheetList);
+            }
 
             modelMap.put("success", "true");
             modelMap.put("msg", "修改评标打分模板成功！！");

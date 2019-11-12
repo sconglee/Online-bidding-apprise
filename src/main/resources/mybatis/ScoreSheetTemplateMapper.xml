@@ -14,6 +14,8 @@
         <result column="remove" property="remove" jdbcType="INTEGER"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+        <result column="evaluIndexDesc" property="evaluIndexDesc" jdbcType="VARCHAR"/>
+        <result column="description " property="description" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findTemplateTotalCount" resultType="Integer">
@@ -62,6 +64,12 @@
             <if test="updateTime != null">
                 updateTime,
             </if>
+            <if test="evaluIndexDesc != null">
+                evaluIndexDesc,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
         </trim>
         values (
         <trim prefix="" suffix=")" suffixOverrides=",">
@@ -94,6 +102,12 @@
             </if>
             <if test="updateTime != null">
                 #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="evaluIndexDesc != null">
+                #{evaluIndexDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -130,6 +144,12 @@
             </if>
             <if test="updateTime != null and updateTime != '' ">
                 updateTime = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="evaluIndexDesc != null and evaluIndexDesc != ''">
+                evaluIndexDesc = #{evaluIndexDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
