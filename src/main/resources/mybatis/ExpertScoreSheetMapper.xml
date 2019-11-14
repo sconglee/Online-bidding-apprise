@@ -48,6 +48,10 @@
         select * from expertscoresheet where projectName = #{projectName} and projectNumber = #{projectNumber}
     </select>
 
+    <select id="deleteExpertScoreByProjectNameAndProjectNumber" parameterType="com.avic.model.ExpertScoreSheet" resultType="Integer">
+        delete  from expertscoresheet where projectName = #{projectName} and projectNumber = #{projectNumber}
+    </select>
+
     <select id="findScoreInfoByProjectNumberAndCompanyName" resultMap="expertScoreSheetMap">
         select * from expertscoresheet where projectNumber = #{projectNumber} and companyName = #{companyName}
     </select>
@@ -55,8 +59,15 @@
     <select id="findScoreSheetTotalCount" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="Integer">
         select count(*)
         from expertscoresheet
-        where expertName = #{expertName} and projectNumber = #{projectNumber} and expertName = #{expertName}
+        where projectName = #{projectName} and projectNumber = #{projectNumber} and expertName = #{expertName}
     </select>
+
+    <select id="getExpertScoreSheetList" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="com.avic.model.ExpertScoreSheet">
+        select *
+        from expertscoresheet
+        where projectName = #{projectName} and projectNumber = #{projectNumber} and expertName = #{expertName}
+    </select>
+
 
     <!-- 分页查询 -->
     <select id="findScoreSheetPagination" parameterType="com.avic.model.httovo.ExpertScoreSheetPagination" resultType="com.avic.model.ExpertScoreSheet">
@@ -197,6 +208,114 @@
                 <if test="expertScoreSheet.sequenceNumber != null">
                     sequenceNumber,
                 </if>
+                <if test="expertScoreSheet.status != null and expertScoreSheet.status != ''">
+                    status,
+                </if>
+                <!--<if test="expertScoreSheet.status != null">
+                    status,
+                </if>-->
+                <if test="expertScoreSheet.point != null">
+                    point,
+                </if>
+                <if test="expertScoreSheet.createTime != null">
+                    createTime,
+                </if>
+                <if test="expertScoreSheet.updateTime != null">
+                    updateTime,
+                </if>
+                <if test="expertScoreSheet.evaluIndexDesc != null">
+                    evaluIndexDesc,
+                </if>
+                <if test="expertScoreSheet.description != null">
+                    description,
+                </if>
+            </trim>
+            values (
+            <trim prefix="" suffix=")" suffixOverrides=",">
+                <if test="expertScoreSheet.projectName != null">
+                    #{expertScoreSheet.projectName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.projectNumber != null">
+                    #{expertScoreSheet.projectNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.companyName != null">
+                    #{expertScoreSheet.companyName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.expertName != null">
+                    #{expertScoreSheet.expertName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.itemWeight != null">
+                    #{expertScoreSheet.itemWeight,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.totalItems != null">
+                    #{expertScoreSheet.totalItems, jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.itemCount != null">
+                    #{expertScoreSheet.itemCount, jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.sequenceNumber != null">
+                    #{expertScoreSheet.sequenceNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.point != null">
+                    #{expertScoreSheet.point,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.status != null and expertScoreSheet.status != ''">
+                    #{expertScoreSheet.status,jdbcType=INTEGER},
+                </if>
+                <!--<if test="expertScoreSheet.status != null ">
+                    #{expertScoreSheet.status,jdbcType=INTEGER},
+                </if>-->
+                <if test="expertScoreSheet.createTime != null">
+                    #{expertScoreSheet.createTime,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.updateTime != null">
+                    #{expertScoreSheet.updateTime,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.evaluIndexDesc != null">
+                    #{expertScoreSheet.evaluIndexDesc,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.description != null">
+                    #{expertScoreSheet.description,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="deleteExpertScoreForeachById" parameterType="java.util.List" >
+        delete from expertscoresheet where id in
+        <foreach collection="list" item="expertScoreSheet" separator="," open="(" close=")">
+            #{expertScoreSheet.id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+    <!--<insert id="insertExpertScoreSheetForeach" parameterType="java.util.List" >
+        <foreach collection="list" item="expertScoreSheet" separator=";">
+            insert into expertscoresheet (
+            <trim prefix="" suffix=")" suffixOverrides=",">
+                <if test="expertScoreSheet.projectName != null">
+                    projectName,
+                </if>
+                <if test="expertScoreSheet.projectNumber != null">
+                    projectNumber,
+                </if>
+                <if test="expertScoreSheet.companyName != null">
+                    companyName,
+                </if>
+                <if test="expertScoreSheet.expertName != null">
+                    expertName,
+                </if>
+                <if test="expertScoreSheet.itemWeight != null">
+                    itemWeight,
+                </if>
+                <if test="expertScoreSheet.totalItems != null">
+                    totalItems,
+                </if>
+                <if test="expertScoreSheet.itemCount != null">
+                    itemCount,
+                </if>
+                <if test="expertScoreSheet.sequenceNumber != null">
+                    sequenceNumber,
+                </if>
                 <if test="expertScoreSheet.status != null">
                     status,
                 </if>
@@ -263,19 +382,13 @@
             </trim>
             where not exists
             (select 1 from expertscoresheet
-                where projectName=#{expertScoreSheet.projectName}
-                and projectNumber=#{expertScoreSheet.projectNumber}
-                and companyName=#{expertScoreSheet.companyName}
-                and expertName = #{expertScoreSheet.expertName}
+            where projectName=#{expertScoreSheet.projectName}
+            and projectNumber=#{expertScoreSheet.projectNumber}
+            and companyName=#{expertScoreSheet.companyName}
+            and expertName = #{expertScoreSheet.expertName}
             )
         </foreach>
-    </insert>
+    </insert>-->
 
-    <delete id="deleteExpertScoreForeachById" parameterType="java.util.List" >
-        delete from expertscoresheet where id in
-        <foreach collection="list" item="expertScoreSheet" separator="," open="(" close=")">
-            #{expertScoreSheet.id,jdbcType=INTEGER}
-        </foreach>
-    </delete>
 
 </mapper>

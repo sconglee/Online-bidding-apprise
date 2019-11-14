@@ -1,5 +1,6 @@
 package com.avic.service.impl;
 
+import com.avic.common.utils.TimeUtil;
 import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.print.MultiDoc;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -158,5 +160,35 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     public Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList) {
         logger.info("修改模板之后，根据项目名称 + 项目编号 批量修改expertScoreSheet：" );
         return expertScoreSheetMapper.updateExpertScoreSheetForeach(expertScoreSheetList);
+    }
+
+    @Override
+    public Integer insertExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList) {
+        logger.info("专家在一个表单中，同时对所有单位评价，然后批量插入expertScoreSheet表:" );
+
+        for (ExpertScoreSheet expertScoreSheet : expertScoreSheetList) {
+            expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
+            expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
+
+            System.out.println("打分状态数据：status = " + expertScoreSheet.getStatus());
+        }
+
+        return expertScoreSheetMapper.insertExpertScoreSheetForeach(expertScoreSheetList);
+    }
+
+    @Override
+    public List<ExpertScoreSheet> getExpertScoreSheetList(ExpertScoreSheetPagination expertScoreSheetPagination) {
+        logger.info("根据projectName  projectNumber expertName批量获取专家打分结果: projectName = " + expertScoreSheetPagination.getProjectName()
+                + ",   projectNumber = " + expertScoreSheetPagination.getProjectNumber()
+                + ",    expertName = " + expertScoreSheetPagination.getExpertName());
+
+        return expertScoreSheetMapper.getExpertScoreSheetList(expertScoreSheetPagination);
+    }
+
+    @Override
+    public Integer deleteExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet) {
+        logger.info("修改评分模板后，根据projectName  projectNumber 批量删除老的打分结果: projectName = " + expertScoreSheet.getProjectName()
+                + ",   projectNumber = " + expertScoreSheet.getProjectNumber());
+        return expertScoreSheetMapper.deleteExpertScoreByProjectNameAndProjectNumber(expertScoreSheet);
     }
 }

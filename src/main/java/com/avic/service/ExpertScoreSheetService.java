@@ -39,4 +39,10 @@ public interface ExpertScoreSheetService {
 
     Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
 
+    Integer insertExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
+
+    List<ExpertScoreSheet> getExpertScoreSheetList(ExpertScoreSheetPagination expertScoreSheetPagination);
+
+    Integer deleteExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet);
+
 }
