@@ -23,4 +23,6 @@ public interface FinalScoreSheetService {
     int insertFinalScoreSheet(FinalScoreSheet finalScoreSheet);
 
     FinalScoreSheet findFinalScoreSheetByCondtion(FinalScoreSheet finalScoreSheet);
+
+    int insertFinalScoreSheetPagination(List<FinalScoreSheet> finalScoreSheetList);
 }

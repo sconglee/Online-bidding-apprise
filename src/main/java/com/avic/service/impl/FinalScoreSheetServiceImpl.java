@@ -58,4 +58,10 @@ public class FinalScoreSheetServiceImpl implements FinalScoreSheetService {
         logger.info("根据非固定条件查询：" + finalScoreSheet.toString());
         return finalScoreSheetMapper.findFinalScoreSheetByCondtion(finalScoreSheet);
     }
+
+    @Override
+    public int insertFinalScoreSheetPagination(List<FinalScoreSheet> finalScoreSheetList) {
+        logger.info("批量插入数据：" + finalScoreSheetList.size());
+        return finalScoreSheetMapper.insertFinalScoreSheetPagination(finalScoreSheetList);
+    }
 }

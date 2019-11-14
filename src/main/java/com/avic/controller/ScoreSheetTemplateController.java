@@ -150,7 +150,7 @@ public class ScoreSheetTemplateController {
             // 根据projectName、projectNumber、两个字段查询expertScoreSheet表，如果存在就批量删除。
             ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();
             expertScoreSheet.setProjectName(scoreSheetTemplate.getProjectName());
-            expertScoreSheet.setSequenceNumber(scoreSheetTemplate.getSequenceNumber());
+            expertScoreSheet.setProjectNumber(scoreSheetTemplate.getProjectNumber());
             expertScoreSheetService.deleteExpertScoreByProjectNameAndProjectNumber(expertScoreSheet);
 
             modelMap.put("success", "true");

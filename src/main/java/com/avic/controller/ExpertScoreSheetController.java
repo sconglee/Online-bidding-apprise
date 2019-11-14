@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,10 +94,31 @@ public class ExpertScoreSheetController {
         modelMap.put("success", "false");
         modelMap.put("msg", "专家评分失败！！");
 
+        // 1、批量保存专家打分结果
         Integer insertFlag = expertScoreSheetService.insertExpertScoreSheetForeach(expertScoreSheetList);
         if (insertFlag > 0) {
             modelMap.put("success", "true");
             modelMap.put("msg", "专家评分成功！");
+        }
+
+        // 2、向表finalscoresheet中写入数据
+        List<FinalScoreSheet> finalScoreSheetList = new ArrayList<>();
+        for (ExpertScoreSheet expertScoreSheet : expertScoreSheetList) {
+            FinalScoreSheet finalScoreSheet = new FinalScoreSheet();
+            finalScoreSheet.setProjectName(expertScoreSheet.getProjectName());
+            finalScoreSheet.setProjectNumber(expertScoreSheet.getProjectNumber());
+            finalScoreSheet.setCompanyName(expertScoreSheet.getCompanyName());
+            finalScoreSheet.setIsGenerate(0);
+            finalScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
+            finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
+
+            finalScoreSheetList.add(finalScoreSheet);
+        }
+        // 2.1 校验finalscoresheet是否已经存在，如果不存在则insert。
+        FinalScoreSheet result = null;
+        result = finalScoreSheetService.findFinalScoreSheetByCondtion(finalScoreSheetList.get(0));
+        if (result == null) {
+            finalScoreSheetService.insertFinalScoreSheetPagination(finalScoreSheetList);
         }
 
         return modelMap;
