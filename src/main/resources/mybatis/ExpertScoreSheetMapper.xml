@@ -208,9 +208,6 @@
                 <if test="expertScoreSheet.sequenceNumber != null">
                     sequenceNumber,
                 </if>
-                <if test="expertScoreSheet.status != null and expertScoreSheet.status != ''">
-                    status,
-                </if>
                 <!--<if test="expertScoreSheet.status != null">
                     status,
                 </if>-->
@@ -258,9 +255,6 @@
                 </if>
                 <if test="expertScoreSheet.point != null">
                     #{expertScoreSheet.point,jdbcType=VARCHAR},
-                </if>
-                <if test="expertScoreSheet.status != null and expertScoreSheet.status != ''">
-                    #{expertScoreSheet.status,jdbcType=INTEGER},
                 </if>
                 <!--<if test="expertScoreSheet.status != null ">
                     #{expertScoreSheet.status,jdbcType=INTEGER},
