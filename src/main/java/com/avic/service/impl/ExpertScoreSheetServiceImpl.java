@@ -4,7 +4,10 @@ import com.avic.common.utils.TimeUtil;
 import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
+import com.avic.model.FinalScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetComAndPoint;
+import com.avic.model.httovo.ExpertScoreSheetInsert;
 import com.avic.model.httovo.ExpertScoreSheetPagination;
 import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ExpertScoreSheetService;
@@ -190,5 +193,75 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
         logger.info("修改评分模板后，根据projectName  projectNumber 批量删除老的打分结果: projectName = " + expertScoreSheet.getProjectName()
                 + ",   projectNumber = " + expertScoreSheet.getProjectNumber());
         return expertScoreSheetMapper.deleteExpertScoreByProjectNameAndProjectNumber(expertScoreSheet);
+    }
+
+    @Override
+    public HashMap<String, List> getInsertExpertScoreSheetData(ExpertScoreSheetInsert expertScoreSheetInsert){
+        HashMap<String,List> hashMap = new HashMap<>();
+
+        List<ExpertScoreSheetComAndPoint> expertScoreSheetComAndPointList = expertScoreSheetInsert.getExpertScoreSheetComAndPointList();
+        List<ExpertScoreSheet> expertScoreSheetList = new ArrayList<>();
+        List<FinalScoreSheet> finalScoreSheetList = new ArrayList<>();
+
+        for (ExpertScoreSheetComAndPoint expertScoreSheetComAndPoint : expertScoreSheetComAndPointList) {
+            ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();
+            FinalScoreSheet finalScoreSheet = new FinalScoreSheet();
+
+            expertScoreSheet.setProjectName(expertScoreSheetInsert.getProjectName());
+            expertScoreSheet.setProjectNumber(expertScoreSheetInsert.getProjectNumber());
+            expertScoreSheet.setExpertName(expertScoreSheetInsert.getExpertName());
+            expertScoreSheet.setItemWeight(expertScoreSheetInsert.getItemWeight());
+            expertScoreSheet.setTotalItems(expertScoreSheetInsert.getTotalItems());
+            expertScoreSheet.setTotalItems(expertScoreSheetInsert.getItemCount());
+            expertScoreSheet.setSequenceNumber(expertScoreSheetInsert.getSequenceNumber());
+            expertScoreSheet.setEvaluIndexDesc(expertScoreSheetInsert.getEvaluIndexDesc());
+            expertScoreSheet.setDescription(expertScoreSheetInsert.getDescription());
+            expertScoreSheet.setCompanyName(expertScoreSheetComAndPoint.getCompanyName());
+            expertScoreSheet.setPoint(expertScoreSheetComAndPoint.getPoint());
+            expertScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
+            expertScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
+
+
+            finalScoreSheet.setProjectName(expertScoreSheetInsert.getProjectName());
+            finalScoreSheet.setProjectNumber(expertScoreSheetInsert.getProjectNumber());
+            finalScoreSheet.setCompanyName(expertScoreSheetComAndPoint.getCompanyName());
+            finalScoreSheet.setIsGenerate(0);
+            finalScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
+            finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
+
+            expertScoreSheetList.add(expertScoreSheet);
+            finalScoreSheetList.add(finalScoreSheet);
+        }
+
+        hashMap.put("expertScoreSheet", expertScoreSheetList);
+        hashMap.put("finalScoreSheet", finalScoreSheetList);
+        return hashMap;
+    }
+
+    @Override
+    public ExpertScoreSheetInsert getExpertScoreSheetInsertToWeb(List<ExpertScoreSheet> expertScoreSheetList) {
+        ExpertScoreSheetInsert expertScoreSheetInsert = new ExpertScoreSheetInsert();
+
+        ExpertScoreSheet expertScoreSheet = expertScoreSheetList.get(0);
+        expertScoreSheetInsert.setProjectName(expertScoreSheet.getProjectName());
+        expertScoreSheetInsert.setProjectNumber(expertScoreSheet.getProjectNumber());
+        expertScoreSheetInsert.setExpertName(expertScoreSheet.getExpertName());
+        expertScoreSheetInsert.setItemWeight(expertScoreSheet.getItemWeight());
+        expertScoreSheetInsert.setTotalItems(expertScoreSheet.getTotalItems());
+        expertScoreSheetInsert.setItemCount(expertScoreSheet.getItemCount());
+        expertScoreSheetInsert.setSequenceNumber(expertScoreSheet.getSequenceNumber());
+        expertScoreSheetInsert.setEvaluIndexDesc(expertScoreSheet.getEvaluIndexDesc());
+        expertScoreSheetInsert.setDescription(expertScoreSheet.getDescription());
+
+        List<ExpertScoreSheetComAndPoint> expertScoreSheetComAndPointList = new ArrayList<>();
+        for (ExpertScoreSheet temp : expertScoreSheetList) {
+            ExpertScoreSheetComAndPoint expertScoreSheetComAndPoint = new ExpertScoreSheetComAndPoint();
+            expertScoreSheetComAndPoint.setCompanyName(temp.getCompanyName());
+            expertScoreSheetComAndPoint.setPoint(temp.getPoint());
+            expertScoreSheetComAndPointList.add(expertScoreSheetComAndPoint);
+        }
+        expertScoreSheetInsert.setExpertScoreSheetComAndPointList(expertScoreSheetComAndPointList);
+
+        return expertScoreSheetInsert;
     }
 }

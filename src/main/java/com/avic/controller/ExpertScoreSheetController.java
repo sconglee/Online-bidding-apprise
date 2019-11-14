@@ -6,6 +6,8 @@ import com.avic.mapper.ScoreSheetTemplateMapper;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.FinalScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetComAndPoint;
+import com.avic.model.httovo.ExpertScoreSheetInsert;
 import com.avic.model.httovo.ExpertScoreSheetPagination;
 import com.avic.service.ExpertScoreSheetService;
 import com.avic.service.FinalScoreSheetService;
@@ -124,6 +126,43 @@ public class ExpertScoreSheetController {
         return modelMap;
     }
 
+    @RequestMapping(value = "insertExpertScoreSheetTest")
+    @ResponseBody
+    public Map<String, Object> insertExpertScoreSheetTest(@RequestBody ExpertScoreSheetInsert expertScoreSheetInsert ) {
+        Map<String, Object> modelMap = new ModelMap();
+        modelMap.put("success", "false");
+        modelMap.put("msg", "专家评分失败！！");
+
+        List<ExpertScoreSheetComAndPoint> expertScoreSheetComAndPointList = expertScoreSheetInsert.getExpertScoreSheetComAndPointList();
+        if (expertScoreSheetComAndPointList.size() == 0) {
+            return  modelMap;
+        }
+
+        // 1、组装expertScoreSheet、FinalScoreSheet数据
+        HashMap<String,List> hashMapResult = expertScoreSheetService.getInsertExpertScoreSheetData(expertScoreSheetInsert);
+        List<ExpertScoreSheet> expertScoreSheetList = new ArrayList<>();
+        expertScoreSheetList = hashMapResult.get("expertScoreSheet");
+        List<FinalScoreSheet> finalScoreSheetList = new ArrayList<>();
+        finalScoreSheetList = hashMapResult.get("finalScoreSheet");
+
+        // 1、批量保存专家打分结果
+        Integer insertFlag = expertScoreSheetService.insertExpertScoreSheetForeach(expertScoreSheetList);
+        if (insertFlag > 0) {
+            modelMap.put("success", "true");
+            modelMap.put("msg", "专家评分成功！");
+        }
+
+        // 2、向表finalscoresheet中写入数据
+        // 2.1 校验finalscoresheet是否已经存在，如果不存在则insert。
+        FinalScoreSheet result = null;
+        result = finalScoreSheetService.findFinalScoreSheetByCondtion(finalScoreSheetList.get(0));
+        if (result == null) {
+            finalScoreSheetService.insertFinalScoreSheetPagination(finalScoreSheetList);
+        }
+
+        return modelMap;
+    }
+
 
     /**
      * @Author xulei
@@ -148,6 +187,34 @@ public class ExpertScoreSheetController {
         modelMap.put("success", "true");
         modelMap.put("total", expertScoreSheetList.size());
         modelMap.put("data", expertScoreSheetList);
+        return modelMap;
+    }
+
+    /**
+     * @Author xulei
+     * @Description 根据projectName  projectNumber expertName批量获取专家打分结果
+     * @Date 9:11 2019/11/14/014
+     * @Param [expertScoreSheetPagination]
+     * @return java.util.List<com.avic.model.ExpertScoreSheet>
+     **/
+    @RequestMapping("/getExpertScoreSheetListTest")
+    @ResponseBody
+    public Map<String, Object> getExpertScoreSheetListTest(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        // 1、查询expertScoreSheet，获取数据
+        List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetList(expertScoreSheetPagination);
+        if (expertScoreSheetList.size() == 0) {
+            modelMap.put("success", "false");
+            modelMap.put("msg", "不存在对应的评标打分结果数据，请先打分再查看！");
+            return modelMap;
+        }
+
+        // 2、组装数据格式
+        ExpertScoreSheetInsert expertScoreSheetInsert = expertScoreSheetService.getExpertScoreSheetInsertToWeb(expertScoreSheetList);
+        modelMap.put("success", "true");
+        modelMap.put("total", expertScoreSheetInsert.getExpertScoreSheetComAndPointList().size());
+        modelMap.put("data", expertScoreSheetInsert);
         return modelMap;
     }
 

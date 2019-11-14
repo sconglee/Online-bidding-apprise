@@ -2,8 +2,10 @@ package com.avic.service;
 
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetInsert;
 import com.avic.model.httovo.ExpertScoreSheetPagination;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,5 +46,9 @@ public interface ExpertScoreSheetService {
     List<ExpertScoreSheet> getExpertScoreSheetList(ExpertScoreSheetPagination expertScoreSheetPagination);
 
     Integer deleteExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet);
+
+    HashMap<String,List> getInsertExpertScoreSheetData(ExpertScoreSheetInsert expertScoreSheetInsert);
+
+    ExpertScoreSheetInsert getExpertScoreSheetInsertToWeb(List<ExpertScoreSheet> expertScoreSheetList);
 
 }
