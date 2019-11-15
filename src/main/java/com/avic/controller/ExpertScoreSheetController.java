@@ -103,6 +103,19 @@ public class ExpertScoreSheetController {
             modelMap.put("msg", "专家评分成功！");
         }
 
+        /*FinalScoreSheet finalScoreSheet = new FinalScoreSheet();
+        finalScoreSheet.setProjectName(expertScoreSheet.getProjectName());
+        finalScoreSheet.setProjectNumber(expertScoreSheet.getProjectNumber());
+        finalScoreSheet.setCompanyName(expertScoreSheet.getCompanyName());
+        finalScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
+        finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
+        // 2.1 校验finalscoresheet是否已经存在，如果不存在则insert。
+        FinalScoreSheet finalScoreSheet1 = null;
+        finalScoreSheet1 = finalScoreSheetService.findFinalScoreSheetByCondtion(finalScoreSheet);
+        if (finalScoreSheet1 == null) {
+            finalScoreSheetService.insertFinalScoreSheet(finalScoreSheet);
+        }*/
+
         // 2、向表finalscoresheet中写入数据
         List<FinalScoreSheet> finalScoreSheetList = new ArrayList<>();
         for (ExpertScoreSheet expertScoreSheet : expertScoreSheetList) {
@@ -117,8 +130,7 @@ public class ExpertScoreSheetController {
             finalScoreSheetList.add(finalScoreSheet);
         }
         // 2.1 校验finalscoresheet是否已经存在，如果不存在则insert。
-        FinalScoreSheet result = null;
-        result = finalScoreSheetService.findFinalScoreSheetByCondtion(finalScoreSheetList.get(0));
+        FinalScoreSheet result = finalScoreSheetService.findFinalScoreSheetByCondtion(finalScoreSheetList.get(0));
         if (result == null) {
             finalScoreSheetService.insertFinalScoreSheetPagination(finalScoreSheetList);
         }
