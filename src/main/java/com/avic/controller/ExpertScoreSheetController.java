@@ -123,7 +123,6 @@ public class ExpertScoreSheetController {
             finalScoreSheet.setProjectName(expertScoreSheet.getProjectName());
             finalScoreSheet.setProjectNumber(expertScoreSheet.getProjectNumber());
             finalScoreSheet.setCompanyName(expertScoreSheet.getCompanyName());
-            finalScoreSheet.setIsGenerate(0);
             finalScoreSheet.setCreateTime(TimeUtil.getTimeByDefautFormat());
             finalScoreSheet.setUpdateTime(TimeUtil.getTimeByDefautFormat());
 

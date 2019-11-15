@@ -157,12 +157,12 @@
             <if test="companyName != null and companyName != ''">
                 and a.companyName = #{companyName,jdbcType=VARCHAR}
             </if>
-            <if test="isGenerate != null">
+            <!--<if test="isGenerate != null">
                 and a.isGenerate = #{isGenerate,jdbcType=INTEGER}
             </if>
             <if test="averageScore != null">
                 and a.averageScore = #{averageScore,jdbcType=INTEGER}
-            </if>
+            </if>-->
             <!--<if test="totalScore != null ">
                 and a.totalScore = #{totalScore,jdbcType=DOUBLE}
             </if>-->
