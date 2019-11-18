@@ -51,4 +51,6 @@ public interface ExpertScoreSheetService {
 
     ExpertScoreSheetInsert getExpertScoreSheetInsertToWeb(List<ExpertScoreSheet> expertScoreSheetList);
 
+    ExpertScoreSheetInsert getExpertScoreSheetDataForCreatePDF(ExpertScoreSheetInsert expertScoreSheetInsert,int times);
+
 }

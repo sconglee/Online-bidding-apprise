@@ -1,5 +1,6 @@
 package com.avic.service.impl;
 
+import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.TimeUtil;
 import com.avic.mapper.ExpertScoreSheetMapper;
 import com.avic.mapper.ScoreSheetTemplateMapper;
@@ -264,4 +265,46 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
 
         return expertScoreSheetInsert;
     }
+
+
+    /**
+    * @Author xulei
+    * @Description 获取每次生成pdf的数据：3家单位的评分
+    * @Date 15:36 2019/11/17/017
+    * @Param [expertScoreSheetInsert, times]
+    * @return com.avic.model.httovo.ExpertScoreSheetInsert
+    **/
+    @Override
+    public ExpertScoreSheetInsert getExpertScoreSheetDataForCreatePDF(ExpertScoreSheetInsert expertScoreSheetInsert, int times) {
+        ExpertScoreSheetInsert resultData = new ExpertScoreSheetInsert();
+
+        resultData.setProjectName(expertScoreSheetInsert.getProjectName());
+        resultData.setProjectNumber(expertScoreSheetInsert.getProjectNumber());
+        resultData.setExpertName(expertScoreSheetInsert.getExpertName());
+        resultData.setItemWeight(expertScoreSheetInsert.getItemWeight());
+        resultData.setTotalItems(expertScoreSheetInsert.getTotalItems());
+        resultData.setItemCount(expertScoreSheetInsert.getItemCount());
+        resultData.setSequenceNumber(expertScoreSheetInsert.getSequenceNumber());
+        resultData.setEvaluIndexDesc(expertScoreSheetInsert.getEvaluIndexDesc());
+        resultData.setDescription(expertScoreSheetInsert.getDescription());
+
+        List<ExpertScoreSheetComAndPoint> expertScoreSheetComAndPointList = new ArrayList<>();
+
+        List<ExpertScoreSheetComAndPoint> comAndPointListResultData = expertScoreSheetInsert.getExpertScoreSheetComAndPointList();
+        int currentLength = (1 + times) * BidConstant.companyNumberSinglePDF;
+        int endLength = expertScoreSheetInsert.getExpertScoreSheetComAndPointList().size();
+        int count = currentLength < endLength ?  currentLength : endLength;
+
+        for (int i = times * BidConstant.companyNumberSinglePDF; i < count; i++) {
+            ExpertScoreSheetComAndPoint expertScoreSheetComAndPoint = new ExpertScoreSheetComAndPoint();
+            expertScoreSheetComAndPoint.setCompanyName(comAndPointListResultData.get(i).getCompanyName());
+            expertScoreSheetComAndPoint.setPoint(comAndPointListResultData.get(i).getPoint());
+            expertScoreSheetComAndPointList.add(expertScoreSheetComAndPoint);
+        }
+
+        resultData.setExpertScoreSheetComAndPointList(expertScoreSheetComAndPointList);
+        return resultData;
+    }
+
+
 }
