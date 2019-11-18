@@ -8,6 +8,8 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,6 +26,7 @@ import java.util.List;
  **/
 public class PDFUtil {
 
+    private static final Log logger = LogFactory.getLog(PDFUtil.class);
     /**
      * @Description 建立一个Document对象
      **/
@@ -323,23 +326,23 @@ public class PDFUtil {
 
         List<ExpertScoreSheetComAndPoint> expertScoreSheetComAndPointList = resultData.getExpertScoreSheetComAndPointList();
 
-        // 拆分  技术评审、商务评审、价格评审
+        // 1、拆分  技术评审、商务评审、价格评审
         String[] totalItems = resultData.getTotalItems().split(",");
         for (int i = 0; i < totalItems.length; i++) {
             totalItems[i] = totalItems[i].substring(0, totalItems[i].indexOf("("));
         }
-        // 保存 技术评审、商务评审、价格评审各自对应的评审项目数量 -- [13,6,4]
+        // 2、保存 技术评审、商务评审、价格评审各自对应的评审项目数量 -- [13,6,4]
         ArrayList<Integer> reviewNumberList = getReviewNumber(resultData.getEvaluIndexDesc());
 
-        // 获取公司数量
+        // 3、获取公司数量
         Integer companyNumber = expertScoreSheetComAndPointList.size();
-        Integer totalColounms = companyNumber + 4;
-        System.out.println("当前生成pdf时，公司数量是：" + companyNumber);
+        // Integer totalColounms = companyNumber + 4;
+        logger.info("在本次生成pdf时，公司数量是：" + companyNumber);
 
-        // 把标准分值拆分到一个数组中
+        // 4、把标准分值拆分到一个数组中
         String[] itemWeightArray = resultData.getItemWeight().split(",");
 
-        // 把evaluIndexDesc和description字段分别拆分到一个数组中
+        // 5、把evaluIndexDesc和description字段分别拆分到一个数组中
         HashMap<String, String[]> resultHashMap = getEvaluAndDescArray(resultData.getEvaluIndexDesc(),resultData.getDescription());
         String[] evaluIndexDescArray = resultHashMap.get("evaluIndexDescArray");
         String[] descriptionArray = resultHashMap.get("descriptionArray");
@@ -347,20 +350,21 @@ public class PDFUtil {
         // 评审项目序号
         Integer reviewCount = 1;
 
-        // 1、根据表格的列数，生成table -- 先获取每个单元格的width
+        // 6、根据表格的列数，生成table -- 先获取每个单元格的width
         ArrayList<Float> singleColoumnWidthList = getSingleColoumnWidth(companyNumber);
         float[] singleColoumnWidth = new float[singleColoumnWidthList.size()];
         for (int i = 0; i < singleColoumnWidthList.size(); i++) {
             singleColoumnWidth[i] = singleColoumnWidthList.get(i);
         }
+
+        // 7、生成pdfTable
         PdfPTable table = createTable(singleColoumnWidth);
 
-        // 以技术评审、商务评审、价格评审为顺序进行输出pdf
+        // 8、以技术评审、商务评审、价格评审为顺序进行输出pdf
         Boolean isFirst = true;
         for (int i = 0; i < totalItems.length; i++){
-            System.out.println("总共模块：" + totalItems.length);
 
-            // 2、设置pdf头信息
+            // 8.1、设置pdf头信息
             table.addCell(createCell("评审专家签字：", textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber, true,isFirst));
             if (isFirst) {
                 isFirst = false;
@@ -369,7 +373,7 @@ public class PDFUtil {
             table.addCell(createCell("项目名称：" + resultData.getProjectName(), textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber,false));
             table.addCell(createCell("项目编号：" + resultData.getProjectNumber(), textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber,false));
 
-            // 3、设置表头关键字
+            // 8.2、设置表头关键字
             table.addCell(createCellVerticalAligent("id", keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
             table.addCell(createCellVerticalAligent(BidConstant.reviewIndex, keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
             table.addCell(createCellVerticalAligent(BidConstant.standardScore, keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
@@ -382,7 +386,7 @@ public class PDFUtil {
                 allComPointList.add(expertScoreSheetComAndPoint.getPoint().split(","));
             }
 
-            // 开始循环add单元格内容
+            // 8.3、开始循环add单元格内容
             for (int j = 0; j < reviewNumberList.get(i); j++) {
                 table.addCell(createCell(reviewCount + "", textfont));
                 table.addCell(createCell(evaluIndexDescArray[reviewCount - 1] , textfont));
@@ -402,9 +406,5 @@ public class PDFUtil {
     }
 
 
-    public static void main(String[] args) {
-        String os = System.getProperty("os.name");
-        System.out.println(os.toLowerCase());
-    }
 
 }

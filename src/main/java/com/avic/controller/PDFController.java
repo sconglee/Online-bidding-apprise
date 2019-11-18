@@ -67,16 +67,14 @@ public class PDFController {
 
             // 2、把数据写入到pdf中，生成最终pdf
             int comAndPointListLength = resultData.getExpertScoreSheetComAndPointList().size();
-            int createPDFTimes = (comAndPointListLength % BidConstant.companyNumberSinglePDF) == 0 ?
-                    comAndPointListLength / BidConstant.companyNumberSinglePDF : comAndPointListLength / BidConstant.companyNumberSinglePDF + 1;
+            int tempTimes = comAndPointListLength / BidConstant.companyNumberSinglePDF;
+            int createPDFTimes = (comAndPointListLength % BidConstant.companyNumberSinglePDF) == 0 ? tempTimes : tempTimes + 1;
+            logger.info("公司数量为：" + comAndPointListLength + "; 每3家进行分页，共需要 " + createPDFTimes + " 次生成pdf。");
 
             for (int i = 0; i < createPDFTimes; i++) {
-                System.out.println("这是第 " + i + " 次开始生成pdf:");
                 ExpertScoreSheetInsert createPDFData = expertScoreSheetService.getExpertScoreSheetDataForCreatePDF(resultData,i);
-                System.out.println(createPDFData.toString());
-
                 // 定义pdf文件名称
-                String newPdfFile = "";
+                String newPdfFile;
                 String osName = System.getProperty("os.name");
                 if (osName.toLowerCase().startsWith("win")) {
                     newPdfFile = BidConstant.constantPrePathForWin + createPDFData.getProjectName() + "_" + i + "" + BidConstant.constantSufPath;
@@ -102,6 +100,7 @@ public class PDFController {
             modelMap.put("msg", "生成pdf失败！！");
         }
 
+        logger.info("生成的文件路径为：" + pdfPathList.toString());
         return modelMap;
     }
 
