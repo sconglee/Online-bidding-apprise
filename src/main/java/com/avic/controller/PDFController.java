@@ -11,6 +11,7 @@ import java.util.Map;
 
 import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.PDFUtil;
+import com.avic.common.utils.ZipUtil;
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.httovo.ExpertScoreSheetInsert;
 import com.avic.model.httovo.ExpertScoreSheetPagination;
@@ -52,6 +53,7 @@ public class PDFController {
 
         // 存放生成的所有pdf的地址
         ArrayList<String> pdfPathList = new ArrayList<>();
+        String osName = System.getProperty("os.name");
 
         try {
             // 1、获取数据
@@ -75,7 +77,6 @@ public class PDFController {
                 ExpertScoreSheetInsert createPDFData = expertScoreSheetService.getExpertScoreSheetDataForCreatePDF(resultData,i);
                 // 定义pdf文件名称
                 String newPdfFile;
-                String osName = System.getProperty("os.name");
                 if (osName.toLowerCase().startsWith("win")) {
                     newPdfFile = BidConstant.constantPrePathForWin + createPDFData.getProjectName() + "_" + i + "" + BidConstant.constantSufPath;
                 } else {
@@ -92,7 +93,6 @@ public class PDFController {
                 PDFUtil pdfUtil = new PDFUtil(file);
                 pdfUtil.generatePDF(createPDFData);
             }
-            modelMap.put("data", pdfPathList);
 
         } catch (Exception e) {
             System.out.println("生成pdf异常，信息为：" + e.getMessage());
@@ -101,6 +101,18 @@ public class PDFController {
         }
 
         logger.info("生成的文件路径为：" + pdfPathList.toString());
+
+        // 3、把存放pdf的文件夹打包
+        String zipFilePath;
+        if (osName.toLowerCase().startsWith("win")) {
+            zipFilePath = "http://localhost/WEB/pdfFile.zip";
+            ZipUtil.createZip(BidConstant.constantPrePathForWin, BidConstant.constantPrePathForWinZip, false);
+        } else {
+            zipFilePath = "http://192.168.1.71/WEB/pdfFile.zip";
+            ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip,false);
+        }
+        modelMap.put("data", zipFilePath);
+
         return modelMap;
     }
 
