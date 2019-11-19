@@ -1,14 +1,5 @@
 package com.avic.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.avic.common.constant.BidConstant;
 import com.avic.common.utils.PDFUtil;
 import com.avic.common.utils.ZipUtil;
@@ -20,10 +11,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -106,7 +102,7 @@ public class PDFController {
         String zipFilePath;
         if (osName.toLowerCase().startsWith("win")) {
             String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip);
-            zipFilePath = "http://192.168.1.2/WEB/pdfFile.zip";
+            zipFilePath = "http://192.168.1.1/WEB/pdfFile.zip";
             ZipUtil.createZip(BidConstant.constantPrePathForWin, zipFileUrl, true);
 
         } else {
