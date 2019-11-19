@@ -382,7 +382,7 @@ public class PDFUtil {
 
             ArrayList<String[]> allComPointList = new ArrayList<>();
             for (ExpertScoreSheetComAndPoint expertScoreSheetComAndPoint : expertScoreSheetComAndPointList) {
-                // 设置表头中的公司名称
+                // 设置表头中--公司名称
                 table.addCell(createCell(expertScoreSheetComAndPoint.getCompanyName(), keyfont, Element.ALIGN_CENTER));
                 allComPointList.add(expertScoreSheetComAndPoint.getPoint().split(","));
             }

@@ -57,5 +57,12 @@ public interface ExpertScoreSheetService {
     **/
     ExpertScoreSheetInsert getExpertScoreSheetDataForCreatePDF(ExpertScoreSheetInsert expertScoreSheetInsert,int times);
 
+    /**
+    * 获取保存zip压缩包的路径
+     * 压缩包下保存当前本次请求中的所有pdf
+    **/
     String getSaveZipPath(String url);
+
+
+
 }

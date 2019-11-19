@@ -15,6 +15,7 @@ import java.util.zip.ZipOutputStream;
  * @Version 1.0
  **/
 public class ZipUtil {
+
     private static final Log logger = LogFactory.getLog(ZipUtil.class);
 
     /**
@@ -26,110 +27,68 @@ public class ZipUtil {
      * isDrop  是否删除原文件:true删除、false不删除
     * @return void
     **/
-    public static void createZip(String sourcePath, String zipPath,Boolean isDrop) {
-        FileOutputStream fos = null;
-        ZipOutputStream zos = null;
+    public static void createZip(String sourcePath, String zipPath, Boolean isDrop) {
+        FileOutputStream fileOutputStream;
+        ZipOutputStream zipOutputStream = null;
         try {
-            fos = new FileOutputStream(zipPath);
-            zos = new ZipOutputStream(fos);
-            // 此处修改字节码方式。
-            //zos.setEncoding("gbk");
-            //createXmlFile(sourcePath,"293.xml");
-            writeZip(new File(sourcePath), "", zos,isDrop);
+            fileOutputStream = new FileOutputStream(zipPath);
+            zipOutputStream = new ZipOutputStream(fileOutputStream);
+            writeZip(new File(sourcePath), "", zipOutputStream, isDrop);
 
-        } catch (FileNotFoundException e) {
-            logger.error("创建ZIP文件失败",e);
+        } catch (FileNotFoundException exception) {
+            logger.error("创建ZIP文件失败",exception);
+
         } finally {
             try {
-                if (zos != null) {
-                    zos.close();
+                if (zipOutputStream != null) {
+                    zipOutputStream.close();
                 }
             } catch (IOException e) {
                 logger.error("创建ZIP文件失败",e);
             }
-
         }
     }
-
-
+    
     /**
-     * 清空文件和文件目录
-     *
-     * @param f
-     */
-    public static void clean(File f) throws Exception {
-        String cs[] = f.list();
-        if (cs == null || cs.length <= 0) {
-            System.out.println("delFile:[ " + f + " ]");
-            boolean isDelete = f.delete();
-            if (!isDelete) {
-                System.out.println("delFile:[ " + f.getName() + "文件删除失败！" + " ]");
-                throw new Exception(f.getName() + "文件删除失败！");
-            }
-        } else {
-            for (int i = 0; i < cs.length; i++) {
-                String cn = cs[i];
-                String cp = f.getPath() + File.separator + cn;
-                File f2 = new File(cp);
-                if (f2.exists() && f2.isFile()) {
-                    System.out.println("delFile:[ " + f2 + " ]");
-                    boolean isDelete = f2.delete();
-                    if (!isDelete) {
-                        System.out.println("delFile:[ " + f2.getName() + "文件删除失败！" + " ]");
-                        throw new Exception(f2.getName() + "文件删除失败！");
-                    }
-                } else if (f2.exists() && f2.isDirectory()) {
-                    clean(f2);
-                }
-            }
-            System.out.println("delFile:[ " + f + " ]");
-            boolean isDelete = f.delete();
-            if (!isDelete) {
-                System.out.println("delFile:[ " + f.getName() + "文件删除失败！" + " ]");
-                throw new Exception(f.getName() + "文件删除失败！");
-            }
-        }
-    }
-
-
-    private static void writeZip(File file, String parentPath, ZipOutputStream zos,Boolean isDrop) {
+    * 向zip文件中写入数据
+    **/
+    private static void writeZip(File file, String parentPath, ZipOutputStream zos, Boolean isDrop) {
         if(file.exists()){
             // 处理文件夹
-            if(file.isDirectory()){
-                parentPath+=file.getName()+File.separator;
-                File [] files=file.listFiles();
-                if(files.length != 0)
-                {
+            if(file.isDirectory()) {
+                parentPath += file.getName() + File.separator;
+                File [] files = file.listFiles();
+                if(files.length != 0) {
                     for(File f:files){
                         writeZip(f, parentPath, zos,isDrop);
                     }
-                }
-                else
-                {       //空目录则创建当前目录
+                } else {
+                    // 空目录则创建当前目录
                     try {
                         zos.putNextEntry(new ZipEntry(parentPath));
+
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
-            }else{
-                FileInputStream fis=null;
+            } else {
+                FileInputStream fis = null;
                 try {
-                    fis=new FileInputStream(file);
+                    fis = new FileInputStream(file);
                     ZipEntry ze = new ZipEntry(parentPath + file.getName());
                     zos.putNextEntry(ze);
                     byte [] content=new byte[1024];
                     int len;
-                    while((len=fis.read(content))!=-1){
+                    while((len = fis.read(content)) != -1){
                         zos.write(content,0,len);
                         zos.flush();
                     }
-
                 } catch (FileNotFoundException e) {
                     logger.error("创建ZIP文件失败",e);
+
                 } catch (IOException e) {
                     logger.error("创建ZIP文件失败",e);
+
                 }finally{
                     try {
                         if(fis!=null){
@@ -140,6 +99,7 @@ public class ZipUtil {
                         }
                     }catch(IOException e){
                         logger.error("创建ZIP文件失败",e);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -147,5 +107,45 @@ public class ZipUtil {
             }
         }
     }
+
+    /**
+     * 清空文件和文件目录
+     *
+     * @param f
+     */
+    public static void clean(File f) throws Exception {
+        String cs[] = f.list();
+        if (cs == null || cs.length <= 0) {
+            logger.info("delFile:[ " + f + " ]");
+            boolean isDelete = f.delete();
+            if (!isDelete) {
+                logger.info("delFile:[ " + f.getName() + "文件删除失败！" + " ]");
+                throw new Exception(f.getName() + "文件删除失败！");
+            }
+        } else {
+            for (int i = 0; i < cs.length; i++) {
+                String cn = cs[i];
+                String cp = f.getPath() + File.separator + cn;
+                File f2 = new File(cp);
+                if (f2.exists() && f2.isFile()) {
+                    logger.info("delFile:[ " + f2 + " ]");
+                    boolean isDelete = f2.delete();
+                    if (!isDelete) {
+                        logger.info("delFile:[ " + f2.getName() + "文件删除失败！" + " ]");
+                        throw new Exception(f2.getName() + "文件删除失败！");
+                    }
+                } else if (f2.exists() && f2.isDirectory()) {
+                    clean(f2);
+                }
+            }
+           logger.info("delFile:[ " + f + " ]");
+            boolean isDelete = f.delete();
+            if (!isDelete) {
+                logger.info("delFile:[ " + f.getName() + "文件删除失败！" + " ]");
+                throw new Exception(f.getName() + "文件删除失败！");
+            }
+        }
+    }
+
 }
 
