@@ -142,10 +142,16 @@ public class ScoreSheetTemplateController {
             scoreSheetTemplateService.updateScoreSheetTemplate(scoreSheetTemplate);
 
             // 根据projectName、projectNumber、两个字段查询expertScoreSheet表，如果存在就update。
-            List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate("");
+            /*List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getExpertScoreSheetFromTemplate("");
             if (expertScoreSheetList.size() > 0) {
                 expertScoreSheetService.updateExpertScoreSheetForeach(expertScoreSheetList);
-            }
+            }*/
+
+            // 根据projectName、projectNumber、两个字段查询expertScoreSheet表，如果存在就批量删除。
+            ExpertScoreSheet expertScoreSheet = new ExpertScoreSheet();
+            expertScoreSheet.setProjectName(scoreSheetTemplate.getProjectName());
+            expertScoreSheet.setProjectNumber(scoreSheetTemplate.getProjectNumber());
+            expertScoreSheetService.deleteExpertScoreByProjectNameAndProjectNumber(expertScoreSheet);
 
             modelMap.put("success", "true");
             modelMap.put("msg", "修改评标打分模板成功！！");

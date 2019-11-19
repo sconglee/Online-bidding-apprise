@@ -43,4 +43,11 @@ public interface ExpertScoreSheetMapper {
 
     Integer deleteExpertScoreForeachById(List<ExpertScoreSheet> expertScoreSheetList);
 
+    /**
+    * 根据projectName  projectNumber expertName批量获取专家打分结果
+    **/
+    List<ExpertScoreSheet> getExpertScoreSheetList(ExpertScoreSheetPagination expertScoreSheetPagination);
+
+    Integer deleteExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet);
+
 }

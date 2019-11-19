@@ -30,6 +30,53 @@
         from finalscoresheet order by id limit #{startNumber}, #{columns}
     </select>
 
+    <insert id="insertFinalScoreSheetPagination" parameterType="java.util.List" >
+        <foreach collection="list" item="finalscoresheet" separator=";">
+            insert into finalscoresheet (
+            <trim prefix="" suffix=")" suffixOverrides=",">
+                <if test="finalscoresheet.projectName != null">
+                    projectName,
+                </if>
+                <if test="finalscoresheet.projectNumber != null">
+                    projectNumber,
+                </if>
+                <if test="finalscoresheet.companyName != null">
+                    companyName,
+                </if>
+                <if test="finalscoresheet.isGenerate != null">
+                    isGenerate,
+                </if>
+                <if test="finalscoresheet.createTime != null">
+                    createTime,
+                </if>
+                <if test="finalscoresheet.updateTime != null">
+                    updateTime,
+                </if>
+            </trim>
+            values (
+            <trim prefix="" suffix=")" suffixOverrides=",">
+                <if test="finalscoresheet.projectName != null">
+                    #{finalscoresheet.projectName,jdbcType=VARCHAR},
+                </if>
+                <if test="finalscoresheet.projectNumber != null">
+                    #{finalscoresheet.projectNumber,jdbcType=VARCHAR},
+                </if>
+                <if test="finalscoresheet.companyName != null">
+                    #{finalscoresheet.companyName,jdbcType=VARCHAR},
+                </if>
+                <if test="finalscoresheet.isGenerate != null">
+                    #{finalscoresheet.isGenerate,jdbcType=INTEGER},
+                </if>
+                <if test="finalscoresheet.createTime != null">
+                    #{finalscoresheet.createTime,jdbcType=VARCHAR},
+                </if>
+                <if test="finalscoresheet.updateTime != null">
+                    #{finalscoresheet.updateTime,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
     <insert id="insertFinalScoreSheet" parameterType="com.avic.model.FinalScoreSheet">
         insert into finalscoresheet (
         <trim prefix="" suffix=")" suffixOverrides=",">
@@ -110,15 +157,15 @@
             <if test="companyName != null and companyName != ''">
                 and a.companyName = #{companyName,jdbcType=VARCHAR}
             </if>
-            <if test="isGenerate != null">
+            <!--<if test="isGenerate != null">
                 and a.isGenerate = #{isGenerate,jdbcType=INTEGER}
             </if>
             <if test="averageScore != null">
                 and a.averageScore = #{averageScore,jdbcType=INTEGER}
-            </if>
-            <if test="totalScore != null ">
+            </if>-->
+            <!--<if test="totalScore != null ">
                 and a.totalScore = #{totalScore,jdbcType=DOUBLE}
-            </if>
+            </if>-->
         </where>
     </select>
 

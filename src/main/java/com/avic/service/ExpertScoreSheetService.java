@@ -2,8 +2,10 @@ package com.avic.service;
 
 import com.avic.model.ExpertScoreSheet;
 import com.avic.model.ScoreSheetTemplate;
+import com.avic.model.httovo.ExpertScoreSheetInsert;
 import com.avic.model.httovo.ExpertScoreSheetPagination;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,4 +41,21 @@ public interface ExpertScoreSheetService {
 
     Integer updateExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
 
+    Integer insertExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList);
+
+    List<ExpertScoreSheet> getExpertScoreSheetList(ExpertScoreSheetPagination expertScoreSheetPagination);
+
+    Integer deleteExpertScoreByProjectNameAndProjectNumber(ExpertScoreSheet expertScoreSheet);
+
+    HashMap<String,List> getInsertExpertScoreSheetData(ExpertScoreSheetInsert expertScoreSheetInsert);
+
+    ExpertScoreSheetInsert getExpertScoreSheetInsertToWeb(List<ExpertScoreSheet> expertScoreSheetList);
+
+    /**
+    * 获取每次用来生成pdf的数据
+     * 由于pdf需要分页，所以需要使用tines标记当前是第几次生成pdf。
+    **/
+    ExpertScoreSheetInsert getExpertScoreSheetDataForCreatePDF(ExpertScoreSheetInsert expertScoreSheetInsert,int times);
+
+    String getSaveZipPath(String url);
 }

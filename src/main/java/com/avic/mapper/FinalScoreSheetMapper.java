@@ -24,4 +24,6 @@ public interface FinalScoreSheetMapper {
 
     int insertFinalScoreSheet(FinalScoreSheet finalScoreSheet);
 
+    int insertFinalScoreSheetPagination(List<FinalScoreSheet> finalScoreSheetList);
+
 }
