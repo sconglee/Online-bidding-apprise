@@ -105,11 +105,13 @@ public class PDFController {
         // 3、把存放pdf的文件夹打包
         String zipFilePath;
         if (osName.toLowerCase().startsWith("win")) {
-            zipFilePath = "http://localhost/WEB/pdfFile.zip";
-            ZipUtil.createZip(BidConstant.constantPrePathForWin, BidConstant.constantPrePathForWinZip, false);
+            String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip);
+            zipFilePath = "http://192.168.1.2/WEB/pdfFile.zip";
+            ZipUtil.createZip(BidConstant.constantPrePathForWin, zipFileUrl, true);
+
         } else {
             zipFilePath = "http://192.168.1.71/WEB/pdfFile.zip";
-            ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip,false);
+            ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip,true);
         }
         modelMap.put("data", zipFilePath);
 

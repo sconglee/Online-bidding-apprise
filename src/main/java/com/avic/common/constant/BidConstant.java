@@ -48,10 +48,13 @@ public class BidConstant {
     /**
      * pdf 相关
      **/
-    public static String constantPrePathForWin = "C:\\Users\\xulei\\Desktop\\pdfFile\\";
-    public static String constantPrePathForLinux = "/var/apache-tomcat-8.5.47/webapps/WEB/pdfFile/";
+    // public static String constantPrePathForWin = "C:\\Users\\xulei\\Desktop\\pdfFile\\";
+    // public static String constantPrePathForWinZip = "C:\\Users\\xulei\\Desktop\\pdfFile.zip";
 
-    public static String constantPrePathForWinZip = "C:\\Users\\xulei\\Desktop\\pdfFile.zip";
+    public static String constantPrePathForWin = "D:\\installSoftware\\apache-tomcat-8.5.32\\webapps\\WEB\\pdfFile\\";
+    public static String constantPrePathForWinZip = "D:\\installSoftware\\apache-tomcat-8.5.32\\webapps\\WEB\\";
+
+    public static String constantPrePathForLinux = "/var/apache-tomcat-8.5.47/webapps/WEB/pdfFile/";
     public static String constantPrePathForLinuxZip = "/var/apache-tomcat-8.5.47/webapps/WEB/pdfFile.zip";
 
     public static String constantSufPath = ".pdf";

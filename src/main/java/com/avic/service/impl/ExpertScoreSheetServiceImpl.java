@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.print.MultiDoc;
+import java.io.File;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -304,6 +305,27 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
 
         resultData.setExpertScoreSheetComAndPointList(expertScoreSheetComAndPointList);
         return resultData;
+    }
+
+    @Override
+    public String getSaveZipPath(String url) {
+        File file = new File(url);
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                // 判断是否有已经存在zip文件，如果有就删除。
+                if (f.getName().endsWith(".zip")) {
+                    f.delete();
+                   logger.info("删除zip！！");
+                }
+            }
+        }
+        // 新建zip文件
+        String newUrl = url + "pdfFile.zip";
+        File fileNew = new File(newUrl);
+        logger.info("zip包文件的绝对路径：" + fileNew.getAbsolutePath());
+
+        return newUrl;
     }
 
 

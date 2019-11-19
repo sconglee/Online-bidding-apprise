@@ -51,6 +51,11 @@ public interface ExpertScoreSheetService {
 
     ExpertScoreSheetInsert getExpertScoreSheetInsertToWeb(List<ExpertScoreSheet> expertScoreSheetList);
 
+    /**
+    * 获取每次用来生成pdf的数据
+     * 由于pdf需要分页，所以需要使用tines标记当前是第几次生成pdf。
+    **/
     ExpertScoreSheetInsert getExpertScoreSheetDataForCreatePDF(ExpertScoreSheetInsert expertScoreSheetInsert,int times);
 
+    String getSaveZipPath(String url);
 }

@@ -374,7 +374,7 @@ public class PDFUtil {
             table.addCell(createCell("项目编号：" + resultData.getProjectNumber(), textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber,false));
 
             // 8.2、设置表头关键字
-            table.addCell(createCellVerticalAligent("id", keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
+            table.addCell(createCellVerticalAligent("序号", keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
             table.addCell(createCellVerticalAligent(BidConstant.reviewIndex, keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
             table.addCell(createCellVerticalAligent(BidConstant.standardScore, keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
             table.addCell(createCellVerticalAligent(BidConstant.reviewStandardDesc, keyfont, Element.ALIGN_CENTER, BidConstant.verticalAligentNumber));
@@ -382,6 +382,7 @@ public class PDFUtil {
 
             ArrayList<String[]> allComPointList = new ArrayList<>();
             for (ExpertScoreSheetComAndPoint expertScoreSheetComAndPoint : expertScoreSheetComAndPointList) {
+                // 设置表头中的公司名称
                 table.addCell(createCell(expertScoreSheetComAndPoint.getCompanyName(), keyfont, Element.ALIGN_CENTER));
                 allComPointList.add(expertScoreSheetComAndPoint.getPoint().split(","));
             }
