@@ -1,7 +1,5 @@
 package com.avic.common.constant;
 
-import jdk.nashorn.internal.ir.IfNode;
-
 import java.util.HashMap;
 import java.util.Map;
 
