@@ -17,6 +17,7 @@ public class ScoreSheetTemplate implements Serializable {
     private String projectNumber;
     private String totalItems;
     private String sequenceNumber;
+    private String lowItemWeight;
     private String itemWeight;
     private String scoredComName;
     private Integer status;
@@ -65,6 +66,14 @@ public class ScoreSheetTemplate implements Serializable {
 
     public void setSequenceNumber(String sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
+    }
+
+    public String getLowItemWeight() {
+        return lowItemWeight;
+    }
+
+    public void setLowItemWeight(String lowItemWeight) {
+        this.lowItemWeight = lowItemWeight;
     }
 
     public String getItemWeight() {
@@ -139,6 +148,7 @@ public class ScoreSheetTemplate implements Serializable {
                 ", projectNumber='" + projectNumber + '\'' +
                 ", totalItems='" + totalItems + '\'' +
                 ", sequenceNumber='" + sequenceNumber + '\'' +
+                ", lowItemWeight='" + lowItemWeight + '\'' +
                 ", itemWeight='" + itemWeight + '\'' +
                 ", scoredComName='" + scoredComName + '\'' +
                 ", status=" + status +

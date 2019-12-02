@@ -6,6 +6,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="projectName" property="projectName" jdbcType="VARCHAR"/>
         <result column="projectNumber" property="projectNumber" jdbcType="VARCHAR"/>
+        <result column="lowItemWeight" property="lowItemWeight" jdbcType="VARCHAR"/>
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="sequenceNumber" property="sequenceNumber" jdbcType="VARCHAR"/>
         <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
@@ -46,6 +47,9 @@
             <if test="sequenceNumber != null">
                 sequenceNumber,
             </if>
+            <if test="lowItemWeight != null">
+                lowItemWeight,
+            </if>
             <if test="itemWeight != null">
                 itemWeight,
             </if>
@@ -84,6 +88,9 @@
             </if>
             <if test="sequenceNumber != null">
                 #{sequenceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="lowItemWeight != null">
+                #{lowItemWeight,jdbcType=VARCHAR},
             </if>
             <if test="itemWeight != null">
                 #{itemWeight,jdbcType=VARCHAR},
@@ -126,6 +133,9 @@
             </if>
             <if test="sequenceNumber != null and sequenceNumber != ''">
                 sequenceNumber = #{sequenceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="lowItemWeight != null and lowItemWeight != ''">
+                lowItemWeight = #{lowItemWeight,jdbcType=VARCHAR},
             </if>
             <if test="itemWeight != null and itemWeight != ''">
                 itemWeight = #{itemWeight,jdbcType=VARCHAR},
