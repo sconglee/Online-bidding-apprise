@@ -83,7 +83,15 @@ public class FinalScoreSheetController {
         logger.info(expertScoreSheetList.get(0));
         //String itemWeight = expertScoreSheetList.get(0).getItemWeight();
         //Map mapScore = CountFinalScore.getItemAverageAndTotalScore(pointList, itemWeight);
-        Map mapScore = CountFinalScore.getExpertAverageAndTotalScore(pointList);
+        //Map mapScore = CountFinalScore.getExpertAverageAndTotalScore(pointList);
+        Map mapScore = CountFinalScore.getItemAverageAndTotalScoreExceptFourExpert(pointList);
+
+        if (mapScore.get("flag") == false) {
+            map.put("success", false);
+            map.put("msg", mapScore.get("msg"));
+            return map;
+        }
+
         List<String> finalScoreList = (List<String>) mapScore.get("finalScore");
 
         FinalScoreSheet finalScoreSheet1 = new FinalScoreSheet();
@@ -127,11 +135,13 @@ public class FinalScoreSheetController {
             String totalItems = expertScoreSheetList.get(0).getTotalItems();
             String itemCount = expertScoreSheetList.get(0).getItemCount();
             String sequenceNumber = expertScoreSheetList.get(0).getSequenceNumber();
+            String evaluIndexDesc = expertScoreSheetList.get(0).getEvaluIndexDesc();
 
             FinalScoreSheet finalScoreSheet1 = finalScoreSheetService.getFinalScoreSheetByProjectNumberAndCompanyName(finalScoreSheet);
 
             if (itemWeight != null & totalItems != null & finalScoreSheet1 != null) {
                 map.put("totalItems", totalItems);
+                map.put("evaluIndexDesc", evaluIndexDesc);
                 map.put("itemWeight", itemWeight);
                 map.put("itemCount", itemCount);
                 map.put("sequenceNumber", sequenceNumber);
