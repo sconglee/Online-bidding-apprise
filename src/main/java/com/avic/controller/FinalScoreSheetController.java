@@ -86,11 +86,11 @@ public class FinalScoreSheetController {
         //Map mapScore = CountFinalScore.getExpertAverageAndTotalScore(pointList);
         Map mapScore = CountFinalScore.getItemAverageAndTotalScoreExceptFourExpert(pointList);
 
-       /* if (mapScore.get("flag") == false) {
+       if (mapScore.get("flag") == false) {
             map.put("success", false);
             map.put("msg", mapScore.get("msg"));
             return map;
-        }*/
+        }
 
         List<String> finalScoreList = (List<String>) mapScore.get("finalScore");
 
