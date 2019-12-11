@@ -10,6 +10,7 @@
         <result column="expertName" property="expertName" jdbcType="VARCHAR"/>
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="sequenceNumber" property="sequenceNumber" jdbcType="VARCHAR"/>
+        <result column="lowItemWeight" property="lowItemWeight" jdbcType="VARCHAR"/>
         <result column="itemWeight" property="itemWeight" jdbcType="VARCHAR"/>
         <result column="totalItems" property="totalItems" jdbcType="VARCHAR"/>
         <result column="itemCount" property="itemCount" jdbcType="VARCHAR"/>
@@ -92,6 +93,9 @@
             <if test="expertName != null and expertName != ''">
                 expertName = #{expertName,jdbcType=VARCHAR},
             </if>
+            <if test="lowItemWeight != null and lowItemWeight != ''">
+                lowItemWeight = #{lowItemWeight,jdbcType=VARCHAR},
+            </if>
             <if test="itemWeight != null and itemWeight != ''">
                 itemWeight = #{itemWeight,jdbcType=VARCHAR},
             </if>
@@ -142,6 +146,9 @@
                 </if>
                 <if test="expertScoreSheet.expertName != null and expertScoreSheet.expertName != ''">
                     expertName = #{expertScoreSheet.expertName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.lowItemWeight != null and expertScoreSheet.lowItemWeight != ''">
+                    lowItemWeight = #{expertScoreSheet.lowItemWeight,jdbcType=VARCHAR},
                 </if>
                 <if test="expertScoreSheet.itemWeight != null and expertScoreSheet.itemWeight != ''">
                     itemWeight = #{expertScoreSheet.itemWeight,jdbcType=VARCHAR},
@@ -196,6 +203,9 @@
                 <if test="expertScoreSheet.expertName != null">
                     expertName,
                 </if>
+                <if test="expertScoreSheet.lowItemWeight != null and expertScoreSheet.lowItemWeight != ''">
+                    lowItemWeight,
+                </if>
                 <if test="expertScoreSheet.itemWeight != null">
                     itemWeight,
                 </if>
@@ -240,6 +250,9 @@
                 </if>
                 <if test="expertScoreSheet.expertName != null">
                     #{expertScoreSheet.expertName,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.lowItemWeight != null and expertScoreSheet.lowItemWeight != ''">
+                    #{expertScoreSheet.lowItemWeight,jdbcType=VARCHAR},
                 </if>
                 <if test="expertScoreSheet.itemWeight != null">
                     #{expertScoreSheet.itemWeight,jdbcType=VARCHAR},

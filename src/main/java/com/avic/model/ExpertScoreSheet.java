@@ -10,6 +10,7 @@ public class ExpertScoreSheet {
     private String projectNumber;
     private String companyName;
     private String expertName;
+    private String lowItemWeight;
     private String itemWeight;
     private String totalItems;
     private String itemCount;
@@ -142,6 +143,14 @@ public class ExpertScoreSheet {
         this.description = description;
     }
 
+    public String getLowItemWeight() {
+        return lowItemWeight;
+    }
+
+    public void setLowItemWeight(String lowItemWeight) {
+        this.lowItemWeight = lowItemWeight;
+    }
+
     @Override
     public String toString() {
         return "ExpertScoreSheet{" +
@@ -150,6 +159,7 @@ public class ExpertScoreSheet {
                 ", projectNumber='" + projectNumber + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", expertName='" + expertName + '\'' +
+                ", lowItemWeight='" + lowItemWeight + '\'' +
                 ", itemWeight='" + itemWeight + '\'' +
                 ", totalItems='" + totalItems + '\'' +
                 ", itemCount='" + itemCount + '\'' +
