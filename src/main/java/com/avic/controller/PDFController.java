@@ -105,9 +105,9 @@ public class PDFController {
         String zipFilePath;
         if (osName.toLowerCase().startsWith("win")) {
             String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip);
-            // zipFilePath = "http://192.168.1.1/WEB/pdfFile.zip";
+            zipFilePath = "http://192.168.1.1/WEB/pdfFile.zip";
             // zipFilePath = "http://192.168.1.2/WEB/pdfFile.zip";
-            zipFilePath = "http://localhost:8080/WEB/pdfFile.zip";
+            //zipFilePath = "http://localhost:8080/WEB/pdfFile.zip";
             ZipUtil.createZip(BidConstant.constantPrePathForWin, zipFileUrl, true);
 
         } else {
