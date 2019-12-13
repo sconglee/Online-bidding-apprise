@@ -31,7 +31,7 @@ public class CountFinalScore {
 
             //求每个专家打分的和
             List<String> finalScoreList = new ArrayList<>();
-            DecimalFormat df = new DecimalFormat(".##");
+            DecimalFormat df = new DecimalFormat("0.##");
             for (List<String> pointList2 : pointList1) {
                 double sum = 0;
                 for (String point : pointList2) {
@@ -128,7 +128,7 @@ public class CountFinalScore {
 
             logger.info("________________________");
             List<String> finalScoreList = new ArrayList<>();
-            DecimalFormat df = new DecimalFormat(".##");
+            DecimalFormat df = new DecimalFormat("0.##");
             for (int k = 0; k < itemNumber; k++) {
                 finalScoreList.add(df.format(averageScoreList.get(k)));
             }
@@ -201,7 +201,7 @@ public class CountFinalScore {
             logger.info(itemWeightList);
             logger.info("________________________");
             List<String> finalScoreList = new ArrayList<>();
-            DecimalFormat df = new DecimalFormat(".##");
+            DecimalFormat df = new DecimalFormat("0.##");
             for (int k = 0; k < itemNumber; k++) {
                 finalScoreList.add(df.format(averageScoreList.get(k) * Double.valueOf(itemWeightList.get(k))));
             }
