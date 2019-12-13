@@ -21,6 +21,7 @@
 
         <result column="evaluIndexDesc" property="evaluIndexDesc" jdbcType="VARCHAR"/>
         <result column="description " property="description" jdbcType="VARCHAR"/>
+        <result column="dataLimitFlag " property="description" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="partExpertScoreSheetMap" type="java.util.HashMap">
@@ -126,6 +127,9 @@
             <if test="description != null and description != ''">
                 description = #{description,jdbcType=VARCHAR},
             </if>
+            <if test="dataLimitFlag != null and dataLimitFlag != ''">
+                dataLimitFlag = #{dataLimitFlag,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -179,6 +183,9 @@
                 </if>
                 <if test="expertScoreSheet.description != null and expertScoreSheet.description != ''">
                     description = #{expertScoreSheet.description,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.dataLimitFlag != null and expertScoreSheet.dataLimitFlag != ''">
+                    dataLimitFlag = #{expertScoreSheet.dataLimitFlag,jdbcType=VARCHAR},
                 </if>
             </set>
             where projectName = #{expertScoreSheet.projectName}
@@ -236,6 +243,9 @@
                 <if test="expertScoreSheet.description != null">
                     description,
                 </if>
+                <if test="expertScoreSheet.dataLimitFlag != null">
+                    dataLimitFlag,
+                </if>
             </trim>
             values (
             <trim prefix="" suffix=")" suffixOverrides=",">
@@ -283,6 +293,9 @@
                 </if>
                 <if test="expertScoreSheet.description != null">
                     #{expertScoreSheet.description,jdbcType=VARCHAR},
+                </if>
+                <if test="expertScoreSheet.dataLimitFlag != null">
+                    #{expertScoreSheet.dataLimitFlag,jdbcType=VARCHAR},
                 </if>
             </trim>
         </foreach>

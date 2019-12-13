@@ -295,9 +295,9 @@ public class PDFUtil {
 
         } else if (companyNumber == 2) {
             singleColoumnWidth.add(Float.parseFloat("30"));
-            singleColoumnWidth.add(Float.parseFloat("178"));
-            singleColoumnWidth.add(Float.parseFloat("30"));
-            singleColoumnWidth.add(Float.parseFloat("214"));
+            singleColoumnWidth.add(Float.parseFloat("138"));
+            singleColoumnWidth.add(Float.parseFloat("40"));
+            singleColoumnWidth.add(Float.parseFloat("244"));
             singleColoumnWidth.add(Float.parseFloat("34"));
             singleColoumnWidth.add(Float.parseFloat("34"));
 

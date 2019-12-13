@@ -17,6 +17,7 @@
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
         <result column="evaluIndexDesc" property="evaluIndexDesc" jdbcType="VARCHAR"/>
         <result column="description " property="description" jdbcType="VARCHAR"/>
+        <result column="dataLimitFlag " property="description" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findTemplateTotalCount" resultType="Integer">
@@ -74,6 +75,9 @@
             <if test="description != null">
                 description,
             </if>
+            <if test="dataLimitFlag != null">
+                dataLimitFlag,
+            </if>
         </trim>
         values (
         <trim prefix="" suffix=")" suffixOverrides=",">
@@ -115,6 +119,9 @@
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="dataLimitFlag != null">
+                #{dataLimitFlag,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -160,6 +167,9 @@
             </if>
             <if test="description != null and description != ''">
                 description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="dataLimitFlag != null and dataLimitFlag != ''">
+                dataLimitFlag = #{dataLimitFlag,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
