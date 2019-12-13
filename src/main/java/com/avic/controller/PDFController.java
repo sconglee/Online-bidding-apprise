@@ -51,6 +51,9 @@ public class PDFController {
         ArrayList<String> pdfPathList = new ArrayList<>();
         String osName = System.getProperty("os.name");
 
+        // 获取当前登录专家名称
+        String loginUsername = expertScoreSheetPagination.getExpertName();
+
         try {
             // 1、获取数据
             // 1.1、查询expertScoreSheet，获取数据
@@ -74,9 +77,9 @@ public class PDFController {
                 // 定义pdf文件名称
                 String newPdfFile;
                 if (osName.toLowerCase().startsWith("win")) {
-                    newPdfFile = BidConstant.constantPrePathForWin + createPDFData.getProjectName() + "_" + i + "" + BidConstant.constantSufPath;
+                    newPdfFile = BidConstant.constantPrePathForWin + createPDFData.getProjectName() + "_" + loginUsername + "_" + i + "" + BidConstant.constantSufPath;
                 } else {
-                    newPdfFile = BidConstant.constantPrePathForLinux + createPDFData.getProjectName() + "_" + i + "" + BidConstant.constantSufPath;
+                    newPdfFile = BidConstant.constantPrePathForLinux + createPDFData.getProjectName() + "_" + loginUsername + "_" + i + "" + BidConstant.constantSufPath;
                 }
                 // 把当前pdf的路径放到pdfPathList中给前端下载pdf使用
                 pdfPathList.add(newPdfFile);
@@ -87,7 +90,7 @@ public class PDFController {
 
                 // 向pdf文件中写入数据
                 PDFUtil pdfUtil = new PDFUtil(file);
-                pdfUtil.generatePDF(createPDFData);
+                pdfUtil.generatePDF(createPDFData, loginUsername);
             }
 
         } catch (Exception e) {

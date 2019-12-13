@@ -143,9 +143,9 @@ public class PDFUtil {
 
         if(!isFirst){
             cell.setPaddingTop(50.0f);
-           /* cell.setPaddingBottom(10.0f);*/
+            /*cell.setPaddingBottom(10.0f);*/
         }
-        cell.setPaddingBottom(10.0f);
+        /*cell.setPaddingBottom(10.0f);*/
 
         return cell;
     }
@@ -295,9 +295,9 @@ public class PDFUtil {
 
         } else if (companyNumber == 2) {
             singleColoumnWidth.add(Float.parseFloat("30"));
-            singleColoumnWidth.add(Float.parseFloat("58"));
+            singleColoumnWidth.add(Float.parseFloat("178"));
             singleColoumnWidth.add(Float.parseFloat("30"));
-            singleColoumnWidth.add(Float.parseFloat("334"));
+            singleColoumnWidth.add(Float.parseFloat("214"));
             singleColoumnWidth.add(Float.parseFloat("34"));
             singleColoumnWidth.add(Float.parseFloat("34"));
 
@@ -323,7 +323,7 @@ public class PDFUtil {
      * @Param []
      * @return void
      **/
-    public void generatePDF(ExpertScoreSheetInsert resultData) throws Exception {
+    public void generatePDF(ExpertScoreSheetInsert resultData, String loginUsername) throws Exception {
 
         List<ExpertScoreSheetComAndPoint> expertScoreSheetComAndPointList = resultData.getExpertScoreSheetComAndPointList();
 
@@ -366,10 +366,11 @@ public class PDFUtil {
         for (int i = 0; i < totalItems.length; i++){
 
             // 8.1、设置pdf头信息
-            table.addCell(createCell("评审专家签字：", textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber, true, isFirst));
+            table.addCell(createCell("专家编号：" + loginUsername, textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber, true, isFirst));
             if (isFirst) {
                 isFirst = false;
             }
+            table.addCell(createCell("评审专家签字：", textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber, false));
             table.addCell(createCell("专家签字日期：", textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber, false));
             table.addCell(createCell(totalItems[i] + "表", headfont, Element.ALIGN_CENTER, BidConstant.coloumnNumber, false));
             table.addCell(createCell("项目名称：" + resultData.getProjectName(), textfont, Element.ALIGN_LEFT, BidConstant.coloumnNumber,false));
