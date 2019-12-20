@@ -3,6 +3,7 @@ package com.avic.common.utils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -97,7 +98,7 @@ public class CountFinalScore {
                 logger.info("!!!!!!!!!!!!!!!!!!!!");
                 logger.info(pointList3);
                 for (int z = 0; z < pointList3.size(); z++) {
-                    sum = Float.parseFloat(pointList3.get(z)) + sum;
+                    sum = new BigDecimal(Double.toString(Double.valueOf(pointList3.get(z)))).add(new BigDecimal(Double.toString(sum))).doubleValue();
                 }
                 List<Double> doubleList = new ArrayList<>();
                 for (String x : pointList3) {
@@ -120,7 +121,12 @@ public class CountFinalScore {
                 logger.info(min_2);
                 doubleList.remove(Double.valueOf(min_2));
 
-                averageScore = (sum - max_1 - max_2 - min_1 - min_2) / (expertNumber - 4);
+                averageScore = new BigDecimal(Double.toString(sum)).subtract(new BigDecimal(Double.toString(max_1)))
+                        .subtract(new BigDecimal(Double.toString(max_2)))
+                        .subtract(new BigDecimal(Double.toString(min_1)))
+                        .subtract(new BigDecimal(Double.toString(min_2))).doubleValue() / (expertNumber - 4);
+                logger.info(sum);
+                logger.info(averageScore);
                 logger.info("'''''''''''''''");
                 averageScoreList.add(averageScore);
             }
@@ -130,7 +136,7 @@ public class CountFinalScore {
             List<String> finalScoreList = new ArrayList<>();
             DecimalFormat df = new DecimalFormat("0.##");
             for (int k = 0; k < itemNumber; k++) {
-                finalScoreList.add(df.format(averageScoreList.get(k)));
+                finalScoreList.add(String.valueOf((double) Math.round(averageScoreList.get(k) * 100) / 100));
             }
 
             //最后总得分
@@ -138,6 +144,8 @@ public class CountFinalScore {
             for (int m = 0; m < finalScoreList.size(); m++) {
                 totalScore = Double.valueOf(finalScoreList.get(m)) + totalScore;
             }
+            totalScore = (double) Math.round(totalScore * 100) / 100;
+            logger.info("________________________");
             logger.info(finalScoreList);
             logger.info(totalScore);
 
