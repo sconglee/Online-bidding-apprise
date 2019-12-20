@@ -22,6 +22,10 @@ public class ExpertScoreSheet {
 
     private String evaluIndexDesc;
     private String description ;
+    /**
+     * @Description 标识某些特殊字段：0是默认值，1是满足要求的特殊值
+     **/
+    private String dataLimitFlag;
 
     public String getItemCount() {
         return itemCount;
@@ -151,6 +155,14 @@ public class ExpertScoreSheet {
         this.lowItemWeight = lowItemWeight;
     }
 
+    public String getDataLimitFlag() {
+        return dataLimitFlag;
+    }
+
+    public void setDataLimitFlag(String dataLimitFlag) {
+        this.dataLimitFlag = dataLimitFlag;
+    }
+
     @Override
     public String toString() {
         return "ExpertScoreSheet{" +
@@ -170,6 +182,7 @@ public class ExpertScoreSheet {
                 ", updateTime='" + updateTime + '\'' +
                 ", evaluIndexDesc='" + evaluIndexDesc + '\'' +
                 ", description='" + description + '\'' +
+                ", dataLimitFlag='" + dataLimitFlag + '\'' +
                 '}';
     }
 }

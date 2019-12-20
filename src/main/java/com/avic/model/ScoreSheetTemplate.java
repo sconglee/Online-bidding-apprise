@@ -28,6 +28,11 @@ public class ScoreSheetTemplate implements Serializable {
     private String evaluIndexDesc;
     private String description ;
 
+    /**
+    * @Description 标识某些特殊字段：0是默认值，1是满足要求的特殊值
+    **/
+    private String dataLimitFlag;
+
     public Integer getId() {
         return id;
     }
@@ -140,6 +145,14 @@ public class ScoreSheetTemplate implements Serializable {
         this.description = description;
     }
 
+    public String getDataLimitFlag() {
+        return dataLimitFlag;
+    }
+
+    public void setDataLimitFlag(String dataLimitFlag) {
+        this.dataLimitFlag = dataLimitFlag;
+    }
+
     @Override
     public String toString() {
         return "ScoreSheetTemplate{" +
@@ -157,6 +170,7 @@ public class ScoreSheetTemplate implements Serializable {
                 ", updateTime='" + updateTime + '\'' +
                 ", evaluIndexDesc='" + evaluIndexDesc + '\'' +
                 ", description='" + description + '\'' +
+                ", dataLimitFlag='" + dataLimitFlag + '\'' +
                 '}';
     }
 }
