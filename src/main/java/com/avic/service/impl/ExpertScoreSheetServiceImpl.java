@@ -308,7 +308,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
-    public String getSaveZipPath(String url) {
+    public String getSaveZipPath(String url, String projectNameForZip) {
         File file = new File(url);
         if (file.isDirectory()) {
             File[] files = file.listFiles();
@@ -320,8 +320,8 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
                 }
             }
         }
-        // 新建zip文件
-        String newUrl = url + "pdfFile.zip";
+        // 新建zip文件: 使用当前项目名称为后缀进行标识。
+        String newUrl = url + "\\" + projectNameForZip +".zip";
         File fileNew = new File(newUrl);
         logger.info("zip包文件的绝对路径：" + fileNew.getAbsolutePath());
 

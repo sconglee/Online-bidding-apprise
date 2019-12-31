@@ -54,6 +54,9 @@ public class PDFController {
         // 获取当前登录专家名称
         String loginUsername = expertScoreSheetPagination.getExpertName();
 
+        // 保存项目名称 ，用于zip文件命名
+        String projectNameForZip = null;
+
         try {
             // 1、获取数据
             // 1.1、查询expertScoreSheet，获取数据
@@ -63,6 +66,9 @@ public class PDFController {
                 modelMap.put("msg", "不存在对应的评标打分结果数据，请先打分再执行下载pdf操作！");
                 return modelMap;
             }
+            // 保存项目名称 ，用于zip文件命名
+            projectNameForZip = expertScoreSheetList.get(0).getProjectName();
+
             // 1.2、组装数据格式
             ExpertScoreSheetInsert resultData = expertScoreSheetService.getExpertScoreSheetInsertToWeb(expertScoreSheetList);
 
@@ -104,15 +110,15 @@ public class PDFController {
         // 3、把存放pdf的文件夹打包
         String zipFilePath;
         if (osName.toLowerCase().startsWith("win")) {
-            String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip);
-            zipFilePath = "http://192.168.1.1/WEB/pdfFile.zip";
-            // zipFilePath = "http://192.168.1.2/WEB/pdfFile.zip";
-            //zipFilePath = "http://localhost:8080/WEB/pdfFile.zip";
+            String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip, projectNameForZip);
+            // zipFilePath = "http://192.168.1.1/WEB/"+ projectNameForZip + ".zip";
+            // zipFilePath = "http://192.168.1.2/WEB/"+ projectNameForZip + ".zip";
+            zipFilePath = "http://localhost:8080/WEB/" + projectNameForZip + ".zip";
             ZipUtil.createZip(BidConstant.constantPrePathForWin, zipFileUrl, true);
 
         } else {
-            zipFilePath = "http://192.168.1.71/WEB/pdfFile.zip";
-            ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip,true);
+            zipFilePath = "http://192.168.1.71/WEB/"+ projectNameForZip + ".zip";
+            ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip + projectNameForZip + ".zip",true);
         }
         modelMap.put("data", zipFilePath);
 

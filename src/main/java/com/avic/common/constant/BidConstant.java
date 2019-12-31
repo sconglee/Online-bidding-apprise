@@ -53,7 +53,7 @@ public class BidConstant {
     public static String constantPrePathForWinZip = "D:\\installSoftware\\apache-tomcat-8.5.32\\webapps\\WEB\\";
 
     public static String constantPrePathForLinux = "/var/apache-tomcat-8.5.47/webapps/WEB/pdfFile/";
-    public static String constantPrePathForLinuxZip = "/var/apache-tomcat-8.5.47/webapps/WEB/pdfFile.zip";
+    public static String constantPrePathForLinuxZip = "/var/apache-tomcat-8.5.47/webapps/WEB/";
 
     public static String constantSufPath = ".pdf";
     // 表格的列数
