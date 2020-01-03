@@ -10,16 +10,14 @@ import com.avic.model.ScoreSheetTemplate;
 import com.avic.model.httovo.ExpertScoreSheetComAndPoint;
 import com.avic.model.httovo.ExpertScoreSheetInsert;
 import com.avic.model.httovo.ExpertScoreSheetPagination;
-import com.avic.model.httovo.PaginationRequest;
 import com.avic.service.ExpertScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.print.MultiDoc;
 import java.io.File;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +124,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     public Map<String, Object> findScoreSheetPaginationInfo(ScoreSheetTemplate scoreSheetTemplate,ExpertScoreSheetPagination expertScoreSheetPagination) {
         Map<String, Object> modelMap = new HashMap<>();
 
-        //1、根据上面scoreSheetTemplate中的name和number，查询expertScoreSheet表
+        // 1、根据上面scoreSheetTemplate中的name和number，查询expertScoreSheet表
         int whichPage = expertScoreSheetPagination.getPage();
         int everyNumber = expertScoreSheetPagination.getColumns();
         expertScoreSheetPagination.setStartNumber((whichPage - 1) * everyNumber);
@@ -168,6 +166,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
+    @Transactional
     public Integer insertExpertScoreSheetForeach(List<ExpertScoreSheet> expertScoreSheetList) {
         logger.info("专家在一个表单中，同时对所有单位评价，然后批量插入expertScoreSheet表:" );
 
@@ -182,6 +181,7 @@ public class ExpertScoreSheetServiceImpl implements ExpertScoreSheetService {
     }
 
     @Override
+    @Transactional
     public List<ExpertScoreSheet> getExpertScoreSheetList(ExpertScoreSheetPagination expertScoreSheetPagination) {
         logger.info("根据projectName  projectNumber expertName批量获取专家打分结果: projectName = " + expertScoreSheetPagination.getProjectName()
                 + ",   projectNumber = " + expertScoreSheetPagination.getProjectNumber()

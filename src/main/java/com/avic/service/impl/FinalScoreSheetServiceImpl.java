@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class FinalScoreSheetServiceImpl implements FinalScoreSheetService {
     }
 
     @Override
+    @Transactional
     public FinalScoreSheet findFinalScoreSheetByCondtion(FinalScoreSheet finalScoreSheet) {
         logger.info("根据非固定条件查询：" + finalScoreSheet.toString());
         return finalScoreSheetMapper.findFinalScoreSheetByCondtion(finalScoreSheet);
