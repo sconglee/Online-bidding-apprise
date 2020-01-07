@@ -110,16 +110,18 @@ public class PDFController {
         // 3、把存放pdf的文件夹打包
         String zipFilePath;
         if (osName.toLowerCase().startsWith("win")) {
-            String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip, projectNameForZip);
-            // zipFilePath = "http://192.168.1.1/WEB/"+ projectNameForZip + ".zip";
-            // zipFilePath = "http://192.168.1.2/WEB/"+ projectNameForZip + ".zip";
-            // zipFilePath = "http://192.168.1.3/WEB/"+ projectNameForZip + ".zip";
-            zipFilePath = "http://localhost:8080/WEB/" + projectNameForZip + ".zip";
+            // 获取zip文件路径
+            String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip, projectNameForZip, loginUsername);
+
+            // zipFilePath = "http://192.168.1.1/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
+            zipFilePath = "http://192.168.1.2/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
+            // zipFilePath = "http://192.168.1.3/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
+            // zipFilePath = "http://localhost:8080/WEB/" + projectNameForZip + "_" + loginUsername + ".zip";
             ZipUtil.createZip(BidConstant.constantPrePathForWin, zipFileUrl, true);
 
         } else {
             zipFilePath = "http://192.168.1.71/WEB/"+ projectNameForZip + ".zip";
-            ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip + projectNameForZip + ".zip",true);
+            ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip + projectNameForZip + "_" + loginUsername + ".zip",true);
         }
         modelMap.put("data", zipFilePath);
 
