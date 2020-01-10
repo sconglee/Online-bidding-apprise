@@ -82,4 +82,17 @@ public class BidConstant {
     public final static String getScore = "得分";
 
 
+    /**
+    * 定时任务连接池：20个
+    **/
+    public final static Integer threadPoolSize = 20;
+    /**
+     * 定时任务: 从现在开始 1 秒钟之后
+     **/
+    public final static Integer initialDelay = 1;
+    /**
+     * 定时任务：每隔 2 秒钟执行一次
+     **/
+    public final static Integer period = 2;
+
 }

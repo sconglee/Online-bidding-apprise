@@ -10,16 +10,17 @@ import com.avic.service.ExpertScoreSheetService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 
 /**
@@ -42,7 +43,7 @@ public class PDFController {
     **/
     @RequestMapping("/download")
     @ResponseBody
-    public Map<String, Object> download(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) {
+    public synchronized Map<String, Object> download(@RequestBody ExpertScoreSheetPagination expertScoreSheetPagination) throws InterruptedException{
         Map<String, Object> modelMap = new HashMap<>();
         modelMap.put("success", "true");
         modelMap.put("msg", "生成pdf成功！！");
@@ -118,6 +119,7 @@ public class PDFController {
             // zipFilePath = "http://192.168.1.3/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
             // zipFilePath = "http://localhost:8080/WEB/" + projectNameForZip + "_" + loginUsername + ".zip";
             ZipUtil.createZip(BidConstant.constantPrePathForWin, zipFileUrl, true);
+
 
         } else {
             zipFilePath = "http://192.168.1.71/WEB/"+ projectNameForZip + ".zip";
