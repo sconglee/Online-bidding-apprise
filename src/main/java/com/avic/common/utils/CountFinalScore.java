@@ -31,26 +31,37 @@ public class CountFinalScore {
             }
 
             //求每个专家打分的和
+            double sumScore = 0;
+            List<Double> doubleList = new ArrayList<>();
             List<String> finalScoreList = new ArrayList<>();
-            DecimalFormat df = new DecimalFormat("0.##");
+            //DecimalFormat df = new DecimalFormat("0.##");
             for (List<String> pointList2 : pointList1) {
                 double sum = 0;
                 for (String point : pointList2) {
-                    sum = Double.valueOf(point) + sum;
+                    //sum = Double.valueOf(point) + sum;
+                    sum = new BigDecimal(Double.toString(Double.valueOf(point))).add(new BigDecimal(Double.toString(sum))).doubleValue();
                 }
-                finalScoreList.add(df.format(sum));
+                sumScore = new BigDecimal(Double.toString(sum)).add(new BigDecimal(Double.toString(sumScore))).doubleValue();
+                //finalScoreList.add(df.format(sum));
+                sum = (double) Math.round(sum * 100) / 100;
+                doubleList.add(sum);
+                finalScoreList.add(String.valueOf(sum));
             }
             logger.info(finalScoreList);
 
             //去掉一个最高分一个最低分求取平均分
-            double sumScore = 0;
+            /*double sumScore = 0;
             List<Double> doubleList = new ArrayList<>();
             for (String point : finalScoreList) {
                 double doublePoint = Double.valueOf(point);
                 sumScore = doublePoint + sumScore;
                 doubleList.add(doublePoint);
-            }
-            double totalScore = (sumScore - Collections.max(doubleList) - Collections.min(doubleList)) / (expertNumber - 2);
+            }*/
+            //double totalScore = (sumScore - Collections.max(doubleList) - Collections.min(doubleList)) / (expertNumber - 2);
+            double totalScore = new BigDecimal(Double.toString(sumScore))
+                    .subtract(new BigDecimal(Double.toString(Collections.max(doubleList))))
+                    .subtract(new BigDecimal(Double.toString(Collections.min(doubleList)))).doubleValue() / (expertNumber - 2);
+            totalScore = (double) Math.round(totalScore * 100) / 100;
 
             logger.info(sumScore);
             logger.info(Collections.max(doubleList));
@@ -192,13 +203,17 @@ public class CountFinalScore {
                 logger.info("!!!!!!!!!!!!!!!!!!!!");
                 logger.info(pointList3);
                 for (int z = 0; z < pointList3.size(); z++) {
-                    sum = Float.parseFloat(pointList3.get(z)) + sum;
+                    //sum = Float.parseFloat(pointList3.get(z)) + sum;
+                    sum = new BigDecimal(Double.toString(Double.valueOf(pointList3.get(z)))).add(new BigDecimal(Double.toString(sum))).doubleValue();
                 }
                 List<Double> doubleList = new ArrayList<>();
                 for (String x : pointList3) {
                     doubleList.add(Double.valueOf(x));
                 }
-                averageScore = (sum - Collections.max(doubleList) - Collections.min(doubleList)) / (expertNumber - 2);
+                //averageScore = (sum - Collections.max(doubleList) - Collections.min(doubleList)) / (expertNumber - 2);
+                averageScore = new BigDecimal(Double.toString(sum))
+                        .subtract(new BigDecimal(Double.toString(Collections.max(doubleList))))
+                        .subtract(new BigDecimal(Double.toString(Collections.min(doubleList)))).doubleValue() / (expertNumber - 2);
                 logger.info("'''''''''''''''");
                 logger.info(Collections.max(doubleList));
                 logger.info(Collections.min(doubleList));
@@ -209,16 +224,23 @@ public class CountFinalScore {
             logger.info(itemWeightList);
             logger.info("________________________");
             List<String> finalScoreList = new ArrayList<>();
-            DecimalFormat df = new DecimalFormat("0.##");
+            //乘以权重,并求取总分
+            //DecimalFormat df = new DecimalFormat("0.##");
+            double totalScore = 0;
             for (int k = 0; k < itemNumber; k++) {
-                finalScoreList.add(df.format(averageScoreList.get(k) * Double.valueOf(itemWeightList.get(k))));
+                double finalScore = 0;
+                //finalScoreList.add(df.format(averageScoreList.get(k) * Double.valueOf(itemWeightList.get(k))));
+                finalScore = new BigDecimal(Double.toString(averageScoreList.get(k))).multiply(new BigDecimal(Double.toString(Double.valueOf(itemWeightList.get(k))))).doubleValue();
+                finalScoreList.add(String.valueOf((double) Math.round(finalScore * 100) / 100));
+                totalScore = new BigDecimal(Double.toString(finalScore)).add(new BigDecimal(Double.toString(totalScore))).doubleValue();
             }
+            totalScore = (double) Math.round(totalScore * 100) / 100;
 
             //最后总得分
-            double totalScore = 0;
+            /*double totalScore = 0;
             for (int m = 0; m < finalScoreList.size(); m++) {
                 totalScore = Double.valueOf(finalScoreList.get(m)) + totalScore;
-            }
+            }*/
             logger.info(finalScoreList);
             logger.info(totalScore);
 

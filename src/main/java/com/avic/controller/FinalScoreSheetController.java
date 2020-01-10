@@ -87,7 +87,7 @@ public class FinalScoreSheetController {
         Map mapScore = CountFinalScore.getItemAverageAndTotalScoreExceptFourExpert(pointList);
 
         //注意区分java7（false）、java8（"false"）
-       if (mapScore.get("flag") == "false") {
+       if (mapScore.get("flag") == false) {
             map.put("success", false);
             map.put("msg", mapScore.get("msg"));
             return map;
@@ -129,8 +129,10 @@ public class FinalScoreSheetController {
 
             List<ExpertScoreSheet> expertScoreSheetList = expertScoreSheetService.getScoreInfoByProjectNumberAndCompanyName(expertScoreSheet);
             List<String> pointList = new ArrayList<>();
+            List<String> expertNameList = new ArrayList<>();
             for (ExpertScoreSheet expertScoreSheet1 : expertScoreSheetList) {
                 pointList.add(expertScoreSheet1.getPoint());
+                expertNameList.add(expertScoreSheet1.getExpertName());
             }
             String itemWeight = expertScoreSheetList.get(0).getItemWeight();
             String totalItems = expertScoreSheetList.get(0).getTotalItems();
@@ -146,6 +148,7 @@ public class FinalScoreSheetController {
                 map.put("itemWeight", itemWeight);
                 map.put("itemCount", itemCount);
                 map.put("sequenceNumber", sequenceNumber);
+                map.put("expertNameList", expertNameList);
                 map.put("pointList", pointList);
                 map.put("finalScoreSheet", finalScoreSheet1);
                 map.put("msg", "查询得分表详情成功！");

@@ -33,13 +33,13 @@
     </resultMap>
 
     <select id="findExportScoreCount" resultType="Integer">
-        select count(*) from expertscoresheet where projectNumber = #{projectNumber}
+        select count(distinct expertName) from expertscoresheet where projectNumber = #{projectNumber}
     </select>
 
     <select id="findExpertScoreByProjectNumberAndPagination" resultMap="partExpertScoreSheetMap">
-        select projectName, projectNumber, companyName, expertName, updateTime
+        select distinct expertName, projectName, projectNumber, updateTime
         from expertscoresheet
-        where projectNumber = #{projectNumber} order by id limit #{startNumber}, #{columns}
+        where projectNumber = #{projectNumber} limit #{startNumber}, #{columns}
     </select>
 
     <select id="findScoreInfoByExpertNameAndCompanyName" resultType="com.avic.model.ExpertScoreSheet">
