@@ -12,6 +12,7 @@
         <result column="checkItems" property="checkItems" jdbcType="VARCHAR"/>
         <result column="bidderComName" property="bidderComName" jdbcType="VARCHAR"/>
         <result column="preCheckResult" property="preCheckResult" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
     </resultMap>
@@ -42,6 +43,9 @@
             </if>
             <if test="preCheckResult != null">
                 preCheckResult,
+            </if>
+            <if test="description != null">
+                description,
             </if>
             <if test="createTime != null">
                 createTime,
@@ -75,6 +79,9 @@
             </if>
             <if test="preCheckResult != null">
                 #{preCheckResult, jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description, jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 #{createTime, jdbcType=VARCHAR},
@@ -111,6 +118,9 @@
             </if>
             <if test="preCheckResult != null and preCheckResult != '' ">
                 preCheckResult = #{preCheckResult, jdbcType=VARCHAR},
+            </if>
+            <if test="description != null and description != '' ">
+                description = #{description, jdbcType=VARCHAR},
             </if>
             <if test="createTime != null and createTime != '' ">
                 createTime = #{createTime, jdbcType=VARCHAR},

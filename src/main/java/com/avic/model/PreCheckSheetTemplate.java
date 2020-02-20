@@ -45,6 +45,11 @@ public class PreCheckSheetTemplate implements Serializable {
      **/
     private String preCheckResult;
 
+    /**
+     * 备注
+     **/
+    private String description;
+
     private String createTime;
     private String updateTime;
 
@@ -136,6 +141,14 @@ public class PreCheckSheetTemplate implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "PreCheckSheetTemplate{" +
@@ -148,6 +161,7 @@ public class PreCheckSheetTemplate implements Serializable {
                 ", checkItems='" + checkItems + '\'' +
                 ", bidderComName='" + bidderComName + '\'' +
                 ", preCheckResult='" + preCheckResult + '\'' +
+                ", description='" + description + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 '}';
