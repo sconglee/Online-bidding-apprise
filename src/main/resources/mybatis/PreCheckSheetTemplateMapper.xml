@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.avic.mapper.PreCheckSheetTemplateMapper">
+    <resultMap id="preCheckSheetTemplateMap" type="com.avic.model.PreCheckSheetTemplate">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="sheetTitle" property="sheetTitle" jdbcType="VARCHAR"/>
+        <result column="projectName" property="projectName" jdbcType="VARCHAR"/>
+        <result column="projectNumber" property="projectNumber" jdbcType="VARCHAR"/>
+        <result column="evaluateBidTime" property="evaluateBidTime" jdbcType="VARCHAR"/>
+        <result column="evaluateBidAddr" property="evaluateBidAddr" jdbcType="VARCHAR"/>
+        <result column="checkItems" property="checkItems" jdbcType="VARCHAR"/>
+        <result column="bidderComName" property="bidderComName" jdbcType="VARCHAR"/>
+        <result column="preCheckResult" property="preCheckResult" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
+        <result column="updateTime" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertPreCheckSheetTemplate" parameterType="com.avic.model.PreCheckSheetTemplate">
+        insert into prechecksheettemplate (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="sheetTitle != null" >
+                sheetTitle,
+            </if>
+            <if test="projectName != null">
+                projectName,
+            </if>
+            <if test="projectNumber != null">
+                projectNumber,
+            </if>
+            <if test="evaluateBidTime != null">
+                evaluateBidTime,
+            </if>
+            <if test="evaluateBidAddr != null">
+                evaluateBidAddr,
+            </if>
+            <if test="checkItems != null">
+                checkItems,
+            </if>
+            <if test="bidderComName != null">
+                bidderComName,
+            </if>
+            <if test="preCheckResult != null">
+                preCheckResult,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        values (
+        <trim prefix="" suffix=")" suffixOverrides=",">
+            <if test="sheetTitle != null" >
+                #{sheetTitle, jdbcType=VARCHAR},
+            </if>
+            <if test="projectName != null">
+                #{projectName, jdbcType=VARCHAR},
+            </if>
+            <if test="projectNumber != null">
+                #{projectNumber, jdbcType=VARCHAR},
+            </if>
+            <if test="evaluateBidTime != null">
+                #{evaluateBidTime, jdbcType=VARCHAR},
+            </if>
+            <if test="evaluateBidAddr != null">
+                #{evaluateBidAddr, jdbcType=VARCHAR},
+            </if>
+            <if test="checkItems != null">
+                #{checkItems, jdbcType=VARCHAR},
+            </if>
+            <if test="bidderComName != null">
+                #{bidderComName, jdbcType=VARCHAR},
+            </if>
+            <if test="preCheckResult != null">
+                #{preCheckResult, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime, jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime, jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updatePreCheckSheetTemplate" parameterType="com.avic.model.PreCheckSheetTemplate">
+        update prechecksheettemplate
+        <set>
+            <if test="sheetTitle != null and sheetTitle != '' " >
+                sheetTitle = #{sheetTitle, jdbcType=VARCHAR},
+            </if>
+            <if test="projectName != null and projectName != '' ">
+                projectName = #{projectName, jdbcType=VARCHAR},
+            </if>
+            <if test="projectNumber != null and projectNumber != '' ">
+                projectNumber = #{projectNumber, jdbcType=VARCHAR},
+            </if>
+            <if test="evaluateBidTime != null and evaluateBidTime != '' ">
+                evaluateBidTime = #{evaluateBidTime, jdbcType=VARCHAR},
+            </if>
+            <if test="evaluateBidAddr != null and evaluateBidAddr != '' ">
+                evaluateBidAddr = #{evaluateBidAddr, jdbcType=VARCHAR},
+            </if>
+            <if test="checkItems != null and checkItems != '' ">
+                checkItems = #{checkItems, jdbcType=VARCHAR},
+            </if>
+            <if test="bidderComName != null and checkItems != '' ">
+                checkItems = #{bidderComName, jdbcType=VARCHAR},
+            </if>
+            <if test="preCheckResult != null and preCheckResult != '' ">
+                preCheckResult = #{preCheckResult, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                createTime = #{createTime, jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime != '' ">
+                updateTime = #{updateTime, jdbcType=VARCHAR},
+            </if>
+        </set>
+    </update>
+
+    <select id="findPreCheckSheetTemplateById" parameterType="Integer" resultType="com.avic.model.PreCheckSheetTemplate">
+        select * from prechecksheettemplate where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <delete id="deletePreCheckSheetTemplateById" parameterType="Integer">
+        delete from prechecksheettemplate where id = #{id, jdbcType=INTEGER}
+    </delete>
+
+    <!-- 分页查看预审表&#45;&#45;起始页号，每页条数 -->
+    <select id="findTemplateTotalCount" resultType="Integer">
+        select count(*)
+        from prechecksheettemplate
+    </select>
+    <select id="findPreCheckSheetTemplatePagination" parameterType="com.avic.model.httovo.PaginationRequest" resultType="com.avic.model.PreCheckSheetTemplate">
+        select * from prechecksheettemplate
+        order by id limit #{startNumber,jdbcType=INTEGER},#{columns, jdbcType=INTEGER}
+    </select>
+
+
+
+</mapper>
