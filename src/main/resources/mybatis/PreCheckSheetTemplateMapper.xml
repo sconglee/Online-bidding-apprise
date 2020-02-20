@@ -119,6 +119,7 @@
                 updateTime = #{updateTime, jdbcType=VARCHAR},
             </if>
         </set>
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="findPreCheckSheetTemplateById" parameterType="Integer" resultType="com.avic.model.PreCheckSheetTemplate">
