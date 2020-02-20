@@ -113,8 +113,8 @@
             <if test="checkItems != null and checkItems != '' ">
                 checkItems = #{checkItems, jdbcType=VARCHAR},
             </if>
-            <if test="bidderComName != null and checkItems != '' ">
-                checkItems = #{bidderComName, jdbcType=VARCHAR},
+            <if test="bidderComName != null and bidderComName != '' ">
+                bidderComName = #{bidderComName, jdbcType=VARCHAR},
             </if>
             <if test="preCheckResult != null and preCheckResult != '' ">
                 preCheckResult = #{preCheckResult, jdbcType=VARCHAR},
