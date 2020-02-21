@@ -83,8 +83,8 @@ public class FinalScoreSheetController {
         logger.info(expertScoreSheetList.get(0));
         //String itemWeight = expertScoreSheetList.get(0).getItemWeight();
         //Map mapScore = CountFinalScore.getItemAverageAndTotalScore(pointList, itemWeight);
-        //Map mapScore = CountFinalScore.getExpertAverageAndTotalScore(pointList);
-        Map mapScore = CountFinalScore.getItemAverageAndTotalScoreExceptFourExpert(pointList);
+        Map mapScore = CountFinalScore.getExpertAverageAndTotalScore(pointList);
+        //Map mapScore = CountFinalScore.getItemAverageAndTotalScoreExceptFourExpert(pointList);
 
         //注意区分java7（false）、java8（"false"）
        if (mapScore.get("flag") == false) {

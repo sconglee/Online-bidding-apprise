@@ -25,6 +25,53 @@ public class CountFinalScore {
         List<List<String>> pointList1 = new ArrayList<>();
         int expertNumber = pointList.size();
 
+        if (expertNumber > 0) {
+            for (String point : pointList) {
+                pointList1.add(Arrays.asList(point.split(",")));
+            }
+
+            //求每个专家打分的和
+            double sumScore = 0;
+            List<Double> doubleList = new ArrayList<>();
+            List<String> finalScoreList = new ArrayList<>();
+            for (List<String> pointList2 : pointList1) {
+                double sum = 0;
+                for (String point : pointList2) {
+                    sum = new BigDecimal(Double.toString(Double.valueOf(point))).add(new BigDecimal(Double.toString(sum))).doubleValue();
+                }
+                sumScore = new BigDecimal(Double.toString(sum)).add(new BigDecimal(Double.toString(sumScore))).doubleValue();
+                sum = (double) Math.round(sum * 100) / 100;
+                doubleList.add(sum);
+                finalScoreList.add(String.valueOf(sum));
+            }
+            logger.info(finalScoreList);
+
+            //直接求取平均分
+            double totalScore = new BigDecimal(Double.toString(sumScore)).doubleValue() / expertNumber;
+            totalScore = (double) Math.round(totalScore * 100) / 100;
+
+            logger.info(sumScore);
+            logger.info(Collections.max(doubleList));
+            logger.info(Collections.min(doubleList));
+            logger.info(totalScore);
+
+            map.put("flag", true);
+            map.put("finalScore", finalScoreList);
+            map.put("totalScore", totalScore);
+        } else {
+            map.put("flag", false);
+            map.put("msg", "没有评标专家提交打分！");
+        }
+        return map;
+    }
+
+    public static Map<String, Object> getExpertAverageAndTotalScoreExceptTwoExpert(List<String> pointList) {
+
+        logger.info(pointList);
+        Map map = new HashMap();
+        List<List<String>> pointList1 = new ArrayList<>();
+        int expertNumber = pointList.size();
+
         if (expertNumber > 2) {
             for (String point : pointList) {
                 pointList1.add(Arrays.asList(point.split(",")));
@@ -49,7 +96,7 @@ public class CountFinalScore {
             }
             logger.info(finalScoreList);
 
-            //去掉一个最高分一个最低分求取平均分
+            //去掉专家的一个最高总分一个最低总分求取平均分
             /*double sumScore = 0;
             List<Double> doubleList = new ArrayList<>();
             for (String point : finalScoreList) {
@@ -101,7 +148,7 @@ public class CountFinalScore {
             logger.info(expertNumber);
             logger.info("-----------------------------");
 
-            //去掉两个最高分和两个最低分然后求取平均分
+            //去掉分项的两个最高分和两个最低分然后求取平均分
             List<Double> averageScoreList = new ArrayList<>();
             for (List<String> pointList3 : pointList2) {
                 double sum = 0;
@@ -195,7 +242,7 @@ public class CountFinalScore {
             logger.info(expertNumber);
             logger.info("-----------------------------");
 
-            //去掉一个最高分和一个最低分然后求取平均分
+            //去掉分项的一个最高分和一个最低分然后求取平均分
             List<Double> averageScoreList = new ArrayList<>();
             for (List<String> pointList3 : pointList2) {
                 double sum = 0;

@@ -114,8 +114,8 @@ public class PDFController {
             // 获取zip文件路径
             String zipFileUrl = expertScoreSheetService.getSaveZipPath(BidConstant.constantPrePathForWinZip, projectNameForZip, loginUsername);
 
-            // zipFilePath = "http://192.168.1.1/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
-            zipFilePath = "http://192.168.1.2/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
+            zipFilePath = "http://192.168.1.1/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
+            //zipFilePath = "http://192.168.1.2/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
             // zipFilePath = "http://192.168.1.3/WEB/"+ projectNameForZip + "_" + loginUsername + ".zip";
             // zipFilePath = "http://localhost:8080/WEB/" + projectNameForZip + "_" + loginUsername + ".zip";
             ZipUtil.createZip(BidConstant.constantPrePathForWin, zipFileUrl, true);
