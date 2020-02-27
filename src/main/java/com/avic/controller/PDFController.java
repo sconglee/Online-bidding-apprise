@@ -122,7 +122,8 @@ public class PDFController {
 
 
         } else {
-            zipFilePath = "http://192.168.1.71/WEB/"+ projectNameForZip + ".zip";
+            // zipFilePath = "http://192.168.1.71/WEB/"+ projectNameForZip + ".zip";
+            zipFilePath = "http://36.110.92.44/WEB/"+ projectNameForZip + ".zip";
             ZipUtil.createZip(BidConstant.constantPrePathForLinux, BidConstant.constantPrePathForLinuxZip + projectNameForZip + "_" + loginUsername + ".zip",true);
         }
         modelMap.put("data", zipFilePath);

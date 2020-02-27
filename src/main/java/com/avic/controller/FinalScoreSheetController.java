@@ -87,7 +87,7 @@ public class FinalScoreSheetController {
         //Map mapScore = CountFinalScore.getItemAverageAndTotalScoreExceptFourExpert(pointList);
 
         //注意区分java7（false）、java8（"false"）
-       if (mapScore.get("flag") == false) {
+       if (mapScore.get("flag") == "false") {
             map.put("success", false);
             map.put("msg", mapScore.get("msg"));
             return map;
